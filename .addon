@@ -1,0 +1,27 @@
+{
+  "Title": "Alex\u0027s Poker",
+  "Type": "game",
+  "Org": "alex",
+  "Ident": "poker",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": [
+    "/code/UI/*"
+  ],
+  "HasCode": true,
+  "CodePath": "/code/",
+  "RootNamespace": "Poker",
+  "Metadata": {
+    "MaxPlayers": 8,
+    "MinPlayers": 2,
+    "GameNetworkType": "Multiplayer",
+    "MapSelect": "Empty",
+    "MapList": [
+      "facepunch.construct"
+    ],
+    "RankType": "None",
+    "PerMapRanking": false,
+    "LeaderboardType": "None"
+  }
+}
