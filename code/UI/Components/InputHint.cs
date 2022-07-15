@@ -53,13 +53,13 @@ public partial class InputHint : Panel
             Texture glyphTexture = Input.GetGlyph( Button, InputGlyphSize.Small, GlyphStyle.Knockout.WithSolidABXY().WithNeutralColorABXY() );
             if ( glyphTexture != null )
             {
-                Glyph.Texture = glyphTexture;
+                Glyph.Style.BackgroundImage = glyphTexture;
                 Glyph.Style.Width = glyphTexture.Width;
                 Glyph.Style.Height = glyphTexture.Height;
             }
             else
             {
-                Glyph.Texture = Texture.Load( FileSystem.Mounted, "/ui/Input/invalid_glyph.png" );
+                Glyph.Style.BackgroundImage = Texture.Load( FileSystem.Mounted, "/ui/Input/invalid_glyph.png" );
             }
         }
     }
