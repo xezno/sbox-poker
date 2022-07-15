@@ -4,19 +4,25 @@
     left: 0;
     right: 0;
     bottom: 0;
-
-    &.is-vr {
-        border-radius: 100px;
-        background-color: rgba( black, 0.1 );
-        backdrop-filter: blur( 50px );
-    }
+    pointer-events: all;
+    background-color: #5a00a9;
 }
 
 text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 64px;
-    padding: 50px;
+    font-family: Ibarra Real Nova;
     color: white;
-    text-shadow: 0 0 10px rgba( black, 0.25 );
+    font-size: 16px;
+}
+
+hr {
+    flex-grow: 1;
+    padding: 4px 0;
+}
+
+.card {
+    aspect-ratio: 0.714;
+    width: 64px;
+    background-color: #031b63;
+    margin: 0 2px;
+    border-radius: 4px;
 }

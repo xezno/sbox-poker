@@ -1,0 +1,26 @@
+﻿@import "/UI/_Theme.scss";
+
+.pots {
+    position: absolute;
+    top: $safe-area-y;
+    right: $safe-area-x;
+    flex-direction: column;
+}
+
+.pot {
+    width: 250px;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 16px;
+    text-shadow: 0 0 4px rgba( black, 0.25 );
+
+    .name {
+    }
+
+    .value {
+        width: 100px;
+        text-align: right;
+        font-weight: 800;
+        font-size: 28px;
+    }
+}

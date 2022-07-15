@@ -1,0 +1,48 @@
+@import "/UI/_Theme.scss";
+
+.input-hint {
+    align-items: center;
+    padding: 4px;
+
+    .glyph {
+        margin-left: 16px;
+        box-shadow: 0 0 4px rgba( black, 0.25 );
+        border-radius: 8px;
+    }
+
+    .action {
+        margin-left: 8px;
+        margin-bottom: 2px;
+        font-size: 16px;
+        font-family: Ibarra Real Nova;
+        color: white;
+        font-weight: bold;
+        text-shadow: 0 0 4px rgba( black, 0.25 );
+    }
+
+    flex-direction: row-reverse;
+
+    &.small {
+        margin-right: 0px;
+        margin-left: 0px;
+
+        .action {
+            display: none;
+        }
+    }
+
+    &.invert {
+        .action {
+            margin-right: 8px;
+        }
+
+        flex-direction: row-reverse;
+    }
+
+
+    &.noaction {
+        .action {
+            display: none;
+        }
+    }
+}

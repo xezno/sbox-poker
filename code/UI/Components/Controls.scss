@@ -1,0 +1,8 @@
+﻿@import "/UI/_Theme.scss";
+
+.controls {
+    position: absolute;
+    bottom: $safe-area-y;
+    right: $safe-area-x;
+    flex-direction: column;
+}

@@ -1,0 +1,47 @@
+﻿@import "/UI/_Theme.scss";
+
+.player-list {
+    position: absolute;
+    bottom: $safe-area-y;
+    left: $safe-area-x;
+    flex-direction: column;
+}
+
+.player {
+    flex-direction: row;
+    padding: 8px 0;
+
+    .avatar {
+        width: 72px;
+        aspect-ratio: 1;
+        aspect-ratio: 1;
+        background-color: #000000;
+        border-radius: 4px;
+        background-image: url( ui/player-icon.png );
+        background-size: cover;
+    }
+
+    .right {
+        padding-left: 8px;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .money {
+            font-weight: 700;
+            font-size: 28px;
+            text-shadow: 0 0 4px rgba( black, 0.25 );
+        }
+
+        .status {
+            padding: 2px 8px;
+            background-color: #000000;
+            border-radius: 4px;
+
+            &.winner {
+                background-color: #ffffff;
+                color: #000000;
+                font-weight: 500;
+            }
+        }
+    }
+}

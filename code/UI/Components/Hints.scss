@@ -1,0 +1,12 @@
+﻿@import "/UI/_Theme.scss";
+
+.hints {
+    position: absolute;
+    top: $safe-area-y;
+    left: $safe-area-x;
+    flex-direction: column;
+    background-color: #000000;
+    width: 325px;
+    padding: 8px;
+    border-radius: 5px;
+}
