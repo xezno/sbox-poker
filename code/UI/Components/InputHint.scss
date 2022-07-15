@@ -14,7 +14,7 @@
     }
 
     .glyph-wrapper {
-        width: 100px;
+        margin-left: 16px;
         align-items: center;
         justify-content: flex-end;
     }
@@ -23,6 +23,7 @@
         font-size: 16px;
         font-family: Ibarra Real Nova;
         color: white;
+        text-align: right;
         font-weight: bold;
         text-shadow: 0 0 4px rgba( black, 0.25 );
         flex-grow: 1;
