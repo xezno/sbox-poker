@@ -26,10 +26,7 @@
 						disabled = true
 						parent_bone = ""
 						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						radius = 31.0
 						point0 = [ 0.0, 34.0, 39.0 ]
 						point1 = [ 0.0, 34.0, 36.0 ]
@@ -39,10 +36,7 @@
 						disabled = true
 						parent_bone = ""
 						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						radius = 31.0
 						point0 = [ 0.0, -34.0, 39.0 ]
 						point1 = [ 0.0, -34.0, 36.0 ]
@@ -52,10 +46,7 @@
 						disabled = true
 						parent_bone = ""
 						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 0.0, 0.0, 37.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 62.0, -68.0, 4.0 ]
@@ -65,10 +56,7 @@
 						name = "dev_table"
 						parent_bone = ""
 						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 76.0 ]
 						offset_angles = [ 0.0, 0.0, 0.0 ]
@@ -96,7 +84,7 @@
 						filename = "models/dev/dev_table.fbx"
 						import_translation = [ 0.0, 0.0, 76.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 0.5
+						import_scale = 0.3937
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
