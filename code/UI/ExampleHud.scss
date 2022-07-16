@@ -1,11 +1,18 @@
-﻿.main-panel {
+﻿.outer {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     pointer-events: all;
+    align-items: center;
+    justify-content: center;
     background-color: #5a00a9;
+}
+
+.main-panel {
+    height: 1080px;
+    width: 1920px;
 }
 
 text {
