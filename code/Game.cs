@@ -1,15 +1,21 @@
-﻿using Sandbox;
+﻿using Poker.Backend;
+using Sandbox;
 using System.Linq;
 
 namespace Poker;
 
 public partial class Game : Sandbox.Game
 {
+	public PokerControllerEntity PokerControllerEntity { get; set; }
+
 	public Game()
 	{
 		if ( IsServer )
 		{
 			_ = new ExampleHudEntity();
+			PokerControllerEntity = new();
+
+			PokerControllerEntity.Run();
 		}
 	}
 
