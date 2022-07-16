@@ -1,7 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 
-namespace VrExample;
+namespace Poker;
 
 public class ExampleHudEntity : HudEntity<RootPanel>
 {

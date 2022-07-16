@@ -9,15 +9,13 @@
 
 .player {
     flex-direction: row;
-    padding: 8px 0;
+    padding: 4px 0;
 
     .avatar {
         width: 72px;
         aspect-ratio: 1;
         aspect-ratio: 1;
-        background-color: #000000;
         border-radius: 4px;
-        background-image: url( ui/player-icon.png );
         background-size: cover;
     }
 
