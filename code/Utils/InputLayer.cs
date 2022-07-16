@@ -19,6 +19,11 @@ public class InputAction
 	{
 		return 0.0f;
 	}
+
+	public virtual InputButton GetDisplayButton()
+	{
+		return InputButton.Slot0;
+	}
 }
 
 public class ActionBool : InputAction
@@ -34,9 +39,15 @@ public class ActionBool : InputAction
 	{
 		return $"Boolean {Name}: {Button} ({Evaluate()})";
 	}
+
 	public override float Evaluate()
 	{
 		return Input.Down( Button ) ? 1.0f : 0.0f;
+	}
+
+	public override InputButton GetDisplayButton()
+	{
+		return Button;
 	}
 }
 
@@ -66,6 +77,11 @@ public class Action1D : InputAction
 
 		return 0.0f;
 	}
+
+	public override InputButton GetDisplayButton()
+	{
+		return PositiveButton;
+	}
 }
 
 public class ActionAxis : InputAction
@@ -88,6 +104,11 @@ public class ActionAxis : InputAction
 	{
 		return Function?.Invoke() ?? 0.0f;
 	}
+
+	public override InputButton GetDisplayButton()
+	{
+		return DisplayButton;
+	}
 }
 
 public class InputLayer
@@ -106,8 +127,8 @@ public class InputLayer
 		new ActionBool( "fold", InputButton.Flashlight ),
 		new Action1D( "adjust_amount", InputButton.Forward, InputButton.Back ),
 		new ActionBool( "submit", InputButton.Jump ),
-		new ActionBool( "your_cards", InputButton.Duck ),
-		new ActionBool( "community_cards", InputButton.Run ),
+		new ActionBool( "your_cards", InputButton.Run ),
+		new ActionBool( "community_cards", InputButton.Duck ),
 	};
 
 	public static List<InputAction> Actions
