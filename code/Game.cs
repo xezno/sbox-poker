@@ -1,6 +1,7 @@
 ﻿using Sandbox;
+using System.Linq;
 
-namespace VrExample;
+namespace Poker;
 
 public partial class Game : Sandbox.Game
 {
@@ -17,8 +18,33 @@ public partial class Game : Sandbox.Game
 		base.ClientJoined( client );
 
 		var player = new Player();
-		MoveToSpawnpoint( player );
+		var clothingContainer = new ClothingContainer();
 
+		if ( client.IsBot )
+			clothingContainer.LoadRandom();
+		else
+			clothingContainer.LoadFromClient( client );
+
+		player.AvatarData = clothingContainer.Serialize();
+		clothingContainer.DressEntity( player );
+
+		MoveToSpawnpoint( player );
 		client.Pawn = player;
+	}
+
+	public override void MoveToSpawnpoint( Entity pawn )
+	{
+		var clientIndex = Client.All.Count - 1;
+		var spawnpoint = Entity.All.OfType<Seat>().ToList().First( x => x.SeatNumber == clientIndex );
+
+		Log.Trace( $"Finding spawnpoint for client {clientIndex}" );
+
+		if ( spawnpoint == null )
+		{
+			Log.Warning( $"Couldn't find spawnpoint for {pawn}!" );
+			return;
+		}
+
+		pawn.Transform = spawnpoint.Transform;
 	}
 }
