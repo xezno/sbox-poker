@@ -1,10 +1,16 @@
-﻿using Sandbox;
+﻿using Poker.Backend;
+using Sandbox;
+using SandboxEditor;
 
 namespace Poker;
 
 partial class Player : AnimatedEntity
 {
+	[Net, Local] public Hand Hand { get; set; }
 	[Net] public string AvatarData { get; set; }
+	[Net] public float Money { get; set; }
+
+	private BaseViewModel ViewModel { get; set; }
 
 	public override void Spawn()
 	{
@@ -14,6 +20,17 @@ partial class Player : AnimatedEntity
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
+
+		Money = 6969;
+
+		if ( IsClient )
+		{
+			ViewModel = new();
+			ViewModel.Position = Position;
+			ViewModel.Owner = Owner;
+			ViewModel.EnableViewmodelRendering = true;
+			ViewModel.SetModel( "models/arms/v_arms.vmdl" );
+		}
 	}
 
 	public override void Simulate( Client cl )
@@ -95,5 +112,24 @@ partial class Player : AnimatedEntity
 		);
 
 		inputBuilder.ViewAngles = clampedAngles;
+	}
+
+	[DebugOverlay( "poker_player", "Poker Player", "person" )]
+	public static void OnDebugOverlay()
+	{
+		if ( !Host.IsClient )
+			return;
+
+		var player = Local.Pawn as Player;
+
+		if ( player == null )
+			return;
+
+		string handStr = "No hand";
+		if ( player.Hand != null )
+			handStr = string.Join( ", ", player.Hand.Cards );
+
+		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 150 ), "Player",
+			$"Hand: {handStr}" );
 	}
 }

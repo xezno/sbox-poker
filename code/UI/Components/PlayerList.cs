@@ -44,7 +44,12 @@ public class PlayerList : Panel
 			set => Avatar.Client = value;
 		}
 
+		private Player Player => Client.Pawn as Player;
+
 		private Avatar Avatar { get; set; }
+
+		private Label MoneyLabel { get; set; }
+		private Label StatusLabel { get; set; }
 
 		public PlayerEntry( Client client )
 		{
@@ -52,10 +57,18 @@ public class PlayerList : Panel
 			Avatar.Client = client;
 
 			var right = Add.Panel( "right" );
-			right.Add.Label( "$500", "money" );
-			right.Add.Label( "High Card", "status" );
+			MoneyLabel = right.Add.Label( "MONEY", "money" );
+			StatusLabel = right.Add.Label( "STATUS", "status" );
 
 			SetClass( "player", true );
+		}
+
+		public override void Tick()
+		{
+			base.Tick();
+
+			MoneyLabel.Text = $"${Player.Money.CeilToInt()}";
+			StatusLabel.Text = $"High Card";
 		}
 	}
 }

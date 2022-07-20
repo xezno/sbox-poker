@@ -13,10 +13,17 @@ public partial class Game : Sandbox.Game
 		if ( IsServer )
 		{
 			_ = new ExampleHudEntity();
-			PokerControllerEntity = new();
-
-			PokerControllerEntity.Run();
 		}
+	}
+
+	[ConCmd.Server( "poker_start" )]
+	public static void StartPokerGame()
+	{
+		var instance = Game.Current as Game;
+
+		instance.PokerControllerEntity?.Delete();
+		instance.PokerControllerEntity = new();
+		instance.PokerControllerEntity.Run();
 	}
 
 	public override void ClientJoined( Client client )

@@ -1,0 +1,59 @@
+﻿@import "/ui/_Theme.scss";
+
+button {
+    padding: 20px;
+    background-color: rgba( black, 0.5 );
+    margin: 4px 0;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba( white, 0.15 );
+    }
+
+    color: white;
+}
+
+iconpanel {
+    font-family: MaterialIcons;
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 32px;
+}
+
+.debug-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba( black, 0.75 );
+    width: 500px;
+    z-index: 1000;
+    flex-direction: column;
+    transform: translate( -50px );
+    opacity: 0;
+    padding: 25px;
+    transition: all 150ms ease;
+
+    button, label {
+        flex-shrink: 0;
+    }
+
+    &.visible {
+        transform: translate( 0 );
+        pointer-events: all;
+        opacity: 1;
+    }
+
+    .buttons {
+        overflow: scroll;
+        height: 100%;
+        flex-direction: column;
+    }
+}

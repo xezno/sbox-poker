@@ -16,9 +16,9 @@
     "MaxPlayers": 9,
     "MinPlayers": 2,
     "GameNetworkType": "Multiplayer",
-    "MapSelect": "Empty",
+    "MapSelect": "Tagged",
     "MapList": [
-      "facepunch.construct"
+      "local.poker_dev"
     ],
     "RankType": "None",
     "PerMapRanking": false,
