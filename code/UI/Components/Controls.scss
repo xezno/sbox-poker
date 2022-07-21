@@ -6,3 +6,12 @@
     right: $safe-area-x;
     flex-direction: column;
 }
+
+.play-controls {
+    flex-direction: column;
+    opacity: 0;
+
+    &.visible {
+        opacity: 1;
+    }
+}

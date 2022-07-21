@@ -11,16 +11,16 @@
     width: 250px;
     align-items: center;
     justify-content: flex-end;
-    font-size: 16px;
+    font-size: $font-normal;
     text-shadow: 0 0 4px rgba( black, 0.25 );
 
     .name {
     }
 
     .value {
-        width: 100px;
+        width: 125px;
         text-align: right;
         font-weight: 800;
-        font-size: 28px;
+        font-size: $font-big;
     }
 }

@@ -2,9 +2,11 @@
 
 <div class="controls">
 
-    <inputhint btn="fold">Fold</inputhint>
-    <inputhint btn="adjust_amount">Raise / Lower Amount</inputhint>
-    <inputhint btn="submit">Call ($100)</inputhint>
+    <div @ref="PlayControlsPanel" class="play-controls">
+        <inputhint btn="fold">Fold</inputhint>
+        <inputhint btn="adjust_amount">Raise / Lower Amount</inputhint>
+        <inputhint @ref="CallHint" btn="submit">Call ($100)</inputhint>
+    </div>
     
     <hr />
 

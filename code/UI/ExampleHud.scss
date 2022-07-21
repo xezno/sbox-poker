@@ -1,4 +1,6 @@
-﻿.outer {
+﻿@import "/UI/_Theme.scss";
+
+.outer {
     position: absolute;
     top: 0;
     left: 0;
@@ -16,7 +18,7 @@
 text, label {
     font-family: Ibarra Real Nova;
     color: white;
-    font-size: 16px;
+    font-size: $font-normal;
 }
 
 hr {
@@ -27,7 +29,9 @@ hr {
 .card {
     aspect-ratio: 0.714;
     width: 64px;
-    background-color: #031b63;
     margin: 0 2px;
     border-radius: 4px;
+    background-image: url( ui/playing-card-sm.png );
+    background-position: center;
+    background-size: cover;
 }

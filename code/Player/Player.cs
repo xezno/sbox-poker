@@ -1,14 +1,16 @@
 ﻿using Poker.Backend;
 using Sandbox;
 using SandboxEditor;
+using System.Linq;
 
 namespace Poker;
 
-partial class Player : AnimatedEntity
+public partial class Player : AnimatedEntity
 {
 	[Net, Local] public Hand Hand { get; set; }
 	[Net] public string AvatarData { get; set; }
 	[Net] public float Money { get; set; }
+	[Net] public bool IsMyTurn { get; set; }
 
 	private BaseViewModel ViewModel { get; set; }
 
@@ -40,7 +42,10 @@ partial class Player : AnimatedEntity
 		UpdateEyes();
 
 		if ( IsServer )
+		{
+			IsMyTurn = PokerControllerEntity.Instance.IsTurn( this );
 			SetAnimProperties();
+		}
 	}
 
 	public override void FrameSimulate( Client cl )
@@ -114,7 +119,7 @@ partial class Player : AnimatedEntity
 		inputBuilder.ViewAngles = clampedAngles;
 	}
 
-	[DebugOverlay( "poker_player", "Poker Player", "person" )]
+	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
 	public static void OnDebugOverlay()
 	{
 		if ( !Host.IsClient )
@@ -129,7 +134,8 @@ partial class Player : AnimatedEntity
 		if ( player.Hand != null )
 			handStr = string.Join( ", ", player.Hand.Cards );
 
-		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 150 ), "Player",
-			$"Hand: {handStr}" );
+		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 400 ), "CL: Local Player",
+			$"Hand: {handStr}\n" +
+			$"Is my turn?: {player.IsMyTurn}" );
 	}
 }

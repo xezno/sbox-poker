@@ -2,11 +2,13 @@
 
 button {
     padding: 20px;
-    background-color: rgba( black, 0.5 );
-    margin: 4px 0;
+    background-color: rgba( white, 0.05 );
+    margin: 4px;
     border-radius: 5px;
     align-items: center;
     cursor: pointer;
+    flex-grow: 1;
+    min-width: 250px;
 
     &:hover {
         background-color: rgba( white, 0.15 );
@@ -29,14 +31,14 @@ iconpanel {
 
 .debug-menu {
     position: absolute;
-    top: 0;
     left: 0;
+    right: 0;
     bottom: 0;
-    background-color: rgba( black, 0.75 );
-    width: 500px;
+    background-color: rgba( black, 1.0 );
+    height: 250px;
     z-index: 1000;
     flex-direction: column;
-    transform: translate( -50px );
+    transform: translate( 0 50px );
     opacity: 0;
     padding: 25px;
     transition: all 150ms ease;
@@ -53,7 +55,7 @@ iconpanel {
 
     .buttons {
         overflow: scroll;
-        height: 100%;
-        flex-direction: column;
+        flex-wrap: wrap;
+        flex-direction: row;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Poker.UI;
+using Sandbox;
 using SandboxEditor;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ public class PokerControllerEntity : Entity
 {
 	public static PokerControllerEntity Instance { get; set; }
 
+	public List<Card> CommunityCards { get; set; }
 	private List<Player> Players => Entity.All.OfType<Player>().ToList();
 	private Deck Deck { get; set; }
 
@@ -19,18 +21,51 @@ public class PokerControllerEntity : Entity
 	private Player SmallBlind { get; set; }
 	private Player BigBlind { get; set; }
 
-	public PokerControllerEntity()
-	{
-		Instance = this;
+	private Queue<Player> PlayerTurnQueue { get; set; }
 
-		//
+	private float Pot { get; set; }
+	private float BetThisRound { get; set; }
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		Transmit = TransmitType.Always;
+		Instance = this;
+	}
+
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+
+		Instance = this;
+	}
+
+	public enum Rounds
+	{
+		Preflop,
+		Flop,
+		Turn,
+		River,
+		Showdown,
+
+		End
+	}
+
+	private Rounds Round { get; set; } = Rounds.Preflop;
+
+	public void Run()
+	{
+		// Instantiate everything
+		Deck = new();
+		CommunityCards = new();
+		PlayerTurnQueue = new();
+		Round = Rounds.Preflop;
+
 		// Determine dealer
-		//
 		Dealer = Players[0];
 
-		//
 		// Determine small blind & big blind
-		//
 		if ( Players.Count < 2 )
 		{
 			Log.Error( "Not enough players." );
@@ -49,59 +84,67 @@ public class PokerControllerEntity : Entity
 			BigBlind = Players[2];
 		}
 
-		//
 		// Give each player two hole cards
-		//
-		foreach ( var player in Players )
+		Players.ForEach( player => player.Hand = Deck.CreateHand() );
+
+		// Start pre-flop
+		StartNextRound();
+	}
+
+	private void StartNextRound()
+	{
+		if ( Round == Rounds.Showdown )
 		{
-			// TODO
+			Log.Info( "Game over" );
+			Run();
+			return;
 		}
 
-		//
-		// Pre-flop
-		//
+		StartRound( Round++ );
 	}
 
-	public enum Streets
+	private void AddCommunityCards( int count )
 	{
-		Preflop,
-		Flop,
-		Turn,
-		River
+		var cards = Deck.Draw( count );
+		var cardsStr = string.Join( ", ", cards.Select( x => x.ToShortString() ) );
+		PokerChatBox.AddInformation( To.Everyone, $"Dealed community cards: {cardsStr}" );
+
+		CommunityCards.AddRange( cards );
 	}
 
-	/// <summary>
-	/// Main game loop
-	/// </summary>
-	public void Run()
+	private void StartRound( Rounds round )
 	{
-		Setup();
+		switch ( round )
+		{
+			case Rounds.Preflop:
+				break;
+			case Rounds.Flop:
+				AddCommunityCards( 3 );
+				break;
+			case Rounds.Turn:
+				AddCommunityCards( 1 );
+				break;
+			case Rounds.River:
+				AddCommunityCards( 1 );
+				break;
+		}
 
-		PlayRound();
+		Players.ForEach( player => PlayerTurnQueue.Enqueue( player ) );
 	}
 
-	/// <summary>
-	/// Initialize game
-	/// </summary>
-	/// <returns>Whether setup was successful or not</returns>
-	private void Setup()
+	private void MoveToNextPlayer()
 	{
-		Log.Info( "\n========================= Start Poker Game ==========================" );
+		PlayerTurnQueue.Dequeue();
 
-		// Deck setup
-		Deck = new Deck();
-		Deck.Shuffle();
+		if ( PlayerTurnQueue.Count == 0 )
+		{
+			// Reached the end of this round; let's move to the next one
+			Log.Trace( "Reached the end of the round. Run()" );
+			StartNextRound();
+		}
 	}
 
-	/// <summary>
-	/// Play a round of Poker
-	/// </summary>
-	private void PlayRound()
-	{
-		Log.Info( "\n========================= Start Poker Round =========================" );
-	}
-
-	[DebugOverlay( "poker_overlay", "Poker Controller", "style" )]
+	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
 	private static void DebugOverlay()
 	{
 		if ( !Host.IsServer )
@@ -109,10 +152,38 @@ public class PokerControllerEntity : Entity
 
 		var instance = PokerControllerEntity.Instance;
 		if ( instance == null )
-			Log.Error( "Instance was null!" );
+			return;
 
-		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 200 ), "Poker Controller",
-			  "Hello, World!" );
+		if ( instance.Deck == null )
+			return;
+
+		var communityCards = string.Join( ", ", instance.CommunityCards.Select( card => card.ToString() ) );
+
+		OverlayUtils.BoxWithText( Render.Draw2D, new Rect( 45, 200, 400, 100 ), "SV: Poker Controller",
+			  $"Current turn: {instance.PlayerTurnQueue.Peek().Client.Name}\n" +
+			  $"Current round: {instance.Round}\n" +
+			  $"Community cards: {communityCards}" );
+	}
+
+	[ConCmd.Server( "poker_force_next_player" )]
+	public static void ForceNextPlayer()
+	{
+		if ( !Host.IsServer )
+			return;
+
+		var instance = PokerControllerEntity.Instance;
+		if ( instance == null )
+			Log.Warning( "Instance was null!" );
+
+		var caller = ConsoleSystem.Caller;
+		var player = caller.Pawn as Player;
+
+		if ( player == null )
+			Log.Warning( "Player was null!" );
+
+		Log.Trace( $"Forced to next player" );
+		PokerChatBox.AddInformation( To.Everyone, $"{instance.PlayerTurnQueue.Peek().Client.Name} took too long!" );
+		instance.MoveToNextPlayer();
 	}
 
 	[ConCmd.Server( "poker_submit_move" )]
@@ -131,6 +202,18 @@ public class PokerControllerEntity : Entity
 		if ( player == null )
 			Log.Error( "Player was null!" );
 
-		Log.Trace( $"Player {player.Name} ({caller.Name}) submitted move {move} with param {parameter}" );
+		if ( instance.IsTurn( player ) )
+		{
+			Log.Trace( $"Player {player.Name} ({caller.Name}) submitted move {move} with param {parameter}" );
+			instance.MoveToNextPlayer();
+			instance.BetThisRound += parameter;
+			instance.Pot += parameter;
+			PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} bets {parameter}" );
+		}
+	}
+
+	public bool IsTurn( Player player )
+	{
+		return PlayerTurnQueue.Peek() == player;
 	}
 }
