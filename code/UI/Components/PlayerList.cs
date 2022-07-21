@@ -59,6 +59,7 @@ public class PlayerList : Panel
 			var right = Add.Panel( "right" );
 			MoneyLabel = right.Add.Label( "MONEY", "money" );
 			StatusLabel = right.Add.Label( "STATUS", "status" );
+			StatusLabel.BindClass( "my-turn", () => Player.IsMyTurn );
 
 			SetClass( "player", true );
 		}
