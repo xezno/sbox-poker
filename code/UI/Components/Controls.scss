@@ -10,6 +10,7 @@
 .play-controls {
     flex-direction: column;
     opacity: 0;
+    transition: opacity 150ms ease;
 
     &.visible {
         opacity: 1;

@@ -107,7 +107,7 @@ public class PokerControllerEntity : Entity
 	{
 		var cards = Deck.Draw( count );
 		var cardsStr = string.Join( ", ", cards.Select( x => x.ToShortString() ) );
-		PokerChatBox.AddInformation( To.Everyone, $"Dealed community cards: {cardsStr}" );
+		PokerChatBox.AddInformation( To.Everyone, $"Dealt community cards: {cardsStr}" );
 
 		CommunityCards.AddRange( cards );
 	}
@@ -122,8 +122,6 @@ public class PokerControllerEntity : Entity
 				AddCommunityCards( 3 );
 				break;
 			case Rounds.Turn:
-				AddCommunityCards( 1 );
-				break;
 			case Rounds.River:
 				AddCommunityCards( 1 );
 				break;
@@ -208,7 +206,7 @@ public class PokerControllerEntity : Entity
 			instance.MoveToNextPlayer();
 			instance.BetThisRound += parameter;
 			instance.Pot += parameter;
-			PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} bets {parameter}" );
+			PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} bets ${parameter}" );
 		}
 	}
 
