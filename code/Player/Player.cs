@@ -23,7 +23,7 @@ public partial class Player : AnimatedEntity
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
-		Money = 6969;
+		Money = 1000;
 
 		if ( IsClient )
 		{
@@ -43,7 +43,7 @@ public partial class Player : AnimatedEntity
 
 		if ( IsServer )
 		{
-			IsMyTurn = PokerControllerEntity.Instance.IsTurn( this );
+			IsMyTurn = PokerControllerEntity.Instance?.IsTurn( this ) ?? false;
 			SetAnimProperties();
 		}
 	}
@@ -82,10 +82,10 @@ public partial class Player : AnimatedEntity
 
 		SetAnimParameter( "b_vr", true );
 
-		SetAnimParameter( "left_hand_ik.position", new Vector3( 16, 8, 32 ) );
+		SetAnimParameter( "left_hand_ik.position", new Vector3( 8, 8, 32 ) );
 		SetAnimParameter( "left_hand_ik.rotation", new Angles( 0, -45, 60 ).ToRotation() );
 
-		SetAnimParameter( "right_hand_ik.position", new Vector3( 16, -8, 32 ) );
+		SetAnimParameter( "right_hand_ik.position", new Vector3( 8, -8, 32 ) );
 		SetAnimParameter( "right_hand_ik.rotation", new Angles( 0, 45, 120 ).ToRotation() );
 
 		SetAnimParameter( "holdtype", 0 );
