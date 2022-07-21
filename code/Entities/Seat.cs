@@ -7,11 +7,23 @@ namespace Poker;
 [Library( "info_seat" )]
 [Title( "Seat" ), Category( "Poker" )]
 [HammerEntity]
-public class Seat : Entity
+public partial class Seat : Entity
 {
 	[Property]
 	public int SeatNumber { get; set; }
 
 	[Property]
 	public string SeatName { get; set; }
+
+	[Net] public Player Player { get; set; }
+
+	public bool IsOccupied => Player.IsValid();
+
+	public void SetOccupiedBy( Player player )
+	{
+		Host.AssertServer();
+
+		player.Transform = this.Transform;
+		this.Player = player;
+	}
 }
