@@ -34,6 +34,15 @@ public class PlayerList : Panel
 				PlayerEntries.Add( playerEntry );
 			}
 		}
+
+		foreach ( var playerEntry in PlayerEntries.ToArray() )
+		{
+			if ( playerEntry.Client.IsDormant )
+			{
+				playerEntry.Delete();
+				PlayerEntries.Remove( playerEntry );
+			}
+		}
 	}
 
 	class PlayerEntry : Panel
