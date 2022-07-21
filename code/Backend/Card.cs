@@ -16,6 +16,11 @@ public struct Card
 		return $"{Value} of {Suit}";
 	}
 
+	public string GetFilename()
+	{
+		return $"/ui/cards/{Value}_{Suit}.png";
+	}
+
 	public string ToShortString()
 	{
 		string suitString = "♠️";

@@ -1,0 +1,11 @@
+﻿@import "/UI/_Theme.scss";
+
+.card {
+    aspect-ratio: 0.714;
+    width: 64px;
+    margin: 0 2px;
+    border-radius: 4px;
+    background-image: url( ui/playing-card-sm.png );
+    background-position: center;
+    background-size: 100%;
+}
