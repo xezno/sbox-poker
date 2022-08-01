@@ -5,12 +5,20 @@
     padding: 4px;
     flex-direction: row-reverse;
 
-    .glyph {
+    .glyph, .glyph-shadow {
         height: 100%;
-        box-shadow: 0 0 4px rgba( black, 0.25 );
-        border-radius: 8px;
+        border-radius: 10px;
         background-size: contain;
         background-repeat: no-repeat;
+    }
+
+    .glyph-shadow {
+        position: absolute;
+        z-index: -1;
+        top: 1.5px;
+        left: 1.5px;
+        filter: blur( 2px );
+        background-image-tint: black;
     }
 
     .glyph-wrapper {
@@ -21,10 +29,9 @@
 
     .action {
         font-size: $font-normal;
-        font-family: Ibarra Real Nova;
         color: white;
         text-align: right;
-        text-shadow: 0 0 4px rgba( black, 0.25 );
+        text-shadow: $text-shadow;
         flex-grow: 1;
     }
 
@@ -36,7 +43,7 @@
 
     &.active {
         .glyph {
-            background-image-tint: black;
+            background-image-tint: gray;
         }
     }
 }

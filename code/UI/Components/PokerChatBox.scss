@@ -55,7 +55,7 @@ chatentry {
     flex-grow: 0;
     padding: 5px;
     max-width: 100%;
-    text-shadow: 0 0 4px rgba( black, 0.25 );
+    text-shadow: $text-shadow;
     justify-content: flex-end;
     align-items: center;
 

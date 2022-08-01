@@ -12,6 +12,7 @@ internal class Controls : Panel
 	// TODO: this shit probably shouldn't be in here
 	//
 	private bool submitPressedLastFrame;
+	private bool foldPressedLastFrame;
 	private float rawBet;
 	private int roundedBet;
 
@@ -33,8 +34,9 @@ internal class Controls : Panel
 		if ( !player.IsMyTurn )
 			return;
 
-		ProcessInputs( out var submitPressed, out var betDelta );
+		ProcessInputs( out var submitPressed, out var foldPressed, out var betDelta );
 		ProcessSubmitInput( submitPressed );
+		ProcessFoldInput( foldPressed );
 		ProcessBetInput( betDelta );
 
 		submitPressedLastFrame = submitPressed;
@@ -42,9 +44,14 @@ internal class Controls : Panel
 
 	private void ProcessSubmitInput( bool submitPressed )
 	{
-
 		if ( !submitPressedLastFrame && submitPressed )
 			PokerControllerEntity.SubmitMove( Move.Bet, roundedBet );
+	}
+
+	private void ProcessFoldInput( bool foldPressed )
+	{
+		if ( !foldPressedLastFrame && foldPressed )
+			PokerControllerEntity.SubmitMove( Move.Fold, 0 );
 	}
 
 	private void ProcessBetInput( float betDelta )
@@ -59,9 +66,10 @@ internal class Controls : Panel
 		CallHint.ActionLabel.Text = $"{action} (${roundedBet})";
 	}
 
-	private void ProcessInputs( out bool submitPressed, out float betDelta )
+	private void ProcessInputs( out bool submitPressed, out bool foldPressed, out float betDelta )
 	{
-		submitPressed = InputLayer.Evaluate( "submit" ) > 0.1f;
+		submitPressed = InputLayer.Evaluate( "submit" ) > 0.5f;
+		foldPressed = InputLayer.Evaluate( "fold" ) > 0.5f;
 		betDelta = InputLayer.Evaluate( "adjust_amount" );
 	}
 }

@@ -27,7 +27,7 @@
         .money {
             font-weight: 700;
             font-size: $font-big;
-            text-shadow: 0 0 4px rgba( black, 0.25 );
+            text-shadow: $text-shadow;
         }
 
         .status {

@@ -12,13 +12,13 @@
     align-items: center;
     justify-content: flex-end;
     font-size: $font-normal;
-    text-shadow: 0 0 4px rgba( black, 0.25 );
+    text-shadow: $text-shadow;
 
     .name {
     }
 
     .value {
-        width: 125px;
+        width: 100px;
         text-align: right;
         font-weight: 800;
         font-size: $font-big;

@@ -36,7 +36,12 @@ public class Card : Panel
 		SetClass( "card", true );
 	}
 
-	private void SetCard( Suit suit, Value value )
+	public void Reset()
+	{
+		Style.BackgroundImage = null;
+	}
+
+	public void SetCard( Suit suit, Value value )
 	{
 		Log.Trace( $"Set card to {value} of {suit}" );
 

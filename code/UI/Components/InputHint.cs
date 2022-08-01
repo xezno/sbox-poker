@@ -1,5 +1,6 @@
 using Sandbox;
 using Sandbox.UI;
+using System;
 
 namespace Poker.UI;
 
@@ -8,6 +9,7 @@ public partial class InputHint : Panel
 {
 	// @ref
 	public Image Glyph { get; set; }
+	public Image GlyphShadow { get; set; }
 	public string Name { get; set; }
 	public string Text { get; set; }
 	public Label ActionLabel { get; set; }
@@ -52,19 +54,24 @@ public partial class InputHint : Panel
 		var action = InputLayer.GetAction( Name );
 		var button = action.GetDisplayButton();
 
-		SetClass( "active", !action.Evaluate().AlmostEqual( 0.0f, 0.01f ) );
+		SetClass( "active", MathF.Abs( action.Evaluate() ) > 0.5f );
 
-		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, GlyphStyle.Knockout.WithSolidABXY().WithNeutralColorABXY() );
+		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, GlyphStyle.Knockout.WithNeutralColorABXY() );
 
 		if ( glyphTexture != null )
 		{
-			Glyph.Style.BackgroundImage = glyphTexture;
-			Glyph.Style.Width = glyphTexture.Width;
-			Glyph.Style.Height = glyphTexture.Height;
+			SetImageTexture( Glyph, glyphTexture );
+			SetImageTexture( GlyphShadow, glyphTexture );
 		}
-		else
-		{
-			Glyph.Style.BackgroundImage = Texture.Load( FileSystem.Mounted, "/ui/Input/invalid_glyph.png" );
-		}
+	}
+
+	private void SetImageTexture( Image image, Texture texture )
+	{
+		if ( image == null )
+			return;
+
+		image.Style.BackgroundImage = texture;
+		image.Style.Width = texture.Width;
+		image.Style.Height = texture.Height;
 	}
 }

@@ -16,8 +16,9 @@
 }
 
 text, label {
-    font-family: Ibarra Real Nova;
+    font-family: $font;
     color: white;
+    font-weight: 700;
     font-size: $font-normal;
 }
 
