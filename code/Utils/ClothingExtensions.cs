@@ -1,9 +1,11 @@
 ﻿using Sandbox;
 using System.Linq;
 
+namespace Poker;
+
 public static class ClothingExtensions
 {
-	public static void LoadRandom( this ClothingContainer clothingContainer )
+	public static void LoadRandom( this Poker.ClothingContainer clothingContainer )
 	{
 		var clothingItems = ResourceLibrary.GetAll<Clothing>().GroupBy( x => x.Category ).ToList();
 		var randomClothingItems = clothingItems.Select( x => Rand.FromArray( x.ToArray() ) );
