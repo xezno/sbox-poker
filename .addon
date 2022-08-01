@@ -18,7 +18,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Tagged",
     "MapList": [
-      "local.poker_dev"
+      "alex.poker_dev"
     ],
     "RankType": "None",
     "PerMapRanking": false,
