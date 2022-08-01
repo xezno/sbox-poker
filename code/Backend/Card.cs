@@ -18,7 +18,13 @@ public struct Card
 
 	public string GetFilename()
 	{
-		return $"/ui/cards/{Value}_{Suit}.png";
+		var fileName = $"/ui/cards/{Value}_{Suit}";
+
+		// Get second variant for king/queen/jack
+		if ( Value == Value.King || Value == Value.Queen || Value == Value.Jack )
+			fileName += "2";
+
+		return $"{fileName}.png";
 	}
 
 	public string ToShortString()

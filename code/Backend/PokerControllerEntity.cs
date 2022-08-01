@@ -9,11 +9,12 @@ namespace Poker.Backend;
 /// <summary>
 /// Poker game FSM
 /// </summary>
-public class PokerControllerEntity : Entity
+public partial class PokerControllerEntity : Entity
 {
 	public static PokerControllerEntity Instance { get; set; }
+	[Net] public IList<Card> CommunityCards { get; set; }
+	[Net] public float Pot { get; set; }
 
-	public List<Card> CommunityCards { get; set; }
 	private List<Player> Players => Entity.All.OfType<Player>().ToList();
 	private Deck Deck { get; set; }
 
@@ -22,8 +23,6 @@ public class PokerControllerEntity : Entity
 	private Player BigBlind { get; set; }
 
 	private Queue<Player> PlayerTurnQueue { get; set; }
-
-	private float Pot { get; set; }
 	private float BetThisRound { get; set; }
 
 	public override void Spawn()
@@ -58,7 +57,6 @@ public class PokerControllerEntity : Entity
 	{
 		// Instantiate everything
 		Deck = new();
-		CommunityCards = new();
 		PlayerTurnQueue = new();
 		Round = Rounds.Preflop;
 
@@ -93,13 +91,6 @@ public class PokerControllerEntity : Entity
 
 	private void StartNextRound()
 	{
-		if ( Round == Rounds.Showdown )
-		{
-			Log.Info( "Game over" );
-			Run();
-			return;
-		}
-
 		StartRound( Round++ );
 	}
 
@@ -109,7 +100,8 @@ public class PokerControllerEntity : Entity
 		var cardsStr = string.Join( ", ", cards.Select( x => x.ToShortString() ) );
 		PokerChatBox.AddInformation( To.Everyone, $"Dealt community cards: {cardsStr}" );
 
-		CommunityCards.AddRange( cards );
+		foreach ( var card in cards )
+			CommunityCards.Add( card );
 	}
 
 	private void StartRound( Rounds round )
@@ -127,7 +119,18 @@ public class PokerControllerEntity : Entity
 				break;
 		}
 
-		Players.ForEach( player => PlayerTurnQueue.Enqueue( player ) );
+		Players.ForEach( player =>
+		{
+			if ( !player.HasFolded )
+				PlayerTurnQueue.Enqueue( player );
+		} );
+
+		if ( Round == Rounds.Showdown || PlayerTurnQueue.Count <= 1 )
+		{
+			Log.Info( "Game over" );
+			Run();
+			return;
+		}
 	}
 
 	private void MoveToNextPlayer()
@@ -139,6 +142,12 @@ public class PokerControllerEntity : Entity
 			// Reached the end of this round; let's move to the next one
 			Log.Trace( "Reached the end of the round. Run()" );
 			StartNextRound();
+			return;
+		}
+
+		if ( PlayerTurnQueue.Peek().HasFolded )
+		{
+			MoveToNextPlayer();
 		}
 	}
 
@@ -200,13 +209,32 @@ public class PokerControllerEntity : Entity
 		if ( player == null )
 			Log.Error( "Player was null!" );
 
+		Log.Trace( $"Player {player.Name} ({caller.Name}) submitted move {move} with param {parameter}" );
+
 		if ( instance.IsTurn( player ) )
 		{
-			Log.Trace( $"Player {player.Name} ({caller.Name}) submitted move {move} with param {parameter}" );
-			instance.MoveToNextPlayer();
-			instance.BetThisRound += parameter;
-			instance.Pot += parameter;
-			PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} bets ${parameter}" );
+			switch ( move )
+			{
+				case Move.Fold:
+					{
+						instance.MoveToNextPlayer();
+						PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} folds" );
+
+						player.HasFolded = true;
+
+						break;
+					}
+				case Move.Bet:
+					{
+						instance.MoveToNextPlayer();
+						instance.BetThisRound += parameter;
+						instance.Pot += parameter;
+						player.Money -= parameter;
+						PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} bets ${parameter}" );
+
+						break;
+					}
+			}
 		}
 	}
 
