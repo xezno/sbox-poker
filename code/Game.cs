@@ -26,6 +26,18 @@ public partial class Game : Sandbox.Game
 		instance.PokerControllerEntity.Run();
 	}
 
+	[ConCmd.Server( "poker_spawn_chip" )]
+	public static void SpawnChip()
+	{
+		Log.Trace( $"Spawning chip" );
+
+		var player = ConsoleSystem.Caller.Pawn as Player;
+		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 1024f ).Ignore( player ).Run();
+
+		var count = Rand.Int( 16, 32 );
+		ChipEntity.CreateStack( count, tr.EndPosition + 0.25f );
+	}
+
 	[ConCmd.Server( "poker_spawn_card" )]
 	public static void SpawnCard( string suitStr, string valueStr )
 	{

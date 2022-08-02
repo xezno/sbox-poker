@@ -2,6 +2,7 @@
 
 namespace Poker;
 
+[Title( "Playing Card" ), Category( "Poker" )]
 public partial class CardEntity : ModelEntity
 {
 	private Texture texture;
@@ -28,7 +29,7 @@ public partial class CardEntity : ModelEntity
 		texture = Texture.Load( FileSystem.Mounted, card.GetFilename() );
 		Log.Trace( $"Set card texture to {texture.ResourcePath}" );
 
-		material = Material.Load( "materials/card.vmat" ).CreateCopy();
+		material = Material.Load( "materials/card/card.vmat" ).CreateCopy();
 		SetMaterialOverride( material );
 	}
 
@@ -37,7 +38,5 @@ public partial class CardEntity : ModelEntity
 	{
 		if ( texture.IsLoaded )
 			material.OverrideTexture( "Color", texture );
-
-		DebugOverlay.Text( $"{texture.ResourcePath}", Position );
 	}
 }
