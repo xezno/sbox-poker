@@ -19,6 +19,13 @@ public partial class Seat : Entity
 
 	public bool IsOccupied => Player.IsValid();
 
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		Transmit = TransmitType.Never;
+	}
+
 	public void SetOccupiedBy( Player player )
 	{
 		Host.AssertServer();
