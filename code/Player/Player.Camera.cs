@@ -8,6 +8,7 @@ partial class Player
 	private Vector3 CameraPosition;
 	private Rotation CameraRotation;
 	private float CameraFOV;
+	private float UserFOV = 60f;
 
 	private enum CameraTargets
 	{
@@ -19,7 +20,7 @@ partial class Player
 
 	private void SetEyeTransforms()
 	{
-		EyeLocalPosition = Vector3.Up * 58f;
+		EyeLocalPosition = Vector3.Up * 60f;
 		EyeLocalRotation = Input.Rotation;
 
 		Position = Position.WithZ( 3 );
@@ -81,7 +82,7 @@ partial class Player
 				{
 					targetPosition = EyePosition;
 					targetRotation = EyeRotation;
-					targetFOV = 80f;
+					targetFOV = UserFOV;
 
 					setup.Viewer = this;
 					break;
@@ -105,11 +106,14 @@ partial class Player
 
 		var inputAngles = inputBuilder.ViewAngles;
 		var clampedAngles = new Angles(
-			inputAngles.pitch.Clamp( -45, 45 ),
+			inputAngles.pitch.Clamp( -60, 60 ),
 			inputAngles.yaw,//.yaw.Clamp( -45, 45 ),
 			inputAngles.roll
 		);
 
 		inputBuilder.ViewAngles = clampedAngles;
+
+		UserFOV -= inputBuilder.MouseWheel * 10f;
+		UserFOV = UserFOV.Clamp( 10, 90 );
 	}
 }
