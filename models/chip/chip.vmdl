@@ -6,17 +6,6 @@
 		children = 
 		[
 			{
-				_class = "ModelDataList"
-				children = 
-				[
-					{
-						_class = "Bounds Hull"
-						mins = [ -2.0, -2.0, -1.0 ]
-						maxs = [ 2.0, 2.0, 1.0 ]
-					},
-				]
-			},
-			{
 				_class = "MaterialGroupList"
 				children = 
 				[
@@ -72,8 +61,25 @@
 							exception_list = 
 							[
 								"Cylinder_001",
+								"Cylinder_003",
+								"Chip_LOD0_003",
 							]
 						}
+					},
+				]
+			},
+			{
+				_class = "ModelModifierList"
+				children = 
+				[
+					{
+						_class = "ModelModifier_ScaleAndMirror"
+						scale = 1.5
+						mirror_x = false
+						mirror_y = false
+						mirror_z = false
+						flip_bone_forward = false
+						swap_left_and_right_bones = false
 					},
 				]
 			},
