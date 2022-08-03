@@ -5,8 +5,7 @@ namespace Poker;
 [Title( "Chip" ), Category( "Poker" )]
 public partial class ChipEntity : ModelEntity
 {
-	private Texture texture;
-	private Material material;
+	[Net] public float Value { get; set; }
 
 	public override void Spawn()
 	{
@@ -18,29 +17,19 @@ public partial class ChipEntity : ModelEntity
 
 	public void SetValue( float value )
 	{
-		RpcSetValue( To.Everyone, value );
-	}
-
-	[ClientRpc]
-	private void RpcSetValue( float value )
-	{
-		Host.AssertClient();
-
+		Value = value;
 	}
 
 	[Event.Frame]
 	public void OnFrame()
 	{
-
-	}
-
-	public static void CreateStack( int count, Vector3 position )
-	{
-		for ( int i = 0; i < count; ++i )
+		SceneObject.ColorTint = Value switch
 		{
-			var chipEntity = new ChipEntity();
-			chipEntity.Position = position + Vector3.Up * i * 0.25f;
-			chipEntity.Rotation = Rotation.FromYaw( Rand.Float( 0, 360f ) );
-		}
+			500 => Color.Parse( "#991e38" ) ?? Color.Black,
+			250 => Color.Parse( "#1f4e99" ) ?? Color.Blue,
+			100 => Color.Parse( "#e31a3b" ) ?? Color.Red,
+			50 => Color.Parse( "#eb8344" ) ?? Color.Orange,
+			_ => Color.Red
+		};
 	}
 }
