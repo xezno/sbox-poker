@@ -6,63 +6,12 @@
 		children = 
 		[
 			{
-				_class = "MaterialGroupList"
+				_class = "PrefabList"
 				children = 
 				[
 					{
-						_class = "DefaultMaterialGroup"
-						remaps = 
-						[
-							{
-								from = "plane.001.vmat"
-								to = "materials/card.vmat"
-							},
-						]
-						use_global_default = true
-						global_default_material = "materials/card/card.vmat"
-					},
-				]
-			},
-			{
-				_class = "RenderMeshList"
-				children = 
-				[
-					{
-						_class = "RenderMeshFile"
-						filename = "models/card/card.fbx"
-						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 0.5
-						align_origin_x_type = "None"
-						align_origin_y_type = "None"
-						align_origin_z_type = "None"
-						parent_bone = ""
-						import_filter = 
-						{
-							exclude_by_default = true
-							exception_list = 
-							[
-								"Plane_001",
-								"Plane",
-							]
-						}
-					},
-				]
-			},
-			{
-				_class = "GameDataList"
-				children = 
-				[
-					{
-						_class = "GenericGameData"
-						game_class = "ao_proxy_box"
-						game_keys = 
-						{
-							bonename = ""
-							dimensions = [ 4.3423, 2.78955, 0.057633 ]
-							offset_origin = [ -0.005945, 0.000032, 0.026992 ]
-							offset_angles = [ 0.0, 0.0, 0.0 ]
-						}
+						_class = "Prefab"
+						target_file = "models/card/card.vmdl_prefab"
 					},
 				]
 			},
