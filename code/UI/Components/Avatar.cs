@@ -45,14 +45,11 @@ public class Avatar : Panel
 			World = new SceneWorld();
 			AmbientColor = Color.White * 0.5f;
 
-			_ = new SceneLight( World, Vector3.Up * 128 + Vector3.Forward * 64f, 512f, Color.White * 50f );
+			_ = new SceneLight( World, Vector3.Up * 128 + Vector3.Forward * 64f, 512f, Color.White * 10f );
 			Citizen = new SceneModel( World, "models/citizen/citizen.vmdl", Transform.Zero );
 			Citizen.SetAnimGraph( "animgraphs/citizen_portrait.vanmgrph" );
 
-			Models = new()
-			{
-				Citizen
-			};
+			Models = new() { Citizen };
 
 			Dress();
 
