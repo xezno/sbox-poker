@@ -35,7 +35,7 @@ public partial class Game : Sandbox.Game
 		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 1024f ).Ignore( player ).Run();
 
 		var count = Rand.Int( 16, 32 );
-		ChipEntity.CreateStack( count, tr.EndPosition + 0.25f );
+		ChipStackEntity.CreateStack( count, 100f, tr.EndPosition + 0.25f );
 	}
 
 	[ConCmd.Server( "poker_spawn_card" )]
@@ -54,7 +54,7 @@ public partial class Game : Sandbox.Game
 		cardEntity.Rotation = Rotation.LookAt( -tr.Direction.WithZ( 0 ).Normal );
 
 		var backendCard = new Backend.Card( suit, value );
-		cardEntity.SetCard( backendCard );
+		cardEntity.RpcSetCard( To.Everyone, backendCard );
 	}
 
 	public override void ClientJoined( Client client )
@@ -91,5 +91,40 @@ public partial class Game : Sandbox.Game
 		}
 
 		firstAvailableSeat.SetOccupiedBy( player );
+	}
+
+	public override void RenderHud()
+	{
+		return;
+		base.RenderHud();
+
+		//
+		// scale the screen using a matrix, so the scale math doesn't invade everywhere
+		// (other than having to pass the new scale around)
+		//
+
+		var scale = Screen.Height / 1080.0f;
+		var screenSize = Screen.Size / scale;
+		var matrix = Matrix.CreateScale( scale );
+
+		using ( Render.Draw2D.MatrixScope( matrix ) )
+		{
+			Render.Draw2D.Color = Color.White;
+			Render.Draw2D.FontFamily = "Roboto";
+
+			foreach ( var entity in Entity.All )
+			{
+				if ( entity is Client )
+					continue;
+
+				var screenPos = (Vector2)entity.Transform.Position.ToScreen();
+				var rect = new Rect( screenPos * screenSize, 1024f );
+				var textRect = Render.Draw2D.MeasureText( rect, entity.Name );
+				var drawRect = new Rect( textRect.Position - textRect.Size / 2.0f, textRect.Size );
+				var displayInfo = DisplayInfo.For( entity );
+
+				Render.Draw2D.DrawText( drawRect, displayInfo.Name, TextFlag.Center );
+			}
+		}
 	}
 }

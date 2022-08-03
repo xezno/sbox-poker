@@ -83,7 +83,38 @@ public partial class PokerControllerEntity : Entity
 		}
 
 		// Give each player two hole cards
-		Players.ForEach( player => player.Hand = Deck.CreateHand() );
+		Players.ForEach( player =>
+		{
+			player.Hand = Deck.CreateHand();
+			player.LeftCard.RpcSetCard( To.Single( player ), player.Hand.Cards[0] );
+			player.RightCard.RpcSetCard( To.Single( player ), player.Hand.Cards[1] );
+		} );
+
+		// Delete chips
+		Entity.All.OfType<ChipEntity>().ToList().ForEach( x => x.Delete() );
+		Entity.All.OfType<ChipStackEntity>().ToList().ForEach( x => x.Delete() );
+
+		// Spawn chips
+		Players.ForEach( player =>
+		{
+			var seat = player.Seat;
+			var chipSpawn = Entity.All.OfType<PlayerChipSpawn>().First( x => x.SeatNumber == seat.SeatNumber );
+			float spacing = 3.5f;
+
+			// ChipEntity.CreateStack( 32, chipSpawn.Position );
+			var chipOffsets = new (int, float, Vector3)[]
+			{
+				new( 10, 500, Vector3.Zero ),
+				new( 20, 250, new Vector3( 0, spacing )),
+				new( 30, 100, new Vector3( spacing, 0 )),
+				new( 40, 50, new Vector3( spacing, spacing ))
+			};
+
+			foreach ( var offset in chipOffsets )
+			{
+				ChipStackEntity.CreateStack( offset.Item1, offset.Item2, chipSpawn.Position + offset.Item3 );
+			}
+		} );
 
 		// Start pre-flop
 		StartNextRound();
