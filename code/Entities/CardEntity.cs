@@ -16,11 +16,6 @@ public partial class CardEntity : ModelEntity
 		Transmit = TransmitType.Always;
 	}
 
-	public void SetCard( Backend.Card card )
-	{
-		RpcSetCard( To.Everyone, card );
-	}
-
 	[ClientRpc]
 	private void RpcSetCard( Backend.Card card )
 	{
@@ -36,7 +31,7 @@ public partial class CardEntity : ModelEntity
 	[Event.Frame]
 	public void OnFrame()
 	{
-		if ( texture.IsLoaded )
+		if ( texture?.IsLoaded ?? false )
 			material.OverrideTexture( "Color", texture );
 	}
 }
