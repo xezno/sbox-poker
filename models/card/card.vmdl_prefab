@@ -53,8 +53,8 @@
 						game_keys = 
 						{
 							bonename = ""
-							dimensions = [ 4.3423, 2.78955, 0.057633 ]
-							offset_origin = [ -0.005945, 0.000032, 0.026992 ]
+							dimensions = [ 4.43985, 3.19489, 0.016348 ]
+							offset_origin = [ 0.001025, 0.000043, -0.01617 ]
 							offset_angles = [ 0.0, 0.0, 0.0 ]
 						}
 					},
