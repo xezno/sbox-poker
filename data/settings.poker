@@ -1,0 +1,15 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		LeftHandPosition = "5.1,9.26,31.41"
+		LeftHandRotation = "0.9998174,0.0000000122259,0.0191102,-0.000000639641"
+		RightHandPosition = "8,-6,32"
+		RightHandRotation = "0.8001032,0.3314138,0.1913417,0.4619394"
+		BaseHoldPosition = "11,0.24,34"
+		LeftCardOffset = "-0.55,0.56,0"
+		LeftCardRotation = "0.3419108,-0.03398511,-0.9332733,0.1046085"
+		RightCardOffset = "0.23,-1.03,0.59"
+		RightCardRotation = "0.07582209,0.9389219,0.02980086,0.3343479"
+	}
+}
