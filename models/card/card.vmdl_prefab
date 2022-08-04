@@ -11,14 +11,8 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						remaps = 
-						[
-							{
-								from = "plane.001.vmat"
-								to = "materials/card.vmat"
-							},
-						]
-						use_global_default = true
+						remaps = [  ]
+						use_global_default = false
 						global_default_material = "materials/card/card.vmat"
 					},
 				]
