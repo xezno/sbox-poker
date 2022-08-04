@@ -86,16 +86,16 @@ public partial class Player : AnimatedEntity
 		SetAnimParameter( "left_hand_ik.position", new Vector3( 6, 10, 32 ) );
 		SetAnimParameter( "left_hand_ik.rotation", new Angles( 0, -0, 180 ).ToRotation() );
 
-		var basePos = new Vector3( 11f, 0.5f, 34 );
+		var basePos = new Vector3( 11f, 0.25f, 34 );
 
-		LeftCard.LocalPosition = basePos + new Vector3( 0, 1.25f, 0 );
+		LeftCard.LocalPosition = basePos + new Vector3( 0, 1f, 0 );
 		LeftCard.LocalRotation = Rotation.From( 130, 20, 180 + 20 );
 
 		SetAnimParameter( "right_hand_ik.position", new Vector3( 8, -6, 32 ) );
 		SetAnimParameter( "right_hand_ik.rotation", new Angles( 0, 45, 120 ).ToRotation() );
 
-		RightCard.LocalPosition = basePos + new Vector3( 0.1f, -0.5f, 0 );
-		RightCard.LocalRotation = Rotation.From( 130, -10, 180 );
+		RightCard.LocalPosition = basePos + new Vector3( 0.75f, -0.5f, 1.0f );
+		RightCard.LocalRotation = Rotation.From( 125, -10, 180 );
 
 		SetAnimParameter( "holdtype", 4 );
 		SetAnimParameter( "aim_body_weight", 0.5f );
