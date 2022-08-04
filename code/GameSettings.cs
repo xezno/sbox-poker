@@ -45,4 +45,9 @@ public class GameSettings : GameResource
 	public Vector3 RightCardOffset { get; set; }
 	[Category( "Cards" )]
 	public Rotation RightCardRotation { get; set; }
+
+	[Category( "Player Sitting" )]
+	public float SitHeight { get; set; }
+	[Category( "Player Sitting" )]
+	public float SitPose { get; set; }
 }

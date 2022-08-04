@@ -71,8 +71,8 @@ public partial class Player : AnimatedEntity
 
 		SetAnimParameter( "b_grounded", true );
 		SetAnimParameter( "sit", 1 );
-		SetAnimParameter( "sit_pose", 1 );
-		SetAnimParameter( "sit_offset_height", 10.0f );
+		SetAnimParameter( "sit_pose", GameSettings.Instance.SitPose );
+		SetAnimParameter( "sit_offset_height", GameSettings.Instance.SitHeight );
 
 		Vector3 aimPos = EyePosition + Rotation.Forward * 512;
 		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
