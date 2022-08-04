@@ -11,7 +11,7 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						name = "Material"
+						name = "Default"
 						remaps = 
 						[
 							{
@@ -21,6 +21,17 @@
 						]
 						use_global_default = false
 						global_default_material = ""
+					},
+					{
+						_class = "MaterialGroup"
+						name = "VIP"
+						remaps = 
+						[
+							{
+								from = "materials/chip/chip.vmat"
+								to = "materials/chip/chip_vip.vmat"
+							},
+						]
 					},
 				]
 			},
