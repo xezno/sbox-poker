@@ -110,7 +110,7 @@ public partial class PokerChatBox : Panel
 		Current?.AddEntry( null, message, avatar, className: "info" );
 	}
 
-	[ConCmd.Server( "say" )]
+	[ConCmd.Server( "poker_chat_say" )]
 	public static void Say( string message )
 	{
 		Assert.NotNull( ConsoleSystem.Caller );
