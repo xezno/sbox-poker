@@ -15,6 +15,12 @@ public partial class Player : AnimatedEntity
 	[Net] public CardEntity LeftCard { get; set; }
 	[Net] public CardEntity RightCard { get; set; }
 
+	public Camera Camera
+	{
+		get => Components.Get<Camera>();
+		set => Components.Add( value );
+	}
+
 	public Seat Seat => Entity.All.OfType<Seat>().First( x => x.Player == this );
 
 	public override void Spawn()
@@ -53,7 +59,7 @@ public partial class Player : AnimatedEntity
 
 	private void SetBodyGroups()
 	{
-		if ( IsClient && IsLocalPawn && GetCameraTarget() != CameraTargets.ThirdPerson )
+		if ( IsClient && IsLocalPawn && Camera.GetCameraTarget() != Camera.Targets.ThirdPerson )
 		{
 			SetBodyGroup( "Head", 1 );
 		}
@@ -117,5 +123,13 @@ public partial class Player : AnimatedEntity
 		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 400 ), "CL: Local Player",
 			$"Hand: {handStr}\n" +
 			$"Is my turn?: {player.IsMyTurn}" );
+	}
+
+	private void SetEyeTransforms()
+	{
+		EyeLocalPosition = Vector3.Up * 60f;
+		EyeLocalRotation = Input.Rotation;
+
+		Position = Position.WithZ( 3 );
 	}
 }
