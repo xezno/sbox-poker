@@ -94,10 +94,6 @@ public class Camera : CameraMode
 		Position = Position.LerpTo( targetPosition, 10f * Time.Delta );
 		Rotation = Rotation.LerpTo( targetRotation, 10f * Time.Delta );
 		FieldOfView = FieldOfView.LerpTo( targetFOV, 10f * Time.Delta );
-
-		DebugOverlay.ScreenText( $"Position: {Position}", 0 );
-		DebugOverlay.ScreenText( $"Rotation: {Rotation}", 1 );
-		DebugOverlay.ScreenText( $"FOV: {FieldOfView}", 2 );
 	}
 
 	public override void BuildInput( InputBuilder inputBuilder )

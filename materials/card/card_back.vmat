@@ -4,19 +4,21 @@ Layer0
 {
 	shader "complex.vfx"
 
+	//---- Normal ----
+	F_SCALE_NORMAL_MAP 1
+
 	//---- PBR ----
-	F_METALNESS_TEXTURE 1
 	F_SPECULAR 1
 
 	//---- Ambient Occlusion ----
 	g_flAmbientOcclusionDirectDiffuse "0.000"
 	g_flAmbientOcclusionDirectSpecular "0.000"
-	TextureAmbientOcclusion "materials/chip/chip_ao.png"
+	TextureAmbientOcclusion "materials/default/default_ao.tga"
 
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "materials/chip/vip/chip_vip_color.png"
+	TextureColor "materials/card/card_color.png"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
@@ -29,13 +31,14 @@ Layer0
 	g_flDirectionalLightmapStrength "1.000"
 
 	//---- Metalness ----
-	TextureMetalness "materials/chip/vip/chip_vip_metal.png"
+	g_flMetalness "0.000"
 
 	//---- Normal ----
-	TextureNormal "materials/chip/vip/chip_vip_normal.png"
+	g_flNormalMapScaleFactor "1.000"
+	TextureNormal "materials/card/card_normal.png"
 
 	//---- Roughness ----
-	TextureRoughness "materials/chip/vip/chip_vip_rough.png"
+	TextureRoughness "materials/card/card_rough.png"
 
 	//---- Texture Coordinates ----
 	g_nScaleTexCoordUByModelScaleAxis "0"

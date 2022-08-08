@@ -7,9 +7,6 @@ Layer0
 	//---- Color ----
 	F_TINT_MASK 1
 
-	//---- Detail Texture ----
-	F_DETAIL_TEXTURE 3 // Normals
-
 	//---- Normal ----
 	F_SCALE_NORMAL_MAP 1
 
@@ -26,16 +23,6 @@ Layer0
 	g_vColorTint "[0.501961 0.501961 0.501961 0.000000]"
 	TextureColor "[1.000000 1.000000 1.000000 0.000000]"
 	TextureTintMask "materials/chip/chip_mask.png"
-
-	//---- Detail Texture ----
-	g_flDetailBlendFactor "1.000"
-	g_flDetailBlendToFull "0.000"
-	g_flDetailNormalStrength "1.000"
-	g_flDetailTexCoordRotation "0.000"
-	g_vDetailTexCoordOffset "[0.000 0.000]"
-	g_vDetailTexCoordScale "[1.000 1.000]"
-	TextureDetailMask "materials/default/default_detailmask.tga"
-	TextureNormalDetail "materials/chip/chip_normal.png"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"

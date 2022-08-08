@@ -36,22 +36,6 @@
 				]
 			},
 			{
-				_class = "PhysicsShapeList"
-				children = 
-				[
-					{
-						_class = "PhysicsShapeCylinder"
-						name = "Collision"
-						parent_bone = ""
-						surface_prop = "default"
-						collision_tags = "solid"
-						radius = 2.0
-						point0 = [ 0.0, 0.0, -0.25 ]
-						point1 = [ 0.0, 0.0, 0.25 ]
-					},
-				]
-			},
-			{
 				_class = "RenderMeshList"
 				children = 
 				[
@@ -61,7 +45,7 @@
 						filename = "models/chip/chip.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 0.5
+						import_scale = 0.3937
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"

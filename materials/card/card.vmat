@@ -47,6 +47,11 @@ Layer0
 	g_vTexCoordScale "[1.000 1.000]"
 	g_vTexCoordScrollSpeed "[0.000 0.000]"
 
+	Attributes
+	{
+		isCardTarget "1"
+	}
+
 	DynamicParams
 	{
 		TextureColor "CardTexture"

@@ -34,8 +34,15 @@ public partial class Game : Sandbox.Game
 		var player = ConsoleSystem.Caller.Pawn as Player;
 		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 1024f ).Ignore( player ).Run();
 
-		var count = Rand.Int( 16, 32 );
-		ChipStackEntity.CreateStack( count, 100f, tr.EndPosition + 0.25f );
+		for ( float x = -8; x < 8; ++x )
+		{
+			for ( float y = -4; y < 4; ++y )
+			{
+				var count = Rand.Int( 16, 32 );
+				var value = Rand.FromArray( new[] { 50, 100, 250, 500 } );
+				ChipStackEntity.CreateStack( count, value, tr.EndPosition + new Vector3( x * 3, y * 3, 0 ) );
+			}
+		}
 	}
 
 	[ConCmd.Server( "poker_spawn_card" )]
@@ -68,6 +75,8 @@ public partial class Game : Sandbox.Game
 			clothingContainer.LoadRandom();
 		else
 			clothingContainer.LoadFromClient( client );
+
+		player.Camera = new Camera();
 
 		player.AvatarData = clothingContainer.Serialize();
 		clothingContainer.DressEntity( player );
