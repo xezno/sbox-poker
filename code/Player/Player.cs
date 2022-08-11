@@ -130,6 +130,6 @@ public partial class Player : AnimatedEntity
 		EyeLocalPosition = Vector3.Up * 60f;
 		EyeLocalRotation = Input.Rotation;
 
-		Position = Position.WithZ( 3 );
+		Position = Position.WithZ( 6 );
 	}
 }

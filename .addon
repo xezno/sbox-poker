@@ -7,14 +7,17 @@
   "HasAssets": true,
   "AssetsPath": "",
   "ResourcePaths": [
-    "/code/UI/*"
+    "/code/UI/*",
+    "/fonts/*",
+    "/ui/*",
+    "/ui/cards/*"
   ],
   "HasCode": true,
   "CodePath": "/code/",
   "RootNamespace": "Poker",
   "Metadata": {
     "MaxPlayers": 6,
-    "MinPlayers": 2,
+    "MinPlayers": 1,
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Tagged",
     "MapList": [
@@ -58,7 +61,7 @@
         }
       ]
     },
-    "GameCategory": "None",
+    "GameCategory": "Strategy",
     "ControlModes": {
       "Keyboard": true,
       "Gamepad": true

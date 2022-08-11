@@ -15,8 +15,8 @@ public enum Value
 	Nine,
 	Ten,
 
-	Ace,
 	Jack,
 	Queen,
-	King
+	King,
+	Ace,
 }

@@ -29,6 +29,12 @@ public class DebugMenu : Panel
 
 			buttons.Add.ButtonWithIcon( "Create Card (♠️A)", "style", "button",
 				() => ConsoleSystem.Run( "poker_spawn_card Spades Ace" ) );
+
+			buttons.Add.ButtonWithIcon( "Connect WS", "network_wifi", "button",
+				() => ConsoleSystem.Run( "poker_ws_connect" ) );
+
+			buttons.Add.ButtonWithIcon( "Disconnect WS", "network_wifi", "button",
+				() => ConsoleSystem.Run( "poker_ws_disconnect" ) );
 		}
 
 		BindClass( "visible", () => Input.Down( InputButton.View ) );

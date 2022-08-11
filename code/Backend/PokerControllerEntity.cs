@@ -15,14 +15,14 @@ public partial class PokerControllerEntity : Entity
 	[Net] public IList<Card> CommunityCards { get; set; }
 	[Net] public float Pot { get; set; }
 
-	private List<Player> Players => Entity.All.OfType<Player>().ToList();
+	private List<Poker.Player> Players => Entity.All.OfType<Poker.Player>().ToList();
 	private Deck Deck { get; set; }
 
-	private Player Dealer { get; set; }
-	private Player SmallBlind { get; set; }
-	private Player BigBlind { get; set; }
+	private Poker.Player Dealer { get; set; }
+	private Poker.Player SmallBlind { get; set; }
+	private Poker.Player BigBlind { get; set; }
 
-	private Queue<Player> PlayerTurnQueue { get; set; }
+	private Queue<Poker.Player> PlayerTurnQueue { get; set; }
 	private float BetThisRound { get; set; }
 
 	public override void Spawn()
@@ -214,7 +214,7 @@ public partial class PokerControllerEntity : Entity
 			Log.Warning( "Instance was null!" );
 
 		var caller = ConsoleSystem.Caller;
-		var player = caller.Pawn as Player;
+		var player = caller.Pawn as Poker.Player;
 
 		if ( player == null )
 			Log.Warning( "Player was null!" );
@@ -235,7 +235,7 @@ public partial class PokerControllerEntity : Entity
 			Log.Error( "Instance was null!" );
 
 		var caller = ConsoleSystem.Caller;
-		var player = caller.Pawn as Player;
+		var player = caller.Pawn as Poker.Player;
 
 		if ( player == null )
 			Log.Error( "Player was null!" );
@@ -269,7 +269,7 @@ public partial class PokerControllerEntity : Entity
 		}
 	}
 
-	public bool IsTurn( Player player )
+	public bool IsTurn( Poker.Player player )
 	{
 		return PlayerTurnQueue.Peek() == player;
 	}

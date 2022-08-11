@@ -92,4 +92,74 @@ public struct Card
 
 		return $"{suitString}{valueString}";
 	}
+
+	public Card FromShortString( string shortString )
+	{
+		string suitString = shortString.Substring( 0, 1 );
+		string valueString = shortString.Substring( 1 );
+
+		Suit suit = Suit.Spades;
+		Value value = Value.Two;
+
+		switch ( suitString )
+		{
+			case "♦️":
+				suit = Suit.Diamonds;
+				break;
+			case "♥️":
+				suit = Suit.Hearts;
+				break;
+			case "♠️":
+				suit = Suit.Spades;
+				break;
+			case "♣️":
+				suit = Suit.Clubs;
+				break;
+		}
+
+		switch ( valueString )
+		{
+			case "A":
+				value = Value.Ace;
+				break;
+			case "K":
+				value = Value.King;
+				break;
+			case "Q":
+				value = Value.Queen;
+				break;
+			case "J":
+				value = Value.Jack;
+				break;
+			case "10":
+				value = Value.Ten;
+				break;
+			case "9":
+				value = Value.Nine;
+				break;
+			case "8":
+				value = Value.Eight;
+				break;
+			case "7":
+				value = Value.Seven;
+				break;
+			case "6":
+				value = Value.Six;
+				break;
+			case "5":
+				value = Value.Five;
+				break;
+			case "4":
+				value = Value.Four;
+				break;
+			case "3":
+				value = Value.Three;
+				break;
+			case "2":
+				value = Value.Two;
+				break;
+		}
+
+		return new Card( suit, value );
+	}
 }
