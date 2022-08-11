@@ -15,6 +15,10 @@ public partial class Player : AnimatedEntity
 	[Net] public CardEntity LeftCard { get; set; }
 	[Net] public CardEntity RightCard { get; set; }
 
+	[Net, Local] public VR.HeadEntity Head { get; set; }
+	[Net, Local] public VR.LeftHand LeftHand { get; set; }
+	[Net, Local] public VR.RightHand RightHand { get; set; }
+
 	public Camera Camera
 	{
 		get => Components.Get<Camera>();
@@ -25,15 +29,20 @@ public partial class Player : AnimatedEntity
 
 	public override void Spawn()
 	{
-		SetModel( "models/citizen/citizen.vmdl" );
-
 		EnableAllCollisions = true;
 		EnableDrawing = true;
 
 		Money = 1000;
 
-		LeftCard = new CardEntity() { Owner = this, Parent = this };
-		RightCard = new CardEntity() { Owner = this, Parent = this };
+		Head = new() { Owner = this };
+		LeftHand = new() { Owner = this };
+		RightHand = new() { Owner = this };
+
+		LeftHand.Other = RightHand;
+		RightHand.Other = LeftHand;
+
+		LeftCard = new CardEntity() { Owner = this, Parent = RightHand };
+		RightCard = new CardEntity() { Owner = this, Parent = RightHand };
 	}
 
 	public override void Simulate( Client cl )
@@ -47,6 +56,10 @@ public partial class Player : AnimatedEntity
 
 		SetEyeTransforms();
 		SetAnimProperties();
+
+		LeftHand?.Simulate( cl );
+		RightHand?.Simulate( cl );
+		Head?.Simulate( cl );
 	}
 
 	public override void FrameSimulate( Client cl )
@@ -54,19 +67,11 @@ public partial class Player : AnimatedEntity
 		base.FrameSimulate( cl );
 
 		SetEyeTransforms();
-		SetBodyGroups();
-	}
+		SetAnimProperties();
 
-	private void SetBodyGroups()
-	{
-		if ( IsClient && IsLocalPawn && Camera.GetCameraTarget() != Camera.Targets.ThirdPerson )
-		{
-			SetBodyGroup( "Head", 1 );
-		}
-		else
-		{
-			SetBodyGroup( "Head", 0 );
-		}
+		LeftHand?.FrameSimulate( cl );
+		RightHand?.FrameSimulate( cl );
+		Head?.FrameSimulate( cl );
 	}
 
 	// TODO: This is all shit and temporary, we need a better way to position hands & cards
@@ -75,34 +80,18 @@ public partial class Player : AnimatedEntity
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		SetAnimParameter( "b_grounded", true );
-		SetAnimParameter( "sit", 1 );
-		SetAnimParameter( "sit_pose", GameSettings.Instance.SitPose );
-		SetAnimParameter( "sit_offset_height", GameSettings.Instance.SitHeight );
-
-		Vector3 aimPos = EyePosition + Rotation.Forward * 512;
-		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
-
-		SetAnimLookAt( "aim_eyes", lookPos );
-		SetAnimLookAt( "aim_head", lookPos );
-		SetAnimLookAt( "aim_body", aimPos );
-
-		SetAnimParameter( "b_vr", true );
-
-		SetAnimParameter( "left_hand_ik.position", GameSettings.Instance.LeftHandPosition );
-		SetAnimParameter( "left_hand_ik.rotation", GameSettings.Instance.LeftHandRotation );
+		var leftLocal = Transform.ToLocal( LeftHand.Transform );
+		var rightLocal = Transform.ToLocal( RightHand.Transform );
+		rightLocal = rightLocal.WithRotation( rightLocal.Rotation * Rotation.From( 0, 0, 180 ) );
 
 		LeftCard.LocalPosition = GameSettings.Instance.BaseHoldPosition + GameSettings.Instance.LeftCardOffset;
 		LeftCard.LocalRotation = GameSettings.Instance.LeftCardRotation;
 
-		SetAnimParameter( "right_hand_ik.position", GameSettings.Instance.RightHandPosition );
-		SetAnimParameter( "right_hand_ik.rotation", GameSettings.Instance.RightHandRotation );
-
 		RightCard.LocalPosition = GameSettings.Instance.BaseHoldPosition + GameSettings.Instance.RightCardOffset;
 		RightCard.LocalRotation = GameSettings.Instance.RightCardRotation;
 
-		SetAnimParameter( "holdtype", 4 );
-		SetAnimParameter( "aim_body_weight", 0.5f );
+		LeftCard.ResetInterpolation();
+		RightCard.ResetInterpolation();
 	}
 
 	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
@@ -127,8 +116,8 @@ public partial class Player : AnimatedEntity
 
 	private void SetEyeTransforms()
 	{
-		EyeLocalPosition = Vector3.Up * 60f;
-		EyeLocalRotation = Input.Rotation;
+		EyeLocalPosition = Input.VR.Head.Position;
+		EyeLocalRotation = Input.VR.Head.Rotation;
 
 		Position = Position.WithZ( 6 );
 	}

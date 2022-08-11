@@ -95,17 +95,17 @@ public partial class Game : Sandbox.Game
 		base.ClientJoined( client );
 
 		var player = new Player();
-		var clothingContainer = new ClothingContainer();
+		//var clothingContainer = new ClothingContainer();
 
-		if ( client.IsBot )
-			clothingContainer.LoadRandom();
-		else
-			clothingContainer.LoadFromClient( client );
+		//if ( client.IsBot )
+		//	clothingContainer.LoadRandom();
+		//else
+		//	clothingContainer.LoadFromClient( client );
 
-		player.Camera = new Camera();
+		//player.Camera = new Camera();
 
-		player.AvatarData = clothingContainer.Serialize();
-		clothingContainer.DressEntity( player );
+		//player.AvatarData = clothingContainer.Serialize();
+		//clothingContainer.DressEntity( player );
 
 		MoveToSeat( player );
 		client.Pawn = player;
