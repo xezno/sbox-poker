@@ -25,6 +25,12 @@ public partial class Player
 		public string? PlayerName { get; set; }
 		public string? PlayerId { get; set; }
 	}
+
+	public class PublicData
+	{
+		public int Money { get; set; }
+		public string Status { get; set; }
+	}
 }
 
 public class MoveData
@@ -48,5 +54,10 @@ public partial class Table
 	public class CreateResponseData
 	{
 		public bool Success { get; set; }
+	}
+
+	public class InfoUpdateData
+	{
+		public int Pot { get; set; }
 	}
 }

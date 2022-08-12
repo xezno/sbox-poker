@@ -6,7 +6,7 @@ namespace Poker;
 
 public partial class Player : AnimatedEntity
 {
-	[Net, Local] public Backend.Hand Hand { get; set; }
+	public Backend.Hand Hand { get; set; }
 	[Net] public string AvatarData { get; set; }
 	[Net] public float Money { get; set; }
 	[Net] public bool IsMyTurn { get; set; }
@@ -117,7 +117,7 @@ public partial class Player : AnimatedEntity
 			return;
 
 		string handStr = "No hand";
-		if ( player.Hand != null )
+		if ( player.Hand.Cards != null )
 			handStr = string.Join( ", ", player.Hand.Cards );
 
 		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 400 ), "CL: Local Player",

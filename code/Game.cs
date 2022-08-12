@@ -64,8 +64,27 @@ public partial class Game : Sandbox.Game
 		cardEntity.RpcSetCard( To.Everyone, backendCard );
 	}
 
-	[ConCmd.Client( "poker_ws_connect" )]
+	[ConCmd.Server( "poker_ws_connect" )]
 	public static void WebsocketConnect()
+	{
+		(Game.Current as Poker.Game).Connect( To.Everyone );
+	}
+
+	[ConCmd.Server( "poker_ws_disconnect" )]
+	public static void WebsocketDisconnect()
+	{
+		(Game.Current as Poker.Game).Disconnect( To.Everyone );
+	}
+
+	[ClientRpc]
+	public void Disconnect()
+	{
+		WebsocketConnection.Disconnect();
+		Log.Trace( "Disconnected WS connection" );
+	}
+
+	[ClientRpc]
+	public void Connect()
 	{
 		WebsocketConnection.Connect();
 
@@ -75,19 +94,6 @@ public partial class Game : Sandbox.Game
 		}
 
 		Log.Trace( "Created WS connection" );
-	}
-
-	[ConCmd.Client( "poker_ws_disconnect" )]
-	public static void WebsocketDisconnect()
-	{
-		WebsocketConnection.Disconnect();
-		Log.Trace( "Disconnected WS connection" );
-	}
-
-	[ClientRpc]
-	public void OnPlayerReady()
-	{
-		// WebsocketConnect();
 	}
 
 	public override void ClientJoined( Client client )
@@ -109,8 +115,6 @@ public partial class Game : Sandbox.Game
 
 		MoveToSeat( player );
 		client.Pawn = player;
-
-		OnPlayerReady( To.Single( client ) );
 	}
 
 	private void MoveToSeat( Player player )
