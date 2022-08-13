@@ -44,12 +44,9 @@ public class Deck
 		return cards;
 	}
 
-	public Hand CreateHand()
+	public List<Card> CreateHand()
 	{
-		var hand = new Hand();
 		var cards = Draw( 2 );
-		hand.Cards = cards.ToList();
-
-		return hand;
+		return cards.ToList();
 	}
 }

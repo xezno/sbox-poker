@@ -3,7 +3,7 @@
 .input-hint {
     align-items: center;
     padding: 4px;
-    flex-direction: row-reverse;
+    flex-direction: row;
 
     .glyph, .glyph-shadow {
         height: 100%;
@@ -29,9 +29,9 @@
 
     .action {
         font-size: $font-normal;
+        text-shadow: $text-shadow;
         color: white;
         text-align: right;
-        text-shadow: $text-shadow;
         flex-grow: 1;
     }
 

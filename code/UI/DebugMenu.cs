@@ -15,19 +15,19 @@ public class DebugMenu : Panel
 		var buttons = Add.Panel( "buttons" );
 
 		{
-			buttons.Add.ButtonWithIcon( "Game test macro", "precision_manufacturing", "button",
+			buttons.Add.ButtonWithIcon( "Game test macro", "vial", "button",
 				() => GameTestMacro() );
 
-			buttons.Add.ButtonWithIcon( "Force start", "sports_esports", "button",
+			buttons.Add.ButtonWithIcon( "Force start", "gamepad", "button",
 				() => ConsoleSystem.Run( "poker_start" ) );
 
-			buttons.Add.ButtonWithIcon( "Force next player", "refresh", "button",
+			buttons.Add.ButtonWithIcon( "Force next player", "angles-right", "button",
 				() => ConsoleSystem.Run( "poker_force_next_player" ) );
 
-			buttons.Add.ButtonWithIcon( "Create Chips", "attach_money", "button",
+			buttons.Add.ButtonWithIcon( "Create Chips", "coins", "button",
 				() => ConsoleSystem.Run( "poker_spawn_chip" ) );
 
-			buttons.Add.ButtonWithIcon( "Create Card (♠️A)", "style", "button",
+			buttons.Add.ButtonWithIcon( "Create Card (♠️A)", "wand-magic-sparkles", "button",
 				() => ConsoleSystem.Run( "poker_spawn_card Spades Ace" ) );
 		}
 

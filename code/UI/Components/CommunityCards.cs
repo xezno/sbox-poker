@@ -40,6 +40,7 @@ internal class CommunityCards : Panel
 				cardPanel.SetCard( card.Suit, card.Value );
 			}
 		}
+
 		timeSinceLastRefresh = 0;
 	}
 }

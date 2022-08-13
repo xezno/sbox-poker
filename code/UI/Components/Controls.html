@@ -5,7 +5,14 @@
     <div @ref="PlayControlsPanel" class="play-controls">
         <inputhint btn="fold">Fold</inputhint>
         <inputhint btn="adjust_amount">Raise / Lower Amount</inputhint>
-        <inputhint @ref="CallHint" btn="submit">Call ($100)</inputhint>
+
+        <row>
+            <text @ref="ActionLabel">Action</text>
+            <text>(</text>
+            <money @ref="ValueLabel">Test</money>
+            <text>)</text>
+            <inputhint @ref="CallHint" btn="submit"></inputhint>
+        </row>
     </div>
     
     <hr />

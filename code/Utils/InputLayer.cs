@@ -120,6 +120,7 @@ public class InputLayer
 		new ActionBool( "submit", InputButton.Jump ),
 		new ActionBool( "your_cards", InputButton.SecondaryAttack ),
 		new ActionBool( "community_cards", InputButton.PrimaryAttack ),
+		new ActionBool( "list_players", InputButton.Score )
 	};
 
 	public static List<InputAction> PCActions => new()
@@ -129,6 +130,7 @@ public class InputLayer
 		new ActionBool( "submit", InputButton.Jump ),
 		new ActionBool( "your_cards", InputButton.Run ),
 		new ActionBool( "community_cards", InputButton.Duck ),
+		new ActionBool( "list_players", InputButton.Score )
 	};
 
 	public static List<InputAction> Actions

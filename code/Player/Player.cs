@@ -1,12 +1,14 @@
 ﻿using Sandbox;
 using SandboxEditor;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Poker;
 
 public partial class Player : AnimatedEntity
 {
-	[Net, Local] public Backend.Hand Hand { get; set; }
+	public List<Backend.Card> Hand { get; set; }
+
 	[Net] public string AvatarData { get; set; }
 	[Net] public float Money { get; set; }
 	[Net] public bool IsMyTurn { get; set; }
@@ -118,7 +120,7 @@ public partial class Player : AnimatedEntity
 
 		string handStr = "No hand";
 		if ( player.Hand != null )
-			handStr = string.Join( ", ", player.Hand.Cards );
+			handStr = string.Join( ", ", player.Hand );
 
 		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 400 ), "CL: Local Player",
 			$"Hand: {handStr}\n" +
@@ -130,6 +132,12 @@ public partial class Player : AnimatedEntity
 		EyeLocalPosition = Vector3.Up * 60f;
 		EyeLocalRotation = Input.Rotation;
 
-		Position = Position.WithZ( 3 );
+		Position = Position.WithZ( 6 );
+	}
+
+	[ClientRpc]
+	public void RpcSetHand( Backend.Card card0, Backend.Card card1 ) // THIS IS SHIT!
+	{
+		Hand = new() { card0, card1 };
 	}
 }

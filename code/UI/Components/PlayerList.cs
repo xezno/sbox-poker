@@ -57,7 +57,7 @@ public class PlayerList : Panel
 
 		private Avatar Avatar { get; set; }
 
-		private Label MoneyLabel { get; set; }
+		private Money MoneyLabel { get; set; }
 		private Label StatusLabel { get; set; }
 
 		public PlayerEntry( Client client )
@@ -66,9 +66,11 @@ public class PlayerList : Panel
 			Avatar.Client = client;
 
 			var right = Add.Panel( "right" );
-			MoneyLabel = right.Add.Label( "MONEY", "money" );
+			MoneyLabel = right.Add.Money( "MONEY", "money" );
 			StatusLabel = right.Add.Label( "STATUS", "status" );
 			StatusLabel.BindClass( "my-turn", () => Player.IsMyTurn );
+
+			Add.Label( client.Name, "player-name" );
 
 			SetClass( "player", true );
 		}
@@ -77,8 +79,14 @@ public class PlayerList : Panel
 		{
 			base.Tick();
 
-			MoneyLabel.Text = $"${Player.Money.CeilToInt()}";
-			StatusLabel.Text = $"High Card";
+			MoneyLabel.Text = $"{Player.Money.CeilToInt()}";
+
+			if ( Player.Hand == null )
+				StatusLabel.Text = $"🤔";
+			else
+				StatusLabel.Text = $"{Backend.PokerControllerEntity.Instance.RankPlayerHand( Player, out _ ).ToDisplayString()}";
+
+			SetClass( "expand", InputLayer.Evaluate( "list_players" ) > 0.5f );
 		}
 	}
 }

@@ -8,19 +8,21 @@
 }
 
 .pot {
-    width: 250px;
     align-items: center;
     justify-content: flex-end;
     font-size: $font-normal;
     text-shadow: $text-shadow;
 
+    iconpanel, label {
+        font-size: $font-big;
+    }
+
     .name {
     }
 
     .value {
-        width: 100px;
+        margin-left: 10px;
         text-align: right;
         font-weight: 800;
-        font-size: $font-big;
     }
 }

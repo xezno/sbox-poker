@@ -16,7 +16,8 @@ internal class Controls : Panel
 	private float rawBet;
 	private int roundedBet;
 
-	public InputHint CallHint { get; set; }
+	public Label ActionLabel { get; set; }
+	public Money ValueLabel { get; set; }
 	public Panel PlayControlsPanel { get; set; }
 
 	private float incrementRate => 50f;
@@ -32,7 +33,10 @@ internal class Controls : Panel
 		PlayControlsPanel.SetClass( "visible", player.IsMyTurn );
 
 		if ( !player.IsMyTurn )
+		{
+			rawBet = 0;
 			return;
+		}
 
 		ProcessInputs( out var submitPressed, out var foldPressed, out var betDelta );
 		ProcessSubmitInput( submitPressed );
@@ -59,11 +63,12 @@ internal class Controls : Panel
 		if ( MathF.Abs( betDelta ) > 0.5f )
 			rawBet += betDelta * Time.Delta * incrementRate;
 
-		rawBet = rawBet.Clamp( 0, 5000 );
+		rawBet = rawBet.Clamp( PokerControllerEntity.Instance.MinimumBet, 5000 );
 		roundedBet = snapRate * (rawBet.CeilToInt() / snapRate);
 
-		var action = PokerUtils.GetMoveName( snapRate, roundedBet );
-		CallHint.ActionLabel.Text = $"{action} (${roundedBet})";
+		var action = PokerUtils.GetMoveName( roundedBet );
+		ActionLabel.Text = $"{action}";
+		ValueLabel.Text = $"{roundedBet}";
 	}
 
 	private void ProcessInputs( out bool submitPressed, out bool foldPressed, out float betDelta )

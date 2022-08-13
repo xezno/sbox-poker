@@ -22,6 +22,11 @@ text, label {
     font-size: $font-normal;
 }
 
+icon, iconpanel {
+    font-family: fa6-solid;
+    color: white;
+}
+
 hr {
     flex-grow: 1;
     padding: 4px 0;

@@ -68,7 +68,6 @@ public partial class Game : Sandbox.Game
 	{
 		base.ClientJoined( client );
 
-		var player = new Player();
 		var clothingContainer = new ClothingContainer();
 
 		if ( client.IsBot )
@@ -76,12 +75,15 @@ public partial class Game : Sandbox.Game
 		else
 			clothingContainer.LoadFromClient( client );
 
-		player.Camera = new Camera();
-
-		player.AvatarData = clothingContainer.Serialize();
-		clothingContainer.DressEntity( player );
+		var player = new Player
+		{
+			Camera = new Camera(),
+			AvatarData = clothingContainer.Serialize()
+		};
 
 		MoveToSeat( player );
+		clothingContainer.DressEntity( player );
+
 		client.Pawn = player;
 	}
 
@@ -104,8 +106,10 @@ public partial class Game : Sandbox.Game
 
 	public override void RenderHud()
 	{
-		return;
 		base.RenderHud();
+
+		if ( InputLayer.Evaluate( "list_players" ) < 0.5f )
+			return;
 
 		//
 		// scale the screen using a matrix, so the scale math doesn't invade everywhere
@@ -119,20 +123,22 @@ public partial class Game : Sandbox.Game
 		using ( Render.Draw2D.MatrixScope( matrix ) )
 		{
 			Render.Draw2D.Color = Color.White;
-			Render.Draw2D.FontFamily = "Roboto";
+			Render.Draw2D.FontFamily = "Ibarra Real Nova";
+			Render.Draw2D.FontSize = 32;
+			Render.Draw2D.FontWeight = 800;
 
-			foreach ( var entity in Entity.All )
+			foreach ( var entity in Entity.All.OfType<Player>() )
 			{
-				if ( entity is Client )
+				if ( entity.IsLocalPawn )
 					continue;
 
-				var screenPos = (Vector2)entity.Transform.Position.ToScreen();
+				var worldPos = entity.EyePosition + Vector3.Up * 8f;
+				var screenPos = (Vector2)worldPos.ToScreen();
 				var rect = new Rect( screenPos * screenSize, 1024f );
-				var textRect = Render.Draw2D.MeasureText( rect, entity.Name );
+				var textRect = Render.Draw2D.MeasureText( rect, entity.Client.Name );
 				var drawRect = new Rect( textRect.Position - textRect.Size / 2.0f, textRect.Size );
-				var displayInfo = DisplayInfo.For( entity );
 
-				Render.Draw2D.DrawText( drawRect, displayInfo.Name, TextFlag.Center );
+				Render.Draw2D.DrawText( drawRect, entity.Client.Name, TextFlag.Center );
 			}
 		}
 	}

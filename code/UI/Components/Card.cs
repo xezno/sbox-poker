@@ -43,8 +43,6 @@ public class Card : Panel
 
 	public void SetCard( Suit suit, Value value )
 	{
-		Log.Trace( $"Set card to {value} of {suit}" );
-
 		var card = new Backend.Card( suit, value );
 		Style.BackgroundImage = Texture.Load( FileSystem.Mounted, card.GetFilename() );
 	}

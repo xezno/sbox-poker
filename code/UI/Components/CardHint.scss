@@ -1,0 +1,15 @@
+﻿@import "/UI/_Theme.scss";
+
+.card-hint {
+    position: absolute;
+    bottom: $safe-area-y;
+    left: 50%;
+    transform: translate( -50% );
+    text-shadow: $text-shadow;
+    opacity: 0;
+    transition: opacity 150ms ease;
+
+    &.visible {
+        opacity: 1;
+    }
+}

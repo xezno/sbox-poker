@@ -11,8 +11,23 @@
     flex-direction: column;
     opacity: 0;
     transition: opacity 150ms ease;
+    font-size: $font-normal;
+    text-shadow: $text-shadow;
 
     &.visible {
         opacity: 1;
+    }
+}
+
+row {
+    align-items: center;
+    justify-content: flex-end;
+
+    text:first-child {
+        margin-right: 8px;
+    }
+
+    text:nth-child(4) {
+        margin-right: -4px;
     }
 }

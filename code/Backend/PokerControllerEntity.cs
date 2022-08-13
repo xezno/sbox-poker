@@ -3,6 +3,9 @@ using Sandbox;
 using SandboxEditor;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Reflection.Metadata;
+using System.Threading.Tasks;
 
 namespace Poker.Backend;
 
@@ -14,6 +17,7 @@ public partial class PokerControllerEntity : Entity
 	public static PokerControllerEntity Instance { get; set; }
 	[Net] public IList<Card> CommunityCards { get; set; }
 	[Net] public float Pot { get; set; }
+	[Net] public float MinimumBet { get; set; }
 
 	private List<Player> Players => Entity.All.OfType<Player>().ToList();
 	private Deck Deck { get; set; }
@@ -23,7 +27,6 @@ public partial class PokerControllerEntity : Entity
 	private Player BigBlind { get; set; }
 
 	private Queue<Player> PlayerTurnQueue { get; set; }
-	private float BetThisRound { get; set; }
 
 	public override void Spawn()
 	{
@@ -58,6 +61,7 @@ public partial class PokerControllerEntity : Entity
 		// Instantiate everything
 		Deck = new();
 		PlayerTurnQueue = new();
+		CommunityCards.Clear();
 		Round = Rounds.Preflop;
 
 		// Determine dealer
@@ -82,12 +86,18 @@ public partial class PokerControllerEntity : Entity
 			BigBlind = Players[2];
 		}
 
+		float blind = 50;
+		Bet( blind * 0.5f, SmallBlind );
+		Bet( blind, BigBlind );
+
 		// Give each player two hole cards
 		Players.ForEach( player =>
 		{
 			player.Hand = Deck.CreateHand();
-			player.LeftCard.RpcSetCard( To.Single( player ), player.Hand.Cards[0] );
-			player.RightCard.RpcSetCard( To.Single( player ), player.Hand.Cards[1] );
+			player.RpcSetHand( To.Single( player ), player.Hand[0], player.Hand[1] );
+
+			player.LeftCard.RpcSetCard( To.Single( player ), player.Hand[0] );
+			player.RightCard.RpcSetCard( To.Single( player ), player.Hand[1] );
 		} );
 
 		// Delete chips
@@ -142,10 +152,12 @@ public partial class PokerControllerEntity : Entity
 			case Rounds.Preflop:
 				break;
 			case Rounds.Flop:
+				MinimumBet = 0;
 				AddCommunityCards( 3 );
 				break;
 			case Rounds.Turn:
 			case Rounds.River:
+				MinimumBet = 0;
 				AddCommunityCards( 1 );
 				break;
 		}
@@ -156,16 +168,28 @@ public partial class PokerControllerEntity : Entity
 				PlayerTurnQueue.Enqueue( player );
 		} );
 
-		if ( Round == Rounds.Showdown || PlayerTurnQueue.Count <= 1 )
+		if ( Round >= Rounds.Showdown || PlayerTurnQueue.Count <= 1 )
 		{
 			Log.Info( "Game over" );
+
+			var winner = FindWinner();
+			winner.Money += Pot;
+			Pot = 0;
+
 			Run();
+
 			return;
 		}
 	}
 
 	private void MoveToNextPlayer()
 	{
+		Players.ForEach( player =>
+		{
+			if ( player.Money <= 0 )
+				player.Client.Kick();
+		} );
+
 		PlayerTurnQueue.Dequeue();
 
 		if ( PlayerTurnQueue.Count == 0 )
@@ -180,6 +204,18 @@ public partial class PokerControllerEntity : Entity
 		{
 			MoveToNextPlayer();
 		}
+
+		if ( PlayerTurnQueue.Peek().Client.IsBot )
+		{
+			_ = BotThink();
+		}
+	}
+
+	private async Task BotThink()
+	{
+		await Task.Delay( 1000 );
+		Bet( MinimumBet, PlayerTurnQueue.Peek() );
+		MoveToNextPlayer();
 	}
 
 	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
@@ -220,7 +256,8 @@ public partial class PokerControllerEntity : Entity
 			Log.Warning( "Player was null!" );
 
 		Log.Trace( $"Forced to next player" );
-		PokerChatBox.AddInformation( To.Everyone, $"{instance.PlayerTurnQueue.Peek().Client.Name} took too long!" );
+
+		instance.Bet( instance.MinimumBet, instance.PlayerTurnQueue.Peek() );
 		instance.MoveToNextPlayer();
 	}
 
@@ -248,29 +285,78 @@ public partial class PokerControllerEntity : Entity
 			{
 				case Move.Fold:
 					{
-						instance.MoveToNextPlayer();
-						PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} folds" );
-
-						player.HasFolded = true;
-
+						instance.Fold( player );
 						break;
 					}
 				case Move.Bet:
 					{
-						instance.MoveToNextPlayer();
-						instance.BetThisRound += parameter;
-						instance.Pot += parameter;
-						player.Money -= parameter;
-						PokerChatBox.AddInformation( To.Everyone, $"{caller.Name} bets ${parameter}" );
-
+						instance.Bet( parameter, player );
 						break;
 					}
 			}
+
+			instance.MoveToNextPlayer();
 		}
+	}
+
+	private void Fold( Player player )
+	{
+		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} folds" );
+
+		player.HasFolded = true;
+	}
+
+	private void Bet( float parameter, Player player )
+	{
+		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets", parameter );
+
+		if ( MinimumBet < parameter )
+			MinimumBet = parameter;
+
+		Pot += parameter;
+		player.Money -= parameter;
 	}
 
 	public bool IsTurn( Player player )
 	{
 		return PlayerTurnQueue.Peek() == player;
+	}
+
+	public HandRank RankPlayerHand( Player player, out int score )
+	{
+		// For each 5 card combination in (communitycards + playerHand) calculate the rank
+
+		var playerHand = player.Hand;
+		var cards = playerHand.ToArray().Concat( CommunityCards ).ToArray();
+
+		return PokerUtils.RankPokerHand( cards, out score );
+	}
+
+	public Player FindWinner()
+	{
+		var rankedPlayers = Players.Select( x => new { player = x, rank = RankPlayerHand( x, out var score ), score } );
+		var groupedPlayers = rankedPlayers.GroupBy( x => x.rank );
+		var orderedGroupedPlayers = groupedPlayers.OrderBy( x => x.Key );
+
+		var bestPlayers = orderedGroupedPlayers.First();
+		Log.Trace( "Best players: " + string.Join( ", ", bestPlayers.Select( x => x.player + " - " + x.rank + " - " + x.score ) ) );
+
+		Player winner;
+
+		if ( bestPlayers.Count() > 1 )
+		{
+			// Find highest score
+			var orderedBestPlayers = bestPlayers.OrderBy( x => x.score );
+			winner = orderedBestPlayers.First().player;
+		}
+		else
+		{
+			// One winner
+			winner = bestPlayers.First().player;
+		}
+
+		EventFeed.AddEvent( To.Everyone, $"{winner.Client.Name} wins" );
+
+		return winner;
 	}
 }
