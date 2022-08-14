@@ -81,13 +81,13 @@ public partial class Game : Sandbox.Game
 			AvatarData = clothingContainer.Serialize()
 		};
 
-		MoveToSeat( player );
 		clothingContainer.DressEntity( player );
 
 		client.Pawn = player;
+		MoveToSeat( client );
 	}
 
-	private void MoveToSeat( Player player )
+	private void MoveToSeat( Client client )
 	{
 		var orderedSeats = Entity.All.OfType<Seat>().OrderBy( x => x.SeatNumber );
 		var emptySeats = orderedSeats.Where( x => !x.IsOccupied );
@@ -97,11 +97,11 @@ public partial class Game : Sandbox.Game
 		if ( firstAvailableSeat == null )
 		{
 			Log.Error( "Wasn't able to seat player, kicking them" );
-			player.Client.Kick();
+			client.Kick(); // TODO: Move to spectators
 			return;
 		}
 
-		firstAvailableSeat.SetOccupiedBy( player );
+		firstAvailableSeat.SetOccupiedBy( client.Pawn as Player );
 	}
 
 	public override void RenderHud()

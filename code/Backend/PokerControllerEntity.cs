@@ -87,6 +87,21 @@ public partial class PokerControllerEntity : Entity
 		}
 
 		float blind = 50;
+
+		// Check if blinds can afford it
+		if ( SmallBlind.Money < blind * 0.5f )
+		{
+			SmallBlind.Client.Kick(); // TODO: Move to spectators
+			Run();
+		}
+
+		if ( BigBlind.Money < blind )
+		{
+			BigBlind.Client.Kick(); // TODO: Move to spectators
+			Run();
+		}
+
+		// Take blinds
 		Bet( blind * 0.5f, SmallBlind );
 		Bet( blind, BigBlind );
 
@@ -136,7 +151,7 @@ public partial class PokerControllerEntity : Entity
 		Players.ForEach( player =>
 		{
 			if ( player.Money <= 0 )
-				player.Client.Kick();
+				player.Client.Kick(); // TODO: Move to spectators
 		} );
 
 		// Start pre-flop
