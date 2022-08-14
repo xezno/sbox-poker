@@ -132,6 +132,13 @@ public partial class PokerControllerEntity : Entity
 			}
 		} );
 
+		// Kick broke people
+		Players.ForEach( player =>
+		{
+			if ( player.Money <= 0 )
+				player.Client.Kick();
+		} );
+
 		// Start pre-flop
 		StartNextRound();
 	}
@@ -190,12 +197,6 @@ public partial class PokerControllerEntity : Entity
 
 	private void MoveToNextPlayer()
 	{
-		Players.ForEach( player =>
-		{
-			if ( player.Money < 0 )
-				player.Client.Kick();
-		} );
-
 		PlayerTurnQueue.Dequeue();
 
 		if ( PlayerTurnQueue.Count == 0 )
