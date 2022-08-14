@@ -5,6 +5,25 @@
     padding: 4px;
     flex-direction: row;
 
+    &.is-hold {
+
+        .progress-indicator {
+            position: absolute;
+            right: -2px;
+            width: 42px;
+            aspect-ratio: 1;
+            border-radius: 100%;
+            z-index: -1;
+            background-color: rgba( white, 0.5 );
+        }
+
+
+        &.has-progress {
+            .progress-indicator {
+            }
+        }
+    }
+
     .glyph, .glyph-shadow {
         height: 100%;
         border-radius: 10px;

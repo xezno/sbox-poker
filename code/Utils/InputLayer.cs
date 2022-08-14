@@ -26,6 +26,42 @@ public class InputAction
 	}
 }
 
+public class ActionHold : ActionBool
+{
+	private TimeSince timeSinceHeld;
+
+	const float ProcessAfter = 1.5f; // Seconds
+
+	public float Progress => (!Input.Down( Button ) ? 0.0f : timeSinceHeld / ProcessAfter);
+
+	public ActionHold( string name, InputButton button ) : base( name, button )
+	{
+		Event.Register( this );
+	}
+
+	~ActionHold()
+	{
+		Event.Unregister( this );
+	}
+
+	public override string ToString()
+	{
+		return $"Hold {Name}: {Button} ({Evaluate()}), {Progress}s";
+	}
+
+	public override float Evaluate()
+	{
+		return (Progress >= 1 && Input.Down( Button )) ? 1.0f : 0.0f;
+	}
+
+	[Event.Frame]
+	public void OnFrame()
+	{
+		if ( Input.Pressed( Button ) || Input.Released( Button ) )
+			timeSinceHeld = 0;
+	}
+}
+
 public class ActionBool : InputAction
 {
 	public InputButton Button { get; set; }
@@ -113,24 +149,26 @@ public class ActionAxis : InputAction
 
 public class InputLayer
 {
-	public static List<InputAction> ControllerActions => new()
+	public static List<InputAction> ControllerActions = new()
 	{
-		new ActionBool( "fold", InputButton.Use ),
+		new ActionHold( "fold", InputButton.Use ),
 		new ActionAxis( "adjust_amount", () => Input.Forward, InputButton.Run ),
-		new ActionBool( "submit", InputButton.Jump ),
+		new ActionHold( "submit", InputButton.Jump ),
 		new ActionBool( "your_cards", InputButton.SecondaryAttack ),
 		new ActionBool( "community_cards", InputButton.PrimaryAttack ),
-		new ActionBool( "list_players", InputButton.Score )
+		new ActionBool( "list_players", InputButton.Score ),
+		new ActionHold( "all_in", InputButton.Duck )
 	};
 
-	public static List<InputAction> PCActions => new()
+	public static List<InputAction> PCActions = new()
 	{
-		new ActionBool( "fold", InputButton.Flashlight ),
+		new ActionHold( "fold", InputButton.Flashlight ),
 		new Action1D( "adjust_amount", InputButton.Forward, InputButton.Back ),
-		new ActionBool( "submit", InputButton.Jump ),
+		new ActionHold( "submit", InputButton.Jump ),
 		new ActionBool( "your_cards", InputButton.Run ),
 		new ActionBool( "community_cards", InputButton.Duck ),
-		new ActionBool( "list_players", InputButton.Score )
+		new ActionBool( "list_players", InputButton.Score ),
+		new ActionHold( "all_in", InputButton.Use )
 	};
 
 	public static List<InputAction> Actions

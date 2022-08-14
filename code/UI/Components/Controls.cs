@@ -13,6 +13,7 @@ internal class Controls : Panel
 	//
 	private bool submitPressedLastFrame;
 	private bool foldPressedLastFrame;
+	private bool allInPressedLastFrame;
 	private float rawBet;
 	private int roundedBet;
 
@@ -38,12 +39,22 @@ internal class Controls : Panel
 			return;
 		}
 
-		ProcessInputs( out var submitPressed, out var foldPressed, out var betDelta );
+		ProcessInputs( out var submitPressed, out var foldPressed, out var betDelta, out var allInPressed );
 		ProcessSubmitInput( submitPressed );
 		ProcessFoldInput( foldPressed );
 		ProcessBetInput( betDelta );
+		ProcessAllInInput( allInPressed );
 
 		submitPressedLastFrame = submitPressed;
+	}
+
+	private void ProcessAllInInput( bool allInPressed )
+	{
+		if ( Local.Pawn is not Player player )
+			return;
+
+		if ( !allInPressedLastFrame && allInPressed )
+			PokerControllerEntity.SubmitMove( Move.Bet, player.Money );
 	}
 
 	private void ProcessSubmitInput( bool submitPressed )
@@ -71,10 +82,11 @@ internal class Controls : Panel
 		ValueLabel.Text = $"{roundedBet}";
 	}
 
-	private void ProcessInputs( out bool submitPressed, out bool foldPressed, out float betDelta )
+	private void ProcessInputs( out bool submitPressed, out bool foldPressed, out float betDelta, out bool allInPressed )
 	{
 		submitPressed = InputLayer.Evaluate( "submit" ) > 0.5f;
 		foldPressed = InputLayer.Evaluate( "fold" ) > 0.5f;
 		betDelta = InputLayer.Evaluate( "adjust_amount" );
+		allInPressed = InputLayer.Evaluate( "all_in" ) > 0.5f;
 	}
 }

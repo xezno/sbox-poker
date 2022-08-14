@@ -100,6 +100,12 @@ public partial class PokerControllerEntity : Entity
 			player.RightCard.RpcSetCard( To.Single( player ), player.Hand[1] );
 		} );
 
+		// Reset players
+		Players.ForEach( player =>
+		{
+			player.HasFolded = false;
+		} );
+
 		// Delete chips
 		Entity.All.OfType<ChipEntity>().ToList().ForEach( x => x.Delete() );
 		Entity.All.OfType<ChipStackEntity>().ToList().ForEach( x => x.Delete() );
@@ -186,7 +192,7 @@ public partial class PokerControllerEntity : Entity
 	{
 		Players.ForEach( player =>
 		{
-			if ( player.Money <= 0 )
+			if ( player.Money < 0 )
 				player.Client.Kick();
 		} );
 
@@ -308,6 +314,8 @@ public partial class PokerControllerEntity : Entity
 
 	private void Bet( float parameter, Player player )
 	{
+		parameter = parameter.Clamp( 0, player.Money );
+
 		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets", parameter );
 
 		if ( MinimumBet < parameter )

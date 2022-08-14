@@ -13,6 +13,7 @@ public partial class InputHint : Panel
 	public string Name { get; set; }
 	public string Text { get; set; }
 	public Label ActionLabel { get; set; }
+	public Panel ProgressIndicatorPanel { get; set; }
 
 	public InputHint()
 	{
@@ -55,6 +56,17 @@ public partial class InputHint : Panel
 		var button = action.GetDisplayButton();
 
 		SetClass( "active", MathF.Abs( action.Evaluate() ) > 0.5f );
+
+		if ( action is ActionHold holdAction )
+		{
+			SetClass( "is-hold", true );
+			SetClass( "has-progress", holdAction.Progress > 0.001f );
+			SetClass( "active", holdAction.Progress > 0.001f );
+
+			float progress = (holdAction.Progress * 100f).CeilToInt().Clamp( 0, 99 );
+
+			ProgressIndicatorPanel.Style.Set( $"background: conic-gradient( white 0%, white {progress}%, transparent {progress}%, transparent 100% )" );
+		}
 
 		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, GlyphStyle.Knockout.WithNeutralColorABXY() );
 
