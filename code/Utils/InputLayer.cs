@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace Poker;
 
-public class InputAction
+public class BaseInputAction
 {
 	public string Name { get; set; }
 
-	public InputAction( string name )
+	public BaseInputAction( string name )
 	{
 		Name = name;
 	}
@@ -26,7 +26,7 @@ public class InputAction
 	}
 }
 
-public class ActionHold : ActionBool
+public class HoldAction : BoolAction
 {
 	private TimeSince timeSinceHeld;
 
@@ -34,12 +34,12 @@ public class ActionHold : ActionBool
 
 	public float Progress => (!Input.Down( Button ) ? 0.0f : timeSinceHeld / ProcessAfter);
 
-	public ActionHold( string name, InputButton button ) : base( name, button )
+	public HoldAction( string name, InputButton button ) : base( name, button )
 	{
 		Event.Register( this );
 	}
 
-	~ActionHold()
+	~HoldAction()
 	{
 		Event.Unregister( this );
 	}
@@ -62,11 +62,11 @@ public class ActionHold : ActionBool
 	}
 }
 
-public class ActionBool : InputAction
+public class BoolAction : BaseInputAction
 {
 	public InputButton Button { get; set; }
 
-	public ActionBool( string name, InputButton button ) : base( name )
+	public BoolAction( string name, InputButton button ) : base( name )
 	{
 		Button = button;
 	}
@@ -87,12 +87,12 @@ public class ActionBool : InputAction
 	}
 }
 
-public class Action1D : InputAction
+public class FloatAction : BaseInputAction
 {
 	public InputButton PositiveButton { get; set; }
 	public InputButton NegativeButton { get; set; }
 
-	public Action1D( string name, InputButton positiveButton, InputButton negativeButton ) : base( name )
+	public FloatAction( string name, InputButton positiveButton, InputButton negativeButton ) : base( name )
 	{
 		PositiveButton = positiveButton;
 		NegativeButton = negativeButton;
@@ -120,12 +120,12 @@ public class Action1D : InputAction
 	}
 }
 
-public class ActionAxis : InputAction
+public class AxisAction : BaseInputAction
 {
 	public Func<float> Function { get; set; }
 	public InputButton DisplayButton { get; set; }
 
-	public ActionAxis( string name, Func<float> function, InputButton displayButton ) : base( name )
+	public AxisAction( string name, Func<float> function, InputButton displayButton ) : base( name )
 	{
 		Function = function;
 		DisplayButton = displayButton;
@@ -149,29 +149,29 @@ public class ActionAxis : InputAction
 
 public class InputLayer
 {
-	public static List<InputAction> ControllerActions = new()
+	public static List<BaseInputAction> ControllerActions = new()
 	{
-		new ActionHold( "fold", InputButton.Use ),
-		new ActionAxis( "adjust_amount", () => Input.Forward, InputButton.Run ),
-		new ActionHold( "submit", InputButton.Jump ),
-		new ActionBool( "your_cards", InputButton.SecondaryAttack ),
-		new ActionBool( "community_cards", InputButton.PrimaryAttack ),
-		new ActionBool( "list_players", InputButton.Score ),
-		new ActionHold( "all_in", InputButton.Duck )
+		new HoldAction( "fold", InputButton.Use ),
+		new AxisAction( "adjust_amount", () => Input.Forward, InputButton.Run ),
+		new HoldAction( "submit", InputButton.Jump ),
+		new BoolAction( "your_cards", InputButton.SecondaryAttack ),
+		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
+		new BoolAction( "list_players", InputButton.Score ),
+		new HoldAction( "all_in", InputButton.Duck )
 	};
 
-	public static List<InputAction> PCActions = new()
+	public static List<BaseInputAction> PCActions = new()
 	{
-		new ActionHold( "fold", InputButton.Flashlight ),
-		new Action1D( "adjust_amount", InputButton.Forward, InputButton.Back ),
-		new ActionHold( "submit", InputButton.Jump ),
-		new ActionBool( "your_cards", InputButton.Run ),
-		new ActionBool( "community_cards", InputButton.Duck ),
-		new ActionBool( "list_players", InputButton.Score ),
-		new ActionHold( "all_in", InputButton.Use )
+		new HoldAction( "fold", InputButton.Flashlight ),
+		new FloatAction( "adjust_amount", InputButton.Forward, InputButton.Back ),
+		new HoldAction( "submit", InputButton.Jump ),
+		new BoolAction( "your_cards", InputButton.Run ),
+		new BoolAction( "community_cards", InputButton.Duck ),
+		new BoolAction( "list_players", InputButton.Score ),
+		new HoldAction( "all_in", InputButton.Use )
 	};
 
-	public static List<InputAction> Actions
+	public static List<BaseInputAction> Actions
 	{
 		get
 		{
@@ -182,7 +182,7 @@ public class InputLayer
 		}
 	}
 
-	public static InputAction GetAction( string name )
+	public static BaseInputAction GetAction( string name )
 	{
 		return Actions.FirstOrDefault( x => x.Name == name );
 	}

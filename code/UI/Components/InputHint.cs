@@ -57,7 +57,7 @@ public partial class InputHint : Panel
 
 		SetClass( "active", MathF.Abs( action.Evaluate() ) > 0.5f );
 
-		if ( action is ActionHold holdAction )
+		if ( action is HoldAction holdAction )
 		{
 			SetClass( "is-hold", true );
 			SetClass( "has-progress", holdAction.Progress > 0.001f );
