@@ -24,8 +24,6 @@ internal class CardHint : Panel
 
 		SetClass( "visible", yourCardsButton || communityCardsButton );
 
-		CardHintLabel.Text = "";
-
 		if ( Local.Pawn is not Player player )
 			return;
 
