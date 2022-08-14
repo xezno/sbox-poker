@@ -12,7 +12,7 @@ public partial class InputHint : Panel
 	public Image GlyphShadow { get; set; }
 	public string Name { get; set; }
 	public string Text { get; set; }
-	public Label ActionLabel { get; set; }
+	public PokerLabel ActionLabel { get; set; }
 	public Panel ProgressIndicatorPanel { get; set; }
 
 	public InputHint()
@@ -39,7 +39,7 @@ public partial class InputHint : Panel
 	{
 		base.SetContent( value );
 
-		ActionLabel.SetText( value );
+		ActionLabel.Text = value;
 		Text = value;
 	}
 
@@ -55,6 +55,7 @@ public partial class InputHint : Panel
 		var action = InputLayer.GetAction( Name );
 		var button = action.GetDisplayButton();
 
+		SetClass( "using-controller", Input.UsingController );
 		SetClass( "active", MathF.Abs( action.Evaluate() ) > 0.5f );
 
 		if ( action is HoldAction holdAction )
@@ -63,9 +64,18 @@ public partial class InputHint : Panel
 			SetClass( "has-progress", holdAction.Progress > 0.001f );
 			SetClass( "active", holdAction.Progress > 0.001f );
 
-			float progress = (holdAction.Progress * 100f).CeilToInt().Clamp( 0, 99 );
+			float progress = (holdAction.Progress * 100f).Clamp( 0, 99.999f );
 
-			ProgressIndicatorPanel.Style.Set( $"background: conic-gradient( white 0%, white {progress}%, transparent {progress}%, transparent 100% )" );
+			if ( Input.UsingController )
+			{
+				ProgressIndicatorPanel.Style.Set( $"background: conic-gradient( white 0%, white {progress}%, transparent {progress}%, transparent 100% )" );
+				ProgressIndicatorPanel.Style.Width = Length.Auto;
+			}
+			else
+			{
+				ProgressIndicatorPanel.Style.Set( $"background: none" );
+				ProgressIndicatorPanel.Style.Width = Length.Percent( progress );
+			}
 		}
 
 		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, GlyphStyle.Knockout.WithNeutralColorABXY() );

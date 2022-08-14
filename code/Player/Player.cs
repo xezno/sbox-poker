@@ -11,11 +11,15 @@ public partial class Player : AnimatedEntity
 
 	[Net] public string AvatarData { get; set; }
 	[Net] public float Money { get; set; }
+	[Net] public float LastBet { get; set; }
+	[Net] public Backend.Move LastMove { get; set; }
 	[Net] public bool IsMyTurn { get; set; }
 	[Net] public bool HasFolded { get; set; }
 
 	[Net] public CardEntity LeftCard { get; set; }
 	[Net] public CardEntity RightCard { get; set; }
+
+	public string StatusText { get; set; }
 
 	public Camera Camera
 	{
@@ -139,5 +143,11 @@ public partial class Player : AnimatedEntity
 	public void RpcSetHand( Backend.Card card0, Backend.Card card1 ) // THIS IS SHIT!
 	{
 		Hand = new() { card0, card1 };
+	}
+
+	[ClientRpc]
+	public void RpcSetStatus( string status )
+	{
+		StatusText = status;
 	}
 }

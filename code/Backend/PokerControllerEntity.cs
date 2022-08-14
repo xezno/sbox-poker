@@ -3,8 +3,6 @@ using Sandbox;
 using SandboxEditor;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace Poker.Backend;
@@ -167,7 +165,7 @@ public partial class PokerControllerEntity : Entity
 	{
 		var cards = Deck.Draw( count );
 		var cardsStr = string.Join( ", ", cards.Select( x => x.ToShortString() ) );
-		PokerChatBox.AddInformation( To.Everyone, $"Dealt community cards: {cardsStr}" );
+		EventFeed.AddEvent( To.Everyone, $"Dealt community cards: {cardsStr}" );
 
 		foreach ( var card in cards )
 			CommunityCards.Add( card );
@@ -212,6 +210,8 @@ public partial class PokerControllerEntity : Entity
 
 	private void MoveToNextPlayer()
 	{
+		UpdateStatuses();
+
 		PlayerTurnQueue.Dequeue();
 
 		if ( PlayerTurnQueue.Count == 0 )
@@ -332,12 +332,13 @@ public partial class PokerControllerEntity : Entity
 	{
 		parameter = parameter.Clamp( 0, player.Money );
 
-		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets", parameter );
+		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets ${parameter}" );
 
 		if ( MinimumBet < parameter )
 			MinimumBet = parameter;
 
 		Pot += parameter;
+		player.LastBet = parameter;
 		player.Money -= parameter;
 	}
 
@@ -382,5 +383,21 @@ public partial class PokerControllerEntity : Entity
 		EventFeed.AddEvent( To.Everyone, $"{winner.Client.Name} wins" );
 
 		return winner;
+	}
+
+	public void UpdateStatuses()
+	{
+		foreach ( var player in Players )
+		{
+			if ( player.HasFolded )
+			{
+				player.RpcSetStatus( To.Everyone, "Folded" );
+			}
+			else
+			{
+				player.RpcSetStatus( To.Everyone, $"Bet ${player.LastBet}" );
+				player.RpcSetStatus( To.Single( player.Client ), $"{RankPlayerHand( player, out _ ).ToDisplayString()}" );
+			}
+		}
 	}
 }

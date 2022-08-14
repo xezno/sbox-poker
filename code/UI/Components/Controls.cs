@@ -17,8 +17,7 @@ internal class Controls : Panel
 	private float rawBet;
 	private int roundedBet;
 
-	public Label ActionLabel { get; set; }
-	public Money ValueLabel { get; set; }
+	public InputHint ActionHint { get; set; }
 	public Panel PlayControlsPanel { get; set; }
 
 	private float incrementRate => 50f;
@@ -78,8 +77,7 @@ internal class Controls : Panel
 		roundedBet = snapRate * (rawBet.CeilToInt() / snapRate);
 
 		var action = PokerUtils.GetMoveName( roundedBet );
-		ActionLabel.Text = $"{action}";
-		ValueLabel.Text = $"{roundedBet}";
+		ActionHint.ActionLabel.Text = $"{action} (${roundedBet})";
 	}
 
 	private void ProcessInputs( out bool submitPressed, out bool foldPressed, out float betDelta, out bool allInPressed )

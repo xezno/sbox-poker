@@ -6,20 +6,29 @@
     flex-direction: row;
 
     &.is-hold {
-
-        .progress-indicator {
-            position: absolute;
-            right: -2px;
-            width: 42px;
-            aspect-ratio: 1;
-            border-radius: 100%;
-            z-index: -1;
-            background-color: rgba( white, 0.5 );
+        &:not(.using-controller) {
+            .progress-indicator {
+                position: absolute;
+                right: 0;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
+                transition: none;
+                background-color: rgba( white, 0.5 );
+            }
         }
 
-
-        &.has-progress {
+        &.using-controller {
             .progress-indicator {
+                position: absolute;
+                right: -4px;
+                left: -4px;
+                top: -4px;
+                bottom: -4px;
+                border-radius: 100%;
+                z-index: -1;
+                background-color: rgba( white, 0.25 );
             }
         }
     }
@@ -50,6 +59,7 @@
         font-size: $font-normal;
         text-shadow: $text-shadow;
         color: white;
+        justify-content: flex-end;
         text-align: right;
         flex-grow: 1;
     }

@@ -14,19 +14,17 @@ public partial class EventFeed : Panel
 	}
 
 	[ConCmd.Client( "poker_add_event", CanBeCalledFromServer = true )]
-	public static void AddEvent( string text, float money = float.NaN )
+	public static void AddEvent( string text )
 	{
 		Host.AssertClient();
 
-		if ( float.IsNaN( money ) )
-			Instance.AddChild( new EventEntry( text ) );
-		else
-			Instance.AddChild( new EventEntry( text, money ) );
+		Instance.AddChild( new EventEntry( text ) );
 	}
 }
 
 class EventEntry : Panel
 {
+	Panel inner;
 	TimeSince timeSinceCreated;
 
 	public EventEntry( string text )
@@ -34,16 +32,7 @@ class EventEntry : Panel
 		timeSinceCreated = 0;
 
 		AddClass( "event-entry" );
-		Add.Label( text );
-	}
-
-	public EventEntry( string text, float value )
-	{
-		timeSinceCreated = 0;
-
-		AddClass( "event-entry" );
-		Add.Label( text );
-		Add.Money( $"{value}" );
+		Add.PokerLabel( text );
 	}
 
 	public override void Tick()

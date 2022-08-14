@@ -18,12 +18,27 @@
         align-items: center;
 
         &:intro, &:outro {
-            transform: scale( 0.0 );
+            transform: scale( 0 );
             opacity: 0;
         }
 
+        inner {
+            min-height: 32px;
+            min-width: 100px;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        inner > pokerlabel, inner > money {
+            min-width: 100px;
+        }
+
         label {
+            height: 100%;
             font-size: $font-big;
+            text-align: center;
+            transition: all 50ms ease;
         }
 
         money {

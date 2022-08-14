@@ -52,9 +52,13 @@
         align-items: flex-start;
 
         .money {
+            label, iconpanel {
+                font-size: $font-big;
+            }
+
+            height: 42px;
             transition: all 150ms ease;
             font-weight: 700;
-            font-size: $font-big;
             text-shadow: $text-shadow;
         }
 

@@ -27,6 +27,18 @@ text, label {
 icon, iconpanel {
     font-family: fa6-solid;
     color: white;
+
+    &.solid {
+        font-family: fa6-solid;
+    }
+
+    &.regular {
+        font-family: fa6-regular;
+    }
+
+    &.brand {
+        font-family: fa6-brands;
+    }
 }
 
 hr {

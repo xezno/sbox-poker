@@ -51,7 +51,7 @@ public class HoldAction : BoolAction
 
 	public override float Evaluate()
 	{
-		return (Progress >= 1 && Input.Down( Button )) ? 1.0f : 0.0f;
+		return (Progress >= 1f && Input.Down( Button )) ? 1.0f : 0.0f;
 	}
 
 	[Event.Frame]
