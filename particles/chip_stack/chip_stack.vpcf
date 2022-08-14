@@ -575,4 +575,10 @@
 			m_bOrientZ = true
 		},
 	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/chip_stack/chip_shadow.vpcf"
+		},
+	]
 }
