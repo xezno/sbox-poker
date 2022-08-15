@@ -1600,6 +1600,97 @@
 									},
 								]
 							},
+							{
+								_class = "Folder"
+								name = "Actions"
+								children = 
+								[
+									{
+										_class = "AnimFile"
+										name = "Actions_Bet"
+										activity_name = ""
+										activity_weight = 1
+										weight_list_name = ""
+										fade_in_time = 0.2
+										fade_out_time = 0.2
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										source_filename = "models/citizen/citizen@actions_bet.fbx"
+										start_frame = -1
+										end_frame = -1
+										framerate = -1.0
+										take = 0
+										reverse = false
+									},
+								]
+							},
+							{
+								_class = "AnimFile"
+								name = "HoldCards"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/citizen@HoldCards.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "HideCards"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/citizen@HideCards.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "LeftIdle"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/citizen@leftidle.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
 						]
 					},
 				]
@@ -1623,6 +1714,15 @@
 					{
 						_class = "Prefab"
 						target_file = "models/citizen/prefabs/citizen_attachmentlist.vmdl_prefab"
+					},
+					{
+						_class = "Attachment"
+						name = "cards"
+						parent_bone = "hold_R"
+						relative_origin = [ -2.539676, -0.209639, -2.093342 ]
+						relative_angles = [ 63.708714, -26.781942, -85.567535 ]
+						weight = 1.0
+						ignore_rotation = false
 					},
 				]
 			},
@@ -1684,6 +1784,52 @@
 						_class = "Prefab"
 						target_file = "models/citizen/prefabs/citizen_weightlistlist.vmdl_prefab"
 					},
+					{
+						_class = "WeightList"
+						name = "Only_Head"
+						default_weight = 0.0
+						weights = 
+						[
+							{
+								bone = "clavicle_L"
+								weight = 0.0
+							},
+							{
+								bone = "clavicle_R"
+								weight = 0.0
+							},
+							{
+								bone = "head"
+								weight = 1.0
+							},
+							{
+								bone = "leg_upper_L"
+								weight = 0.0
+							},
+							{
+								bone = "leg_upper_R"
+								weight = 0.0
+							},
+							{
+								bone = "neck_0"
+								weight = 1.0
+							},
+							{
+								bone = "pelvis"
+								weight = 0.0
+							},
+							{
+								bone = "spine_0"
+								weight = 0.0
+							},
+							{
+								bone = "spine_2"
+								weight = 0.0
+							},
+						]
+						master_morph_weight = -1.0
+						morph_weights = [  ]
+					},
 				]
 			},
 			{
@@ -1693,6 +1839,29 @@
 					{
 						_class = "Prefab"
 						target_file = "models/citizen/prefabs/citizen_gamedatalist.vmdl_prefab"
+					},
+					{
+						_class = "LookAtChain"
+						name = "EmoteChain"
+						lookat_chain = 
+						{
+							name = ""
+							bones = 
+							[
+								{
+									name = "arm_upper_L"
+									weight = 1.0
+								},
+								{
+									name = "clavicle_L"
+									weight = 1.0
+								},
+								{
+									name = "arm_lower_L"
+									weight = 0.25
+								},
+							]
+						}
 					},
 				]
 			},
