@@ -210,8 +210,6 @@ public partial class PokerControllerEntity : Entity
 
 	private void MoveToNextPlayer()
 	{
-		UpdateStatuses();
-
 		PlayerTurnQueue.Dequeue();
 
 		if ( PlayerTurnQueue.Count == 0 )
@@ -385,6 +383,7 @@ public partial class PokerControllerEntity : Entity
 		return winner;
 	}
 
+	[Event.Tick.Server]
 	public void UpdateStatuses()
 	{
 		foreach ( var player in Players )
@@ -395,8 +394,10 @@ public partial class PokerControllerEntity : Entity
 			}
 			else
 			{
-				player.RpcSetStatus( To.Everyone, $"Bet ${player.LastBet}" );
-				player.RpcSetStatus( To.Single( player.Client ), $"{RankPlayerHand( player, out _ ).ToDisplayString()}" );
+				player.RpcSetStatus( To.Everyone, $"${player.LastBet}, Bet" );
+
+				if ( player.IsMyTurn )
+					player.RpcSetStatus( To.Single( player.Client ), $"$0, Your turn" );
 			}
 		}
 	}

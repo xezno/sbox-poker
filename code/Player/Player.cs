@@ -31,15 +31,20 @@ public partial class Player : AnimatedEntity
 
 	public override void Spawn()
 	{
-		SetModel( "models/citizen/citizen.vmdl" );
+		SetModel( "models/citizen/poker_citizen.vmdl" );
 
 		EnableAllCollisions = true;
 		EnableDrawing = true;
 
 		Money = 1000;
 
-		LeftCard = new CardEntity() { Owner = this, Parent = this };
-		RightCard = new CardEntity() { Owner = this, Parent = this };
+		LeftCard = new CardEntity() { Owner = this };
+		LeftCard.SetParent( this, "cards" );
+		LeftCard.LocalPosition = 0;
+		LeftCard.LocalRotation = Rotation.Identity;
+
+		RightCard = new CardEntity() { Owner = this };
+		RightCard.SetParent( this, "cards" );
 	}
 
 	public override void Simulate( Client cl )
@@ -75,40 +80,38 @@ public partial class Player : AnimatedEntity
 		}
 	}
 
-	// TODO: This is all shit and temporary, we need a better way to position hands & cards
 	public void SetAnimProperties()
 	{
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		SetAnimParameter( "b_grounded", true );
-		SetAnimParameter( "sit", 1 );
-		SetAnimParameter( "sit_pose", GameSettings.Instance.SitPose );
-		SetAnimParameter( "sit_offset_height", GameSettings.Instance.SitHeight );
+		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) > 0.5f );
 
-		Vector3 aimPos = EyePosition + Rotation.Forward * 512;
+		if ( InputLayer.Evaluate( "emote" ) > 0.5f )
+		{
+			// TODO: remove this ( test )
+			SetAnimParameter( "action", 2 );
+		}
+		else
+		{
+			SetAnimParameter( "action", 0 );
+		}
+
+		SetAnimParameter( "sit_pose", 0 );
+
 		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
 
 		SetAnimLookAt( "aim_eyes", lookPos );
 		SetAnimLookAt( "aim_head", lookPos );
-		SetAnimLookAt( "aim_body", aimPos );
+		SetAnimParameter( "aim_head_weight", 1.0f );
 
-		SetAnimParameter( "b_vr", true );
+		var baseTransform = GetAttachment( "cards", true ) ?? default;
 
-		SetAnimParameter( "left_hand_ik.position", GameSettings.Instance.LeftHandPosition );
-		SetAnimParameter( "left_hand_ik.rotation", GameSettings.Instance.LeftHandRotation );
+		LeftCard.LocalPosition = GameSettings.Instance.LeftHandPosition;
+		LeftCard.LocalRotation = GameSettings.Instance.LeftHandRotation;
 
-		LeftCard.LocalPosition = GameSettings.Instance.BaseHoldPosition + GameSettings.Instance.LeftCardOffset;
-		LeftCard.LocalRotation = GameSettings.Instance.LeftCardRotation;
-
-		SetAnimParameter( "right_hand_ik.position", GameSettings.Instance.RightHandPosition );
-		SetAnimParameter( "right_hand_ik.rotation", GameSettings.Instance.RightHandRotation );
-
-		RightCard.LocalPosition = GameSettings.Instance.BaseHoldPosition + GameSettings.Instance.RightCardOffset;
-		RightCard.LocalRotation = GameSettings.Instance.RightCardRotation;
-
-		SetAnimParameter( "holdtype", 4 );
-		SetAnimParameter( "aim_body_weight", 0.5f );
+		RightCard.LocalPosition = GameSettings.Instance.RightHandPosition;
+		RightCard.LocalRotation = GameSettings.Instance.RightHandRotation;
 	}
 
 	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
@@ -133,7 +136,8 @@ public partial class Player : AnimatedEntity
 
 	private void SetEyeTransforms()
 	{
-		EyeLocalPosition = Vector3.Up * 60f;
+		var eyeTransform = GetAttachment( "eyes", false ) ?? default;
+		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 8f;
 		EyeLocalRotation = Input.Rotation;
 
 		Position = Position.WithZ( 6 );

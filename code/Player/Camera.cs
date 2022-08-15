@@ -5,7 +5,8 @@ namespace Poker;
 
 public class Camera : CameraMode
 {
-	private float UserFOV = 60f;
+	private float UserFOV = 90f;
+	private float fac;
 
 	public override void Activated()
 	{
@@ -57,16 +58,20 @@ public class Camera : CameraMode
 					var lookDir = (communityCardSpawnPos - pawn.EyePosition).Normal;
 					targetRotation = Rotation.LookAt( lookDir );
 					targetPosition = pawn.EyePosition + Rotation.Forward * 8f;
-					targetFOV = 40f;
+					targetFOV = 80f;
+
+					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
 
 					Viewer = pawn;
 					break;
 				}
 			case Targets.YourCards:
 				{
-					targetRotation = pawn.Rotation * Rotation.From( 60, 0, 0 );
+					targetRotation = pawn.Rotation * Rotation.From( 55, 0, 0 );
 					targetPosition = pawn.EyePosition + Rotation.Forward * 8f;
-					targetFOV = 60f;
+					targetFOV = 80f;
+
+					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
 
 					Viewer = pawn;
 					break;
@@ -77,6 +82,8 @@ public class Camera : CameraMode
 					targetRotation = pawn.EyeRotation;
 					targetFOV = 60f;
 
+					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
+
 					Viewer = null;
 					break;
 				}
@@ -86,6 +93,8 @@ public class Camera : CameraMode
 					targetRotation = pawn.EyeRotation;
 					targetFOV = UserFOV;
 
+					fac = fac.LerpTo( 0.0f, .5f * Time.Delta );
+
 					Viewer = pawn;
 					break;
 				}
@@ -93,6 +102,9 @@ public class Camera : CameraMode
 
 		Position = Position.LerpTo( targetPosition, 10f * Time.Delta );
 		Rotation = Rotation.LerpTo( targetRotation, 10f * Time.Delta );
+
+		Position = Position.LerpTo( pawn.EyePosition, 1.0f - fac );
+		Rotation = Rotation.LerpTo( pawn.EyeRotation, 1.0f - fac );
 		FieldOfView = FieldOfView.LerpTo( targetFOV, 10f * Time.Delta );
 	}
 
@@ -102,8 +114,8 @@ public class Camera : CameraMode
 
 		var inputAngles = inputBuilder.ViewAngles;
 		var clampedAngles = new Angles(
-			inputAngles.pitch.Clamp( -60, 60 ),
-			inputAngles.yaw,//.yaw.Clamp( -45, 45 ),
+			inputAngles.pitch.Clamp( -45, 45 ),
+			inputAngles.yaw,
 			inputAngles.roll
 		);
 
