@@ -1863,6 +1863,25 @@
 							]
 						}
 					},
+					{
+						_class = "LookAtChain"
+						name = "FullLookChain"
+						lookat_chain = 
+						{
+							name = ""
+							bones = 
+							[
+								{
+									name = "head"
+									weight = 1.0
+								},
+								{
+									name = "neck_0"
+									weight = 0.5
+								},
+							]
+						}
+					},
 				]
 			},
 			{
