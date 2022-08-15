@@ -48,3 +48,12 @@ hr {
 
 .card {
 }
+
+.wip {
+    position: absolute;
+    top: $safe-area-y;
+    left: 50%;
+    opacity: 0.25;
+    transform: translateX(-50%);
+    text-transform: uppercase;
+}

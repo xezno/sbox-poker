@@ -3,7 +3,6 @@
 .community-cards {
     position: absolute;
     top: $safe-area-y;
-    left: 50%;
+    left: $safe-area-x;
     flex-direction: row;
-    transform: translateX(-50%);
 }

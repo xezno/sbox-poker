@@ -13,8 +13,12 @@ namespace Poker.UI
 			get => text;
 			set
 			{
-				text = value;
-				Update();
+				if ( text != value )
+				{
+					text = value;
+
+					Update();
+				}
 			}
 		}
 
@@ -60,14 +64,14 @@ namespace Sandbox.UI
 		{
 			public static Poker.UI.PokerLabel PokerLabel( this PanelCreator self, string text, string classname = null )
 			{
-				var money = new Poker.UI.PokerLabel();
-				money.SetContent( text );
-				money.Parent = self.panel;
+				var element = new Poker.UI.PokerLabel();
+				element.Text = text;
+				element.Parent = self.panel;
 
 				if ( classname != null )
-					money.AddClass( classname );
+					element.AddClass( classname );
 
-				return money;
+				return element;
 			}
 		}
 	}

@@ -66,7 +66,7 @@ public partial class InputHint : Panel
 
 			float progress = (holdAction.Progress * 100f).Clamp( 0, 99.999f );
 
-			if ( Input.UsingController )
+			if ( Input.UsingController && progress > 0 )
 			{
 				ProgressIndicatorPanel.Style.Set( $"background: conic-gradient( white 0%, white {progress}%, transparent {progress}%, transparent 100% )" );
 				ProgressIndicatorPanel.Style.Width = Length.Auto;
