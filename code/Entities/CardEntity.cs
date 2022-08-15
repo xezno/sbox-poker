@@ -25,7 +25,7 @@ public partial class CardEntity : ModelEntity
 		Log.Trace( $"Set card texture to {texture.ResourcePath}" );
 
 		material = Material.Load( "materials/card/card.vmat" ).CreateCopy();
-		SetMaterialOverride( material );
+		SetMaterialOverride( material, "isCardTarget" );
 	}
 
 	[Event.Frame]
