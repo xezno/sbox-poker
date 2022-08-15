@@ -371,7 +371,7 @@
 					{
 						m_id = 4294967295
 					}
-					m_lookatChainName = "LookChain"
+					m_lookatChainName = "FullLookChain"
 					m_attachmentName = "forward_reference"
 					m_flYawLimit = 140.0
 					m_flPitchLimit = 140.0
@@ -3175,8 +3175,8 @@
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
 				m_bNetwork = true
-				m_bUseMostRecentValue = false
-				m_bAutoReset = true
+				m_bUseMostRecentValue = true
+				m_bAutoReset = false
 				m_bPredicted = true
 				m_defaultValue = 0
 				m_enumOptions = 
@@ -3194,10 +3194,10 @@
 					m_id = 78654273
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = false
+				m_bNetwork = true
 				m_bUseMostRecentValue = false
 				m_bAutoReset = false
-				m_bPredicted = false
+				m_bPredicted = true
 				m_defaultValue = [ 0.0, 0.0, 0.0 ]
 				m_bInterpolate = false
 			},
@@ -3209,10 +3209,10 @@
 					m_id = 359978321
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = false
+				m_bNetwork = true
 				m_bUseMostRecentValue = false
 				m_bAutoReset = false
-				m_bPredicted = false
+				m_bPredicted = true
 				m_defaultValue = 0
 				m_enumOptions = 
 				[
@@ -3231,10 +3231,10 @@
 					m_id = 1136836915
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = false
+				m_bNetwork = true
 				m_bUseMostRecentValue = false
 				m_bAutoReset = false
-				m_bPredicted = false
+				m_bPredicted = true
 				m_bDefaultValue = false
 			},
 			{
@@ -3245,10 +3245,10 @@
 					m_id = 1963000277
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = false
+				m_bNetwork = true
 				m_bUseMostRecentValue = false
 				m_bAutoReset = false
-				m_bPredicted = false
+				m_bPredicted = true
 				m_defaultValue = [ 0.0, 0.0, 0.0 ]
 				m_bInterpolate = false
 			},
