@@ -90,7 +90,7 @@ public partial class Player : AnimatedEntity
 		if ( InputLayer.Evaluate( "emote" ) > 0.5f )
 		{
 			// TODO: remove this ( test )
-			SetAnimParameter( "action", 2 );
+			SetAnimParameter( "action", (int)Action.Emote_ThumbsUp );
 		}
 		else
 		{
@@ -99,9 +99,8 @@ public partial class Player : AnimatedEntity
 
 		SetAnimParameter( "sit_pose", 0 );
 
-		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
+		Vector3 lookPos = Camera.Position + Camera.Rotation.Forward * 512;
 
-		SetAnimLookAt( "aim_eyes", lookPos );
 		SetAnimLookAt( "aim_head", lookPos );
 		SetAnimParameter( "aim_head_weight", 1.0f );
 
@@ -153,5 +152,26 @@ public partial class Player : AnimatedEntity
 	public void RpcSetStatus( string status )
 	{
 		StatusText = status;
+	}
+
+	public override void BuildInput( InputBuilder inputBuilder )
+	{
+		base.BuildInput( inputBuilder );
+
+		if ( InputLayer.Evaluate( "your_cards" ) > 0.5f || InputLayer.Evaluate( "community_cards" ) > 0.5f )
+		{
+			inputBuilder.ViewAngles = inputBuilder.OriginalViewAngles;
+			inputBuilder.StopProcessing = true;
+			return;
+		}
+
+		var inputAngles = inputBuilder.ViewAngles;
+		var clampedAngles = new Angles(
+			inputAngles.pitch.Clamp( -45, 45 ),
+			inputAngles.yaw,
+			inputAngles.roll
+		);
+
+		inputBuilder.ViewAngles = clampedAngles;
 	}
 }
