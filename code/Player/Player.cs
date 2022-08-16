@@ -85,9 +85,9 @@ public partial class Player : AnimatedEntity
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) > 0.5f );
+		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) );
 
-		if ( InputLayer.Evaluate( "emote" ) > 0.5f )
+		if ( InputLayer.Evaluate( "emote" ) )
 		{
 			// TODO: remove this ( test )
 			SetAnimParameter( "action", (int)Action.Emote_ThumbsUp );
@@ -158,7 +158,7 @@ public partial class Player : AnimatedEntity
 	{
 		base.BuildInput( inputBuilder );
 
-		if ( InputLayer.Evaluate( "your_cards" ) > 0.5f || InputLayer.Evaluate( "community_cards" ) > 0.5f )
+		if ( InputLayer.Evaluate( "your_cards" ) || InputLayer.Evaluate( "community_cards" ) )
 		{
 			inputBuilder.ViewAngles = inputBuilder.OriginalViewAngles;
 			inputBuilder.StopProcessing = true;

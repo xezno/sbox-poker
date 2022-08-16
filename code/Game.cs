@@ -108,7 +108,7 @@ public partial class Game : Sandbox.Game
 	{
 		base.RenderHud();
 
-		if ( InputLayer.Evaluate( "list_players" ) < 0.5f )
+		if ( !InputLayer.Evaluate( "list_players" ) )
 			return;
 
 		//

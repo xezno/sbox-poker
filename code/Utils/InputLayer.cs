@@ -189,9 +189,14 @@ public class InputLayer
 		return Actions.FirstOrDefault( x => x.Name == name );
 	}
 
-	public static float Evaluate( string name )
+	public static float EvaluateRaw( string name )
 	{
 		return GetAction( name ).Evaluate();
+	}
+
+	public static bool Evaluate( string name )
+	{
+		return GetAction( name ).Evaluate() > 0.5f;
 	}
 
 	[DebugOverlay( "inputlayer", "Input Layer", "sports_esports" )]

@@ -29,9 +29,9 @@ public class Camera : CameraMode
 	{
 		Targets cameraTarget = Targets.FirstPerson;
 
-		if ( InputLayer.Evaluate( "community_cards" ) > 0.1f )
+		if ( InputLayer.Evaluate( "community_cards" ) )
 			cameraTarget = Targets.CommunityCards;
-		else if ( InputLayer.Evaluate( "your_cards" ) > 0.1f )
+		else if ( InputLayer.Evaluate( "your_cards" ) )
 			cameraTarget = Targets.YourCards;
 
 		return cameraTarget;

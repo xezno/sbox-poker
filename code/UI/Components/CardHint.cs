@@ -12,15 +12,15 @@ internal class CardHint : Panel
 
 	public CardHint()
 	{
-		BindClass( "visible", () => InputLayer.Evaluate( "your_cards" ) > 0.5f );
+		BindClass( "visible", () => InputLayer.Evaluate( "your_cards" ) );
 	}
 
 	public override void Tick()
 	{
 		base.Tick();
 
-		bool yourCardsButton = InputLayer.Evaluate( "your_cards" ) > 0.5f;
-		bool communityCardsButton = InputLayer.Evaluate( "community_cards" ) > 0.5f;
+		bool yourCardsButton = InputLayer.Evaluate( "your_cards" );
+		bool communityCardsButton = InputLayer.Evaluate( "community_cards" );
 
 		SetClass( "visible", yourCardsButton || communityCardsButton );
 

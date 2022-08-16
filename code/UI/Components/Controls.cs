@@ -82,9 +82,9 @@ internal class Controls : Panel
 
 	private void ProcessInputs( out bool submitPressed, out bool foldPressed, out float betDelta, out bool allInPressed )
 	{
-		submitPressed = InputLayer.Evaluate( "submit" ) > 0.5f;
-		foldPressed = InputLayer.Evaluate( "fold" ) > 0.5f;
-		betDelta = InputLayer.Evaluate( "adjust_amount" );
-		allInPressed = InputLayer.Evaluate( "all_in" ) > 0.5f;
+		submitPressed = InputLayer.Evaluate( "submit" );
+		foldPressed = InputLayer.Evaluate( "fold" );
+		betDelta = InputLayer.EvaluateRaw( "adjust_amount" );
+		allInPressed = InputLayer.Evaluate( "all_in" );
 	}
 }

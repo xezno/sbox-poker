@@ -82,7 +82,7 @@ public class PlayerList : Panel
 			MoneyLabel.Text = $"${Player.Money.CeilToInt()}";
 			StatusLabel.Text = $"{Player.StatusText}";
 
-			SetClass( "expand", InputLayer.Evaluate( "list_players" ) > 0.5f );
+			SetClass( "expand", InputLayer.Evaluate( "list_players" ) );
 		}
 	}
 }
