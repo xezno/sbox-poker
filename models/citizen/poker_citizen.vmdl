@@ -1598,6 +1598,69 @@
 										take = 0
 										reverse = false
 									},
+									{
+										_class = "AnimFile"
+										name = "Emotes_ThumbsUp"
+										activity_name = ""
+										activity_weight = 1
+										weight_list_name = ""
+										fade_in_time = 0.5
+										fade_out_time = 0.5
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										source_filename = "models/citizen/citizen@emotes_thumbsup.fbx"
+										start_frame = 0
+										end_frame = 1
+										framerate = -1.0
+										take = 5
+										reverse = false
+									},
+									{
+										_class = "AnimFile"
+										name = "Emotes_ThumbsDown"
+										activity_name = ""
+										activity_weight = 1
+										weight_list_name = ""
+										fade_in_time = 0.5
+										fade_out_time = 0.5
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										source_filename = "models/citizen/citizen@Emotes_ThumbsDown.fbx"
+										start_frame = 0
+										end_frame = 1
+										framerate = -1.0
+										take = 5
+										reverse = false
+									},
+									{
+										_class = "AnimFile"
+										name = "Emotes_Pump"
+										activity_name = ""
+										activity_weight = 1
+										weight_list_name = ""
+										fade_in_time = 0.2
+										fade_out_time = 0.2
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										source_filename = "models/citizen/citizen@Emotes_Pump.fbx"
+										start_frame = -1
+										end_frame = -1
+										framerate = -1.0
+										take = 0
+										reverse = false
+									},
 								]
 							},
 							{

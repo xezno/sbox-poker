@@ -10,5 +10,5 @@ public enum Action
 	Emote_MiddleFinger,
 	Emote_ThumbsUp,
 	Emote_ThumbsDown,
-	Emote_Unused0
+	Emote_Pump
 }

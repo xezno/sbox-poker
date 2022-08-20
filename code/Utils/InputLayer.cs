@@ -158,7 +158,11 @@ public class InputLayer
 		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
 		new BoolAction( "list_players", InputButton.Score ),
 		new HoldAction( "all_in", InputButton.Duck ),
-		new BoolAction( "emote", InputButton.Flashlight )
+
+		new BoolAction( "emote.middle_finger", InputButton.Flashlight ),
+		new BoolAction( "emote.thumbs_up", InputButton.Slot1 ),
+		new BoolAction( "emote.thumbs_down", InputButton.Slot2 ),
+		new BoolAction( "emote.pump", InputButton.Slot3 ),
 	};
 
 	public static List<BaseInputAction> PCActions = new()
@@ -170,7 +174,11 @@ public class InputLayer
 		new BoolAction( "community_cards", InputButton.Duck ),
 		new BoolAction( "list_players", InputButton.Score ),
 		new HoldAction( "all_in", InputButton.Use ),
-		new BoolAction( "emote", InputButton.Menu )
+
+		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
+		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
+		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
+		new BoolAction( "emote.pump", InputButton.Slot4 )
 	};
 
 	public static List<BaseInputAction> Actions

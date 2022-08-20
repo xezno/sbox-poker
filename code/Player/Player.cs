@@ -87,30 +87,44 @@ public partial class Player : AnimatedEntity
 
 		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) );
 
-		if ( InputLayer.Evaluate( "emote" ) )
-		{
-			// TODO: remove this ( test )
+		// TODO: remove this ( test )
+		if ( InputLayer.Evaluate( "emote.middle_finger" ) )
+			SetAnimParameter( "action", (int)Action.Emote_MiddleFinger );
+		else if ( InputLayer.Evaluate( "emote.thumbs_up" ) )
 			SetAnimParameter( "action", (int)Action.Emote_ThumbsUp );
-		}
+		else if ( InputLayer.Evaluate( "emote.thumbs_down" ) )
+			SetAnimParameter( "action", (int)Action.Emote_ThumbsDown );
+		else if ( InputLayer.Evaluate( "emote.pump" ) )
+			SetAnimParameter( "action", (int)Action.Emote_Pump );
 		else
-		{
 			SetAnimParameter( "action", 0 );
-		}
 
 		SetAnimParameter( "sit_pose", 0 );
 
-		Vector3 lookPos = Camera.Position + Camera.Rotation.Forward * 512;
+		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
+		lookPos.z += 128f;
+		Vector3 emoteAimPos = EyePosition + EyeRotation.Forward * 512;
+		emoteAimPos = emoteAimPos.WithZ( 128 );
 
 		SetAnimLookAt( "aim_head", lookPos );
+		SetAnimLookAt( "aim_emote", emoteAimPos );
 		SetAnimParameter( "aim_head_weight", 1.0f );
-
-		var baseTransform = GetAttachment( "cards", true ) ?? default;
+		SetAnimParameter( "aim_emote_weight", 1.0f );
 
 		LeftCard.LocalPosition = GameSettings.Instance.LeftHandPosition;
 		LeftCard.LocalRotation = GameSettings.Instance.LeftHandRotation;
 
 		RightCard.LocalPosition = GameSettings.Instance.RightHandPosition;
 		RightCard.LocalRotation = GameSettings.Instance.RightHandRotation;
+
+		if ( IsServer )
+		{
+			DebugOverlay.ScreenText( $"SV: {emoteAimPos}", 10, 0 );
+		}
+		else
+		{
+			DebugOverlay.ScreenText( $"CL: {emoteAimPos}", 20, 0 );
+		}
 	}
 
 	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
@@ -136,7 +150,7 @@ public partial class Player : AnimatedEntity
 	private void SetEyeTransforms()
 	{
 		var eyeTransform = GetAttachment( "eyes", false ) ?? default;
-		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 8f;
+		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 8f - Vector3.Forward * 4f;
 		EyeLocalRotation = Input.Rotation;
 
 		Position = Position.WithZ( 6 );
