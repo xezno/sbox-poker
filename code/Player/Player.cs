@@ -53,7 +53,7 @@ public partial class Player : AnimatedEntity
 
 		if ( IsServer )
 		{
-			IsMyTurn = Backend.PokerControllerEntity.Instance?.IsTurn( this ) ?? false;
+			IsMyTurn = Backend.PokerController.Instance?.IsTurn( this ) ?? false;
 		}
 
 		SetEyeTransforms();
@@ -157,9 +157,10 @@ public partial class Player : AnimatedEntity
 	}
 
 	[ClientRpc]
-	public void RpcSetHand( Backend.Card card0, Backend.Card card1 ) // THIS IS SHIT!
+	public void RpcSetHand( byte[] cardData )
 	{
-		Hand = new() { card0, card1 };
+		var cards = RpcUtils.Decompress<Backend.Card[]>( cardData );
+		Hand = cards.ToList();
 	}
 
 	[ClientRpc]

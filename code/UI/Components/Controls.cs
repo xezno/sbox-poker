@@ -53,19 +53,19 @@ internal class Controls : Panel
 			return;
 
 		if ( !allInPressedLastFrame && allInPressed )
-			PokerControllerEntity.SubmitMove( Move.Bet, player.Money );
+			PokerController.CmdSubmitMove( Move.Bet, player.Money );
 	}
 
 	private void ProcessSubmitInput( bool submitPressed )
 	{
 		if ( !submitPressedLastFrame && submitPressed )
-			PokerControllerEntity.SubmitMove( Move.Bet, roundedBet );
+			PokerController.CmdSubmitMove( Move.Bet, roundedBet );
 	}
 
 	private void ProcessFoldInput( bool foldPressed )
 	{
 		if ( !foldPressedLastFrame && foldPressed )
-			PokerControllerEntity.SubmitMove( Move.Fold, 0 );
+			PokerController.CmdSubmitMove( Move.Fold, 0 );
 	}
 
 	private void ProcessBetInput( float betDelta )
@@ -73,7 +73,7 @@ internal class Controls : Panel
 		if ( MathF.Abs( betDelta ) > 0.5f )
 			rawBet += betDelta * Time.Delta * incrementRate;
 
-		rawBet = rawBet.Clamp( PokerControllerEntity.Instance.MinimumBet, 5000 );
+		rawBet = rawBet.Clamp( Game.Instance.MinimumBet, 5000 );
 		roundedBet = snapRate * (rawBet.CeilToInt() / snapRate);
 
 		var action = PokerUtils.GetMoveName( roundedBet );

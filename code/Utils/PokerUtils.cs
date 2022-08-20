@@ -9,7 +9,7 @@ public static class PokerUtils
 	{
 		if ( playerBet == 0 )
 			return "Check";
-		else if ( playerBet == PokerControllerEntity.Instance.MinimumBet )
+		else if ( playerBet == Game.Instance.MinimumBet )
 			return "Call";
 		else
 			return "Raise";

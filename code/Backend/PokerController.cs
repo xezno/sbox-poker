@@ -1,21 +1,29 @@
-﻿using Poker.UI;
-using Sandbox;
+﻿using Sandbox;
 using SandboxEditor;
+using Poker.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Poker.Backend;
 
-/// <summary>
-/// Poker game FSM
-/// </summary>
-public partial class PokerControllerEntity : Entity
+public partial class PokerController
 {
-	public static PokerControllerEntity Instance { get; set; }
-	[Net] public IList<Card> CommunityCards { get; set; }
-	[Net] public float Pot { get; set; }
-	[Net] public float MinimumBet { get; set; }
+	private static PokerController instance;
+
+	public static PokerController Instance
+	{
+		get
+		{
+			Host.AssertServer();
+			return instance;
+		}
+		set
+		{
+			Host.AssertServer();
+			instance = value;
+		}
+	}
 
 	private List<Player> Players => Entity.All.OfType<Player>().ToList();
 	private Deck Deck { get; set; }
@@ -26,20 +34,9 @@ public partial class PokerControllerEntity : Entity
 
 	private Queue<Player> PlayerTurnQueue { get; set; }
 
-	public override void Spawn()
-	{
-		base.Spawn();
-
-		Transmit = TransmitType.Always;
-		Instance = this;
-	}
-
-	public override void ClientSpawn()
-	{
-		base.ClientSpawn();
-
-		Instance = this;
-	}
+	public IList<Card> CommunityCards { get => Game.Instance.CommunityCards; set => Game.Instance.CommunityCards = value; }
+	public float Pot { get => Game.Instance.Pot; set => Game.Instance.Pot = value; }
+	public float MinimumBet { get => Game.Instance.MinimumBet; set => Game.Instance.MinimumBet = value; }
 
 	public enum Rounds
 	{
@@ -53,6 +50,20 @@ public partial class PokerControllerEntity : Entity
 	}
 
 	private Rounds Round { get; set; } = Rounds.Preflop;
+
+	public PokerController()
+	{
+		Host.AssertServer();
+
+		Instance = this;
+
+		Event.Register( this );
+	}
+
+	~PokerController()
+	{
+		Event.Unregister( this );
+	}
 
 	public void Run()
 	{
@@ -107,7 +118,9 @@ public partial class PokerControllerEntity : Entity
 		Players.ForEach( player =>
 		{
 			player.Hand = Deck.CreateHand();
-			player.RpcSetHand( To.Single( player ), player.Hand[0], player.Hand[1] );
+
+			var cardData = RpcUtils.Compress( player.Hand );
+			player.RpcSetHand( To.Single( player ), cardData );
 
 			player.LeftCard.RpcSetCard( To.Single( player ), player.Hand[0] );
 			player.RightCard.RpcSetCard( To.Single( player ), player.Hand[1] );
@@ -236,87 +249,6 @@ public partial class PokerControllerEntity : Entity
 		await Task.Delay( 1000 );
 		Bet( MinimumBet, PlayerTurnQueue.Peek() );
 		MoveToNextPlayer();
-	}
-
-	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
-	private static void DebugOverlay()
-	{
-		if ( !Host.IsServer )
-			return;
-
-		var instance = PokerControllerEntity.Instance;
-		if ( instance == null )
-			return;
-
-		if ( instance.Deck == null )
-			return;
-
-		var communityCards = string.Join( ", ", instance.CommunityCards.Select( card => card.ToString() ) );
-
-		OverlayUtils.BoxWithText( Render.Draw2D, new Rect( 45, 200, 400, 100 ), "SV: Poker Controller",
-			  $"Current turn: {instance.PlayerTurnQueue.Peek().Client.Name}\n" +
-			  $"Current round: {instance.Round}\n" +
-			  $"Community cards: {communityCards}" );
-	}
-
-	[ConCmd.Server( "poker_force_next_player" )]
-	public static void ForceNextPlayer()
-	{
-		if ( !Host.IsServer )
-			return;
-
-		var instance = PokerControllerEntity.Instance;
-		if ( instance == null )
-			Log.Warning( "Instance was null!" );
-
-		var caller = ConsoleSystem.Caller;
-		var player = caller.Pawn as Player;
-
-		if ( player == null )
-			Log.Warning( "Player was null!" );
-
-		Log.Trace( $"Forced to next player" );
-
-		instance.Bet( instance.MinimumBet, instance.PlayerTurnQueue.Peek() );
-		instance.MoveToNextPlayer();
-	}
-
-	[ConCmd.Server( "poker_submit_move" )]
-	public static void SubmitMove( Move move, float parameter )
-	{
-		if ( !Host.IsServer )
-			return;
-
-		var instance = PokerControllerEntity.Instance;
-		if ( instance == null )
-			Log.Error( "Instance was null!" );
-
-		var caller = ConsoleSystem.Caller;
-		var player = caller.Pawn as Player;
-
-		if ( player == null )
-			Log.Error( "Player was null!" );
-
-		Log.Trace( $"Player {player.Name} ({caller.Name}) submitted move {move} with param {parameter}" );
-
-		if ( instance.IsTurn( player ) )
-		{
-			switch ( move )
-			{
-				case Move.Fold:
-					{
-						instance.Fold( player );
-						break;
-					}
-				case Move.Bet:
-					{
-						instance.Bet( parameter, player );
-						break;
-					}
-			}
-
-			instance.MoveToNextPlayer();
-		}
 	}
 
 	private void Fold( Player player )

@@ -1,5 +1,4 @@
-﻿using Poker.Backend;
-using Sandbox.UI;
+﻿using Sandbox.UI;
 
 namespace Poker.UI;
 
@@ -12,9 +11,9 @@ internal class Pots : Panel
 	{
 		base.Tick();
 
-		PokerControllerEntity instance;
+		Game instance;
 
-		if ( (instance = PokerControllerEntity.Instance) == null )
+		if ( (instance = Game.Instance) == null )
 			return;
 
 		var potValue = instance.Pot;

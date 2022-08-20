@@ -18,9 +18,9 @@ internal class CommunityCards : Panel
 			return;
 
 		var cardPanels = Children.OfType<Card>().ToList();
-		PokerControllerEntity instance;
+		PokerController instance;
 
-		if ( (instance = PokerControllerEntity.Instance) == null )
+		if ( (instance = PokerController.Instance) == null )
 		{
 			cardPanels.ForEach( x => x.Reset() );
 			return;

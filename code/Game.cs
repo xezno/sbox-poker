@@ -1,15 +1,25 @@
 ﻿using Poker.Backend;
 using Sandbox;
+using SandboxEditor;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Poker;
 
 public partial class Game : Sandbox.Game
 {
-	public PokerControllerEntity PokerControllerEntity { get; set; }
+	[Net] public IList<Card> CommunityCards { get; set; }
+	[Net] public float Pot { get; set; }
+	[Net] public float MinimumBet { get; set; }
+
+	public PokerController PokerController { get; set; }
+
+	public static Game Instance { get; set; }
 
 	public Game()
 	{
+		Instance = this;
+
 		if ( IsServer )
 		{
 			_ = new Hud();
@@ -21,9 +31,9 @@ public partial class Game : Sandbox.Game
 	{
 		var instance = Game.Current as Game;
 
-		instance.PokerControllerEntity?.Delete();
-		instance.PokerControllerEntity = new();
-		instance.PokerControllerEntity.Run();
+		instance.PokerController = null;
+		instance.PokerController = new();
+		instance.PokerController.Run();
 	}
 
 	[ConCmd.Server( "poker_spawn_chip" )]
@@ -141,5 +151,23 @@ public partial class Game : Sandbox.Game
 				Render.Draw2D.DrawText( drawRect, entity.Client.Name, TextFlag.Center );
 			}
 		}
+	}
+
+	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
+	private static void DebugOverlay()
+	{
+		if ( !Host.IsServer )
+			return;
+
+		var instance = Game.Instance;
+		if ( instance == null )
+			return;
+
+		var communityCards = string.Join( ", ", instance.CommunityCards.Select( card => card.ToString() ) );
+
+		OverlayUtils.BoxWithText( Render.Draw2D, new Rect( 45, 200, 400, 100 ), "CL: Poker Controller",
+			  $"Pot: {instance.Pot}\n" +
+			  $"Minimum bet: {instance.MinimumBet}\n" +
+			  $"Community cards: {communityCards}" );
 	}
 }
