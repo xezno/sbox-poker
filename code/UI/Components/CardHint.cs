@@ -35,7 +35,7 @@ internal class CardHint : Panel
 		if ( yourCardsButton )
 			cards = player.Hand.Select( x => x.ToString() );
 		else if ( communityCardsButton )
-			cards = Backend.PokerController.Instance.CommunityCards.Select( x => x.ToString() );
+			cards = Game.Instance.CommunityCards.Select( x => x.ToString() );
 		else
 			return;
 

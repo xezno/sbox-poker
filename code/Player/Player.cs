@@ -102,7 +102,6 @@ public partial class Player : AnimatedEntity
 		SetAnimParameter( "sit_pose", 0 );
 
 		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
-		lookPos.z += 128f;
 		Vector3 emoteAimPos = EyePosition + EyeRotation.Forward * 512;
 		emoteAimPos = emoteAimPos.WithZ( 128 );
 
@@ -116,15 +115,6 @@ public partial class Player : AnimatedEntity
 
 		RightCard.LocalPosition = GameSettings.Instance.RightHandPosition;
 		RightCard.LocalRotation = GameSettings.Instance.RightHandRotation;
-
-		if ( IsServer )
-		{
-			DebugOverlay.ScreenText( $"SV: {emoteAimPos}", 10, 0 );
-		}
-		else
-		{
-			DebugOverlay.ScreenText( $"CL: {emoteAimPos}", 20, 0 );
-		}
 	}
 
 	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]

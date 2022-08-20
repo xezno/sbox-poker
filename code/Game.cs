@@ -78,23 +78,31 @@ public partial class Game : Sandbox.Game
 	{
 		base.ClientJoined( client );
 
-		var clothingContainer = new ClothingContainer();
-
 		if ( client.IsBot )
-			clothingContainer.LoadRandom();
-		else
-			clothingContainer.LoadFromClient( client );
-
-		var player = new Player
 		{
-			Camera = new Camera(),
-			AvatarData = clothingContainer.Serialize()
-		};
+			var clothingContainer = new ClothingContainer();
 
-		clothingContainer.DressEntity( player );
+			if ( client.IsBot )
+				clothingContainer.LoadRandom();
+			else
+				clothingContainer.LoadFromClient( client );
 
-		client.Pawn = player;
-		MoveToSeat( client );
+			var player = new Player
+			{
+				Camera = new Camera(),
+				AvatarData = clothingContainer.Serialize()
+			};
+
+			clothingContainer.DressEntity( player );
+
+			client.Pawn = player;
+			MoveToSeat( client );
+		}
+		else
+		{
+			var spectatorPawn = new Spectator();
+			client.Pawn = spectatorPawn;
+		}
 	}
 
 	private void MoveToSeat( Client client )
@@ -133,9 +141,9 @@ public partial class Game : Sandbox.Game
 		using ( Render.Draw2D.MatrixScope( matrix ) )
 		{
 			Render.Draw2D.Color = Color.White;
-			Render.Draw2D.FontFamily = "Ibarra Real Nova";
+			Render.Draw2D.FontFamily = "Poppins";
 			Render.Draw2D.FontSize = 32;
-			Render.Draw2D.FontWeight = 800;
+			Render.Draw2D.FontWeight = 500;
 
 			foreach ( var entity in Entity.All.OfType<Player>() )
 			{

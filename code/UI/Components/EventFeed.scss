@@ -37,6 +37,7 @@
         label {
             height: 100%;
             font-size: $font-big;
+            font-weight: $weight-big;
             text-align: center;
             transition: all 50ms ease;
         }
@@ -46,6 +47,7 @@
 
             iconpanel, label {
                 font-size: $font-big;
+                font-weight: $weight-big;
             }
         }
     }

@@ -28,8 +28,12 @@ internal class Controls : Panel
 		base.Tick();
 
 		if ( Local.Pawn is not Player player )
+		{
+			SetClass( "visible", false );
 			return;
+		}
 
+		SetClass( "visible", true );
 		PlayControlsPanel.SetClass( "visible", player.IsMyTurn );
 
 		if ( !player.IsMyTurn )

@@ -15,6 +15,7 @@
 
     iconpanel, label {
         font-size: $font-big;
+        font-weight: $weight-big;
     }
 
     .name {
@@ -24,5 +25,9 @@
         margin-left: 10px;
         text-align: right;
         font-weight: 800;
+
+        iconpanel {
+            margin-right: 8px;
+        }
     }
 }

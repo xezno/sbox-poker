@@ -24,7 +24,7 @@ public class PlayerList : Panel
 
 		foreach ( var client in Client.All )
 		{
-			if ( !PlayerEntries.Any( x => x.Client == client ) )
+			if ( !PlayerEntries.Any( x => x.Client == client ) && client.Pawn is Player )
 			{
 				var playerEntry = new PlayerEntry( client )
 				{

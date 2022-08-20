@@ -67,6 +67,11 @@ public partial class PokerController
 
 	public void Run()
 	{
+		/*
+		 * TODO:
+		 * - Buy-in
+		 */
+
 		// Instantiate everything
 		Deck = new();
 		PlayerTurnQueue = new();
@@ -77,6 +82,7 @@ public partial class PokerController
 		Dealer = Players[0];
 
 		// Determine small blind & big blind
+		// TODO: This shouldn't count spectators or players that haven't bought in yet
 		if ( Players.Count < 2 )
 		{
 			Log.Error( "Not enough players." );
@@ -98,6 +104,7 @@ public partial class PokerController
 		float blind = 50;
 
 		// Check if blinds can afford it
+		// TODO: This should probaly be on Bet() - if they can't afford it, return false, and we'll deal with it where it gets called
 		if ( SmallBlind.Money < blind * 0.5f )
 		{
 			SmallBlind.Client.Kick(); // TODO: Move to spectators
@@ -126,30 +133,32 @@ public partial class PokerController
 			player.RightCard.RpcSetCard( To.Single( player ), player.Hand[1] );
 		} );
 
-		// Reset players
+		// Reset players.. TODO: should probably be a function on Player itself
 		Players.ForEach( player =>
 		{
 			player.HasFolded = false;
 		} );
 
 		// Delete chips
+		// TODO: Move this elsewhere
 		Entity.All.OfType<ChipEntity>().ToList().ForEach( x => x.Delete() );
 		Entity.All.OfType<ChipStackEntity>().ToList().ForEach( x => x.Delete() );
 
 		// Spawn chips
+		// TODO: Move this elsewhere and do it properly
 		Players.ForEach( player =>
 		{
 			var seat = player.Seat;
 			var chipSpawn = Entity.All.OfType<PlayerChipSpawn>().First( x => x.SeatNumber == seat.SeatNumber );
-			float spacing = 3.5f;
+			float spacing = 2.5f;
 
-			// ChipEntity.CreateStack( 32, chipSpawn.Position );
 			var chipOffsets = new (int, float, Vector3)[]
 			{
-				new( 10, 500, Vector3.Zero ),
-				new( 20, 250, new Vector3( 0, spacing )),
-				new( 30, 100, new Vector3( spacing, 0 )),
-				new( 40, 50, new Vector3( spacing, spacing ))
+				// Count, Value, Position
+				new( 2, 500, Vector3.Zero ),
+				new( 5, 250, new Vector3( 0,  spacing  ) * player.Rotation ),
+				new( 7, 100, new Vector3( spacing, spacing ) * player.Rotation ),
+				new( 10, 50, new Vector3( 0, spacing*2 ) * player.Rotation )
 			};
 
 			foreach ( var offset in chipOffsets )
@@ -228,16 +237,17 @@ public partial class PokerController
 		if ( PlayerTurnQueue.Count == 0 )
 		{
 			// Reached the end of this round; let's move to the next one
-			Log.Trace( "Reached the end of the round. Run()" );
 			StartNextRound();
 			return;
 		}
 
+		// TODO: Should probably be removing players from the turn queue if they fold.
 		if ( PlayerTurnQueue.Peek().HasFolded )
 		{
 			MoveToNextPlayer();
 		}
 
+		// HACK: This just means the game won't get stuck whenever a bot plays - forces them to do minimum bet
 		if ( PlayerTurnQueue.Peek().Client.IsBot )
 		{
 			_ = BotThink();
@@ -279,6 +289,7 @@ public partial class PokerController
 
 	public HandRank RankPlayerHand( Player player, out int score )
 	{
+		// TODO
 		// For each 5 card combination in (communitycards + playerHand) calculate the rank
 
 		var playerHand = player.Hand;

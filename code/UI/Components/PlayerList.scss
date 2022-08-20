@@ -29,12 +29,13 @@
     .player-name {
         opacity: 0;
         position: absolute;
-        left: 100px;
+        left: 82px;
         top: 8px;
         align-items: center;
         justify-content: center;
         transform: translateX( -10px );
         font-size: $font-big;
+        font-weight: $weight-big;
         text-shadow: $text-shadow;
     }
 
@@ -55,12 +56,17 @@
         .money {
             label, iconpanel {
                 font-size: $font-big;
+                font-weight: $weight-big;
             }
 
             height: 42px;
             transition: all 150ms ease;
             font-weight: 700;
             text-shadow: $text-shadow;
+
+            iconpanel {
+                margin-right: 8px;
+            }
         }
 
         .status {

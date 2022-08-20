@@ -95,10 +95,6 @@ public class Camera : CameraMode
 		Position = Position.LerpTo( pawn.EyePosition, 1.0f - fac );
 		Rotation = Rotation.LerpTo( pawn.EyeRotation, 1.0f - fac );
 
-		DebugOverlay.ScreenText( pawn.EyePosition.ToString(), 0 );
-		DebugOverlay.ScreenText( pawn.EyeRotation.ToString(), 1 );
-		DebugOverlay.ScreenText( fac.ToString(), 2 );
-		DebugOverlay.ScreenText( targetFOV.ToString(), 3 );
 		FieldOfView = FieldOfView.LerpTo( targetFOV, 10f * Time.Delta );
 	}
 
