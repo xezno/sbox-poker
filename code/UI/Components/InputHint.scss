@@ -7,7 +7,7 @@
 
     &.is-hold {
         &:not(.using-controller) {
-            .progress-indicator {
+            .radial-fill {
                 position: absolute;
                 right: 0;
                 left: 0;
@@ -15,12 +15,11 @@
                 bottom: 0;
                 z-index: -1;
                 transition: none;
-                background-color: rgba( white, 0.5 );
             }
         }
 
         &.using-controller {
-            .progress-indicator {
+            .radial-fill {
                 position: absolute;
                 right: -4px;
                 left: -4px;
@@ -28,7 +27,7 @@
                 bottom: -4px;
                 border-radius: 100%;
                 z-index: -1;
-                background-color: rgba( white, 0.25 );
+                background-color: rgba( white, 0.1 );
             }
         }
     }

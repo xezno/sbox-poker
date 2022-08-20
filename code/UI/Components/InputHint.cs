@@ -13,7 +13,7 @@ public partial class InputHint : Panel
 	public string Name { get; set; }
 	public string Text { get; set; }
 	public PokerLabel ActionLabel { get; set; }
-	public Panel ProgressIndicatorPanel { get; set; }
+	public RadialFill RadialFill { get; set; }
 
 	public InputHint()
 	{
@@ -64,18 +64,10 @@ public partial class InputHint : Panel
 			SetClass( "has-progress", holdAction.Progress > 0.001f );
 			SetClass( "active", holdAction.Progress > 0.001f );
 
-			float progress = (holdAction.Progress * 100f).Clamp( 0, 99.999f );
+			float progress = holdAction.Progress.Clamp( 0, 1 );
 
-			if ( Input.UsingController && progress > 0 )
-			{
-				ProgressIndicatorPanel.Style.Set( $"background: conic-gradient( white 0%, white {progress}%, transparent {progress}%, transparent 100% )" );
-				ProgressIndicatorPanel.Style.Width = Length.Auto;
-			}
-			else
-			{
-				ProgressIndicatorPanel.Style.Set( $"background: none" );
-				ProgressIndicatorPanel.Style.Width = Length.Percent( progress );
-			}
+			RadialFill.Visible = Input.UsingController && progress > 0;
+			RadialFill.FillAmount = progress;
 		}
 
 		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, GlyphStyle.Knockout.WithNeutralColorABXY() );
