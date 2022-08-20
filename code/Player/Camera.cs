@@ -58,7 +58,7 @@ public class Camera : CameraMode
 					var lookDir = (communityCardSpawnPos - pawn.EyePosition).Normal;
 					targetRotation = Rotation.LookAt( lookDir );
 					targetPosition = pawn.EyePosition;
-					targetFOV = 60f;
+					targetFOV = 50f;
 
 					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
 
@@ -67,24 +67,13 @@ public class Camera : CameraMode
 				}
 			case Targets.YourCards:
 				{
-					targetRotation = pawn.Rotation * Rotation.From( 55, 0, 0 );
-					targetPosition = pawn.EyePosition;
-					targetFOV = 60f;
+					targetRotation = pawn.Rotation * Rotation.From( 75, 0, 0 );
+					targetPosition = pawn.EyePosition - targetRotation.Forward * 8f;
+					targetFOV = 70f;
 
 					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
 
 					Viewer = pawn;
-					break;
-				}
-			case Targets.ThirdPerson:
-				{
-					targetPosition = pawn.EyePosition + pawn.EyeRotation.Backward * 96f + pawn.EyeRotation.Right * 8f;
-					targetRotation = pawn.EyeRotation;
-					targetFOV = 60f;
-
-					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
-
-					Viewer = null;
 					break;
 				}
 			default:
