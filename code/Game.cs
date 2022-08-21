@@ -1,5 +1,6 @@
 ﻿using Poker.Backend;
 using Sandbox;
+using Sandbox.Internal;
 using SandboxEditor;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ public partial class Game : Sandbox.Game
 
 		if ( IsServer )
 		{
+			_ = new Menu();
 			_ = new Hud();
 		}
 	}
@@ -78,31 +80,57 @@ public partial class Game : Sandbox.Game
 	{
 		base.ClientJoined( client );
 
-		if ( client.IsBot )
-		{
-			var clothingContainer = new ClothingContainer();
-
-			if ( client.IsBot )
-				clothingContainer.LoadRandom();
-			else
-				clothingContainer.LoadFromClient( client );
-
-			var player = new Player
-			{
-				Camera = new Camera(),
-				AvatarData = clothingContainer.Serialize()
-			};
-
-			clothingContainer.DressEntity( player );
-
-			client.Pawn = player;
-			MoveToSeat( client );
-		}
+		if ( Entity.All.OfType<Seat>().Count() < Client.All.Count )
+			CreateSpectatorFor( client );
 		else
+			CreatePlayerFor( client );
+	}
+
+	public void CreateSpectatorFor( Client client )
+	{
+		client.Pawn?.Delete();
+
+		var spectatorPawn = new Spectator();
+		client.Pawn = spectatorPawn;
+	}
+
+	[ConCmd.Server( "poker_switch" )]
+	public static void SwitchPlayer()
+	{
+		var client = ConsoleSystem.Caller;
+		var pawn = client.Pawn;
+
+		if ( pawn is Player )
 		{
-			var spectatorPawn = new Spectator();
-			client.Pawn = spectatorPawn;
+			Game.Instance.CreateSpectatorFor( client );
 		}
+		else if ( pawn is Spectator )
+		{
+			Game.Instance.CreatePlayerFor( client );
+		}
+	}
+
+	public void CreatePlayerFor( Client client )
+	{
+		client.Pawn?.Delete();
+
+		var clothingContainer = new ClothingContainer();
+
+		if ( client.IsBot )
+			clothingContainer.LoadRandom();
+		else
+			clothingContainer.LoadFromClient( client );
+
+		var player = new Player
+		{
+			Camera = new Camera(),
+			AvatarData = clothingContainer.Serialize()
+		};
+
+		clothingContainer.DressEntity( player );
+
+		client.Pawn = player;
+		MoveToSeat( client );
 	}
 
 	private void MoveToSeat( Client client )

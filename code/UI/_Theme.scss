@@ -9,3 +9,27 @@ $weight-big: 700;
 
 $font: Poppins;
 $text-shadow: 1.5px 1.5px 1px rgba( black, 1 );
+
+text, label {
+    font-family: $font;
+    color: white;
+    font-weight: $weight-normal;
+    font-size: $font-normal;
+}
+
+icon, iconpanel {
+    font-family: fa6-solid;
+    color: white;
+
+    &.solid {
+        font-family: fa6-solid;
+    }
+
+    &.regular {
+        font-family: fa6-regular;
+    }
+
+    &.brand {
+        font-family: fa6-brands;
+    }
+}

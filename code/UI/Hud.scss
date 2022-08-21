@@ -17,30 +17,6 @@
     width: 1920px;
 }
 
-text, label {
-    font-family: $font;
-    color: white;
-    font-weight: $weight-normal;
-    font-size: $font-normal;
-}
-
-icon, iconpanel {
-    font-family: fa6-solid;
-    color: white;
-
-    &.solid {
-        font-family: fa6-solid;
-    }
-
-    &.regular {
-        font-family: fa6-regular;
-    }
-
-    &.brand {
-        font-family: fa6-brands;
-    }
-}
-
 hr {
     flex-grow: 1;
     padding: 4px 0;

@@ -16,15 +16,15 @@ public class SpectatorCamera : CameraMode
 
 	public SpectatorCamera()
 	{
-		TargetPos = Vector3.Up * 128f;
-		TargetRot = Rotation.Identity;
+		TargetPos = CurrentView.Position;
+		TargetRot = CurrentView.Rotation;
+		TargetFOV = 90f;
 
 		Position = TargetPos;
 		Rotation = TargetRot;
-
+		FieldOfView = TargetFOV;
 
 		LookAngles = Rotation.Angles();
-		FieldOfView = 90f;
 	}
 
 	public override void Update()

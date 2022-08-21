@@ -37,7 +37,7 @@ public class PlayerList : Panel
 
 		foreach ( var playerEntry in PlayerEntries.ToArray() )
 		{
-			if ( playerEntry.Client.IsDormant )
+			if ( playerEntry.Client.IsDormant || playerEntry == null )
 			{
 				playerEntry.Delete();
 				PlayerEntries.Remove( playerEntry );
@@ -79,8 +79,11 @@ public class PlayerList : Panel
 		{
 			base.Tick();
 
-			MoneyLabel.Text = $"${Player.Money.CeilToInt()}";
-			StatusLabel.Text = $"{Player.StatusText}";
+			if ( !Player.IsValid() )
+				Delete();
+
+			MoneyLabel.Text = $"${Player?.Money.CeilToInt() ?? 0}";
+			StatusLabel.Text = $"{Player?.StatusText ?? ""}";
 
 			SetClass( "expand", InputLayer.Evaluate( "list_players" ) );
 		}

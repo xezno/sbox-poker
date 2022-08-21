@@ -19,7 +19,7 @@ public partial class Player : AnimatedEntity
 	[Net] public CardEntity LeftCard { get; set; }
 	[Net] public CardEntity RightCard { get; set; }
 
-	public string StatusText { get; set; }
+	public string StatusText { get; set; } = "TODO.. this needs filling";
 
 	public Camera Camera
 	{
