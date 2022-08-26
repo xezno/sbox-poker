@@ -1,9 +1,20 @@
-﻿using Sandbox;
+﻿using Poker.UI;
+using Sandbox;
 
 namespace Poker.Backend;
 
 partial class PokerController
 {
+	[ConCmd.Admin( "poker_debug_forcewin" )]
+	public static void ForceWin()
+	{
+		if ( ConsoleSystem.Caller.Pawn is not Player player )
+			return;
+
+		Log.Trace( $"Forced {player.Client.Name} as winner" );
+		PokerController.Instance.ProcessWinner( player );
+	}
+	
 	[ConCmd.Admin( "poker_force_next_player" )]
 	public static void ForceNextPlayer()
 	{
@@ -62,5 +73,26 @@ partial class PokerController
 
 			instance.MoveToNextPlayer();
 		}
+	}
+
+	private void Fold( Player player )
+	{
+		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} folds" );
+
+		player.HasFolded = true;
+	}
+
+	private void Bet( float parameter, Player player )
+	{
+		parameter = parameter.Clamp( 0, player.Money );
+
+		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets ${parameter}" );
+
+		if ( MinimumBet < parameter )
+			MinimumBet = parameter;
+
+		Pot += parameter;
+		player.LastBet = parameter;
+		player.Money -= parameter;
 	}
 }

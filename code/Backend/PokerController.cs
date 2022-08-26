@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using SandboxEditor;
 using Poker.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +24,14 @@ public partial class PokerController
 		}
 	}
 
+	// TODO: Buy-ins
+	// List of players that have bought in
 	private List<Player> Players => Entity.All.OfType<Player>().ToList();
 	private Deck Deck { get; set; }
 
 	private Player Dealer { get; set; }
 	private Player SmallBlind { get; set; }
 	private Player BigBlind { get; set; }
-
-	private Queue<Player> PlayerTurnQueue { get; set; }
 
 	public IList<Card> CommunityCards { get => Game.Instance.CommunityCards; set => Game.Instance.CommunityCards = value; }
 	public float Pot { get => Game.Instance.Pot; set => Game.Instance.Pot = value; }
@@ -210,29 +209,33 @@ public partial class PokerController
 				break;
 		}
 
-		Players.ForEach( player =>
-		{
-			if ( !player.HasFolded )
-				PlayerTurnQueue.Enqueue( player );
-		} );
+		PlayerTurnQueue.CreateQueue( Players );
 
 		if ( Round >= Rounds.Showdown || PlayerTurnQueue.Count <= 1 )
 		{
 			Log.Info( "Game over" );
 
 			var winner = FindWinner();
-			winner.Money += Pot;
-			Pot = 0;
+			ProcessWinner( winner );
 
-			Run();
+			Run(); // TODO: Should move to a different game state instead and wait for players etc.
 
 			return;
 		}
 	}
 
+	private void ProcessWinner( Player winner )
+	{
+		winner.Money += Pot;
+		Pot = 0;
+
+		GameServices.UpdateLeaderboard( winner.Client.PlayerId, 1, "wins" );
+		Players.Where( x => x != winner ).ToList().ForEach( x => GameServices.UpdateLeaderboard( x.Client.PlayerId, -1, "wins" ) );
+	}
+
 	private void MoveToNextPlayer()
 	{
-		PlayerTurnQueue.Dequeue();
+		PlayerTurnQueue.Pop();
 
 		if ( PlayerTurnQueue.Count == 0 )
 		{
@@ -261,69 +264,9 @@ public partial class PokerController
 		MoveToNextPlayer();
 	}
 
-	private void Fold( Player player )
-	{
-		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} folds" );
-
-		player.HasFolded = true;
-	}
-
-	private void Bet( float parameter, Player player )
-	{
-		parameter = parameter.Clamp( 0, player.Money );
-
-		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets ${parameter}" );
-
-		if ( MinimumBet < parameter )
-			MinimumBet = parameter;
-
-		Pot += parameter;
-		player.LastBet = parameter;
-		player.Money -= parameter;
-	}
-
 	public bool IsTurn( Player player )
 	{
 		return PlayerTurnQueue.Peek() == player;
-	}
-
-	public HandRank RankPlayerHand( Player player, out int score )
-	{
-		// TODO
-		// For each 5 card combination in (communitycards + playerHand) calculate the rank
-
-		var playerHand = player.Hand;
-		var cards = playerHand.ToArray().Concat( CommunityCards ).ToArray();
-
-		return PokerUtils.RankPokerHand( cards, out score );
-	}
-
-	public Player FindWinner()
-	{
-		var rankedPlayers = Players.Select( x => new { player = x, rank = RankPlayerHand( x, out var score ), score } );
-		var groupedPlayers = rankedPlayers.GroupBy( x => x.rank );
-		var orderedGroupedPlayers = groupedPlayers.OrderBy( x => x.Key );
-
-		var bestPlayers = orderedGroupedPlayers.First();
-		Log.Trace( "Best players: " + string.Join( ", ", bestPlayers.Select( x => x.player + " - " + x.rank + " - " + x.score ) ) );
-
-		Player winner;
-
-		if ( bestPlayers.Count() > 1 )
-		{
-			// Find highest score
-			var orderedBestPlayers = bestPlayers.OrderBy( x => x.score );
-			winner = orderedBestPlayers.First().player;
-		}
-		else
-		{
-			// One winner
-			winner = bestPlayers.First().player;
-		}
-
-		EventFeed.AddEvent( To.Everyone, $"{winner.Client.Name} wins" );
-
-		return winner;
 	}
 
 	[Event.Tick.Server]
