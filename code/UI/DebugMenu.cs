@@ -29,6 +29,9 @@ public class DebugMenu : Panel
 
 			buttons.Add.ButtonWithIcon( "Create Card (♠️A)", "wand-magic-sparkles", "button",
 				() => ConsoleSystem.Run( "poker_spawn_card Spades Ace" ) );
+
+			buttons.Add.ButtonWithIcon( "Force Win", "trophy", "button",
+				() => ConsoleSystem.Run( "poker_debug_forcewin" ) );
 		}
 
 		BindClass( "visible", () => Input.Down( InputButton.View ) );

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sandbox;
 using Sandbox.UI;
@@ -14,10 +15,19 @@ public class PlayerList : Panel
 
 	private List<PlayerEntry> PlayerEntries { get; set; } = new();
 
+	public static PlayerList Instance { get; private set; }
+
 	public PlayerList()
 	{
+		Instance = this;
 	}
 
+	public void OnVoicePlayed( long steamId, float level )
+	{
+		var entry = PlayerEntries.FirstOrDefault( x => x.Client.PlayerId == steamId );
+		entry?.UpdateVoiceLevel( level );
+	}
+	
 	public override void Tick()
 	{
 		base.Tick();
@@ -47,6 +57,9 @@ public class PlayerList : Panel
 
 	class PlayerEntry : Panel
 	{
+		private float VoiceLevel = 0.5f;
+		private float TargetVoiceLevel = 0.0f;
+
 		public Client Client
 		{
 			get => Avatar.Client;
@@ -82,10 +95,32 @@ public class PlayerList : Panel
 			if ( !Player.IsValid() )
 				Delete();
 
+			if ( IsDeleting )
+				return;
+
+			TickInfo();
+			TickVoice();
+		}
+		
+		public void UpdateVoiceLevel( float level )
+		{
+			TargetVoiceLevel = level;
+		}
+
+		private void TickInfo()
+		{
 			MoneyLabel.Text = $"${Player?.Money.CeilToInt() ?? 0}";
 			StatusLabel.Text = $"{Player?.StatusText ?? ""}";
 
 			SetClass( "expand", InputLayer.Evaluate( "list_players" ) );
+		}
+
+		private void TickVoice()
+		{
+			base.Tick();
+
+			VoiceLevel = VoiceLevel.LerpTo( TargetVoiceLevel, 50f * Time.Delta );
+			Style.Left = VoiceLevel * 64f;
 		}
 	}
 }

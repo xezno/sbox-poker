@@ -10,6 +10,9 @@ $weight-big: 700;
 $font: Poppins;
 $text-shadow: 1.5px 1.5px 1px rgba( black, 1 );
 
+$accent: #7BDB40;
+$accent-text: black;
+
 text, label {
     font-family: $font;
     color: white;
@@ -31,5 +34,28 @@ icon, iconpanel {
 
     &.brand {
         font-family: fa6-brands;
+    }
+}
+
+button {
+    background-color: black;
+    padding: 10px 25px;
+    margin: 5px 0;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 250ms ease;
+    border-bottom: 2px $accent;
+
+    &:hover {
+        background-color: gray;
+    }
+
+    iconpanel {
+        width: 16px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-right: 32px;
     }
 }

@@ -82,11 +82,12 @@ partial class PokerController
 		player.HasFolded = true;
 	}
 
-	private void Bet( float parameter, Player player )
+	private bool Bet( float parameter, Player player )
 	{
-		parameter = parameter.Clamp( 0, player.Money );
+		if ( player.Money < parameter )
+			return false;
 
-		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets ${parameter}" );
+		parameter = parameter.Clamp( 0, int.MaxValue );
 
 		if ( MinimumBet < parameter )
 			MinimumBet = parameter;
@@ -94,5 +95,8 @@ partial class PokerController
 		Pot += parameter;
 		player.LastBet = parameter;
 		player.Money -= parameter;
+
+		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets ${parameter}" );
+		return true;
 	}
 }

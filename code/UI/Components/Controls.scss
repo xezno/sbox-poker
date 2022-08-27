@@ -5,14 +5,9 @@
     bottom: $safe-area-y;
     right: $safe-area-x;
     flex-direction: column;
-    opacity: 0;
-
-    &.visible {
-        opacity: 1;
-    }
 }
 
-.play-controls {
+.play-controls, .camera-controls {
     flex-direction: column;
     opacity: 0;
     transition: opacity 150ms ease;

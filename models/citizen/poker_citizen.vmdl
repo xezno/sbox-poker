@@ -1670,7 +1670,7 @@
 								[
 									{
 										_class = "AnimFile"
-										name = "Actions_Bet"
+										name = "Bet"
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1682,7 +1682,7 @@
 										hidden = false
 										anim_markup_ordered = false
 										disable_compression = false
-										source_filename = "models/citizen/citizen@actions_bet.fbx"
+										source_filename = "models/citizen/citizen@bet.fbx"
 										start_frame = -1
 										end_frame = -1
 										framerate = -1.0
@@ -1888,6 +1888,70 @@
 							{
 								bone = "spine_2"
 								weight = 0.0
+							},
+						]
+						master_morph_weight = -1.0
+						morph_weights = [  ]
+					},
+					{
+						_class = "WeightList"
+						name = "Action"
+						default_weight = 0.0
+						weights = 
+						[
+							{
+								bone = "clavicle_R"
+								weight = 0.0
+							},
+							{
+								bone = "spine_0"
+								weight = 0.0
+							},
+							{
+								bone = "spine_1"
+								weight = 1.0
+							},
+							{
+								bone = "spine_2"
+								weight = 1.0
+							},
+						]
+						master_morph_weight = -1.0
+						morph_weights = [  ]
+					},
+					{
+						_class = "WeightList"
+						name = "Only_Spine"
+						default_weight = 0.0
+						weights = 
+						[
+							{
+								bone = "clavicle_L"
+								weight = 0.0
+							},
+							{
+								bone = "clavicle_R"
+								weight = 0.0
+							},
+							{
+								bone = "head"
+								weight = 0.0
+							},
+							{
+								bone = "neck_0"
+								weight = 0.0
+							},
+							{
+								bone = "neck_clothing"
+								weight = 0.0
+							},
+							{
+								bone = "spine_0"
+								weight = 0.0
+							},
+							{
+								bone = "spine_1"
+								weight = 1.0
 							},
 						]
 						master_morph_weight = -1.0

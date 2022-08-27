@@ -163,6 +163,8 @@ public class InputLayer
 		new BoolAction( "emote.thumbs_up", InputButton.Slot1 ),
 		new BoolAction( "emote.thumbs_down", InputButton.Slot2 ),
 		new BoolAction( "emote.pump", InputButton.Slot3 ),
+
+		new BoolAction( "menu", InputButton.Menu )
 	};
 
 	public static List<BaseInputAction> PCActions = new()
@@ -178,7 +180,9 @@ public class InputLayer
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
 		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
 		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
-		new BoolAction( "emote.pump", InputButton.Slot4 )
+		new BoolAction( "emote.pump", InputButton.Slot4 ),
+
+		new BoolAction( "menu", InputButton.Menu )
 	};
 
 	public static List<BaseInputAction> Actions

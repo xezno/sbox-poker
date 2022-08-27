@@ -5,19 +5,11 @@
     padding: 4px;
     flex-direction: row;
 
-    &.is-hold {
-        &:not(.using-controller) {
-            .radial-fill {
-                position: absolute;
-                right: 0;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                z-index: -1;
-                transition: none;
-            }
-        }
+    .radial-fill {
+        display: none;
+    }
 
+    &.is-hold {
         &.using-controller {
             .radial-fill {
                 position: absolute;
@@ -28,6 +20,7 @@
                 border-radius: 100%;
                 z-index: -1;
                 background-color: rgba( white, 0.1 );
+                display: flex;
             }
         }
     }
@@ -71,7 +64,7 @@
 
     &.active {
         .glyph {
-            background-image-tint: gray;
+            // background-image-tint: $accent;
         }
     }
 }

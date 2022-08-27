@@ -47,25 +47,3 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
-
-button {
-    background-color: black;
-    padding: 10px 25px;
-    margin: 5px 0;
-    align-items: center;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 250ms ease;
-
-    &:hover {
-        background-color: gray;
-    }
-
-    iconpanel {
-        width: 16px;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        margin-right: 32px;
-    }
-}

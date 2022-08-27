@@ -1,4 +1,5 @@
 ﻿using Poker.Backend;
+using Poker.UI;
 using Sandbox;
 using Sandbox.Internal;
 using SandboxEditor;
@@ -9,7 +10,7 @@ namespace Poker;
 
 public partial class Game : Sandbox.Game
 {
-	[Net] public IList<Card> CommunityCards { get; set; }
+	[Net] public IList<Backend.Card> CommunityCards { get; set; }
 	[Net] public float Pot { get; set; }
 	[Net] public float MinimumBet { get; set; }
 
@@ -26,6 +27,11 @@ public partial class Game : Sandbox.Game
 			_ = new Menu();
 			_ = new Hud();
 		}
+	}
+
+	public override void OnVoicePlayed( Client cl )
+	{
+		PlayerList.Instance?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
 	}
 
 	[ConCmd.Server( "poker_start" )]

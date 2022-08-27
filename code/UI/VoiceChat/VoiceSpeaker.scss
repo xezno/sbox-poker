@@ -1,0 +1,18 @@
+﻿@import "/UI/_Theme.scss";
+
+voicespeaker {
+    position: absolute;
+    bottom: $safe-area-y;
+    left: 50%;
+    transform: translate( -50% );
+    opacity: 0.0;
+    font-family: "material icons";
+    font-size: 80px;
+    color: white;
+    text-shadow: $text-shadow;
+    transition: opacity 150ms ease;
+
+    &.active {
+        opacity: 1.0;
+    }
+}

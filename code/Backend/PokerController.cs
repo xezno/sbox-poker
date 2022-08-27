@@ -55,7 +55,6 @@ public partial class PokerController
 		Host.AssertServer();
 
 		Instance = this;
-
 		Event.Register( this );
 	}
 
@@ -76,6 +75,7 @@ public partial class PokerController
 		PlayerTurnQueue = new();
 		CommunityCards.Clear();
 		Round = Rounds.Preflop;
+		Pot = 0;
 
 		// Determine dealer
 		Dealer = Players[0];
@@ -102,23 +102,25 @@ public partial class PokerController
 
 		float blind = 50;
 
-		// Check if blinds can afford it
-		// TODO: This should probaly be on Bet() - if they can't afford it, return false, and we'll deal with it where it gets called
-		if ( SmallBlind.Money < blind * 0.5f )
-		{
-			SmallBlind.Client.Kick(); // TODO: Move to spectators
-			Run();
-		}
-
-		if ( BigBlind.Money < blind )
-		{
-			BigBlind.Client.Kick(); // TODO: Move to spectators
-			Run();
-		}
-
 		// Take blinds
-		Bet( blind * 0.5f, SmallBlind );
-		Bet( blind, BigBlind );
+		if ( !Bet( blind * 0.5f, SmallBlind ) )
+		{
+			/*
+				When a player's stack is less than the amount of the small blind, they are 
+				automatically considered all-in in the next hand they play, regardless of position.
+				If the player's stack is larger than the small blind but smaller than the big blind,
+				they will be considered all-in in any position other than the small blind, assuming
+				they fold for their option.
+				When all-in, the player can only win the amount of their stack, plus that same 
+				amount from all of the callers and blinds. If the person has less than the big 
+				blind, they can only win the portion of the blind equal to that of their stack.
+			*/
+		}
+
+		if ( !Bet( blind, BigBlind ) )
+		{
+			// (same as above)
+		}
 
 		// Give each player two hole cards
 		Players.ForEach( player =>
@@ -170,6 +172,13 @@ public partial class PokerController
 		Players.ForEach( player =>
 		{
 			if ( player.Money <= 0 )
+				player.Client.Kick(); // TODO: Move to spectators
+		} );
+
+		// OK now everyone needs to pay the ante
+		Players.ForEach( player =>
+		{
+			if ( !Bet( 5, player ) )
 				player.Client.Kick(); // TODO: Move to spectators
 		} );
 

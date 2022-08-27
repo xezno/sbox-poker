@@ -54,9 +54,11 @@ public partial class InputHint : Panel
 
 		var action = InputLayer.GetAction( Name );
 		var button = action.GetDisplayButton();
+		bool active = MathF.Abs( action.Evaluate() ) > 0.5f;
 
 		SetClass( "using-controller", Input.UsingController );
-		SetClass( "active", MathF.Abs( action.Evaluate() ) > 0.5f );
+		SetClass( "active", active );
+		
 
 		if ( action is HoldAction holdAction )
 		{
@@ -68,9 +70,15 @@ public partial class InputHint : Panel
 
 			RadialFill.Visible = Input.UsingController && progress > 0;
 			RadialFill.FillAmount = progress;
+
+			active = holdAction.Progress > 0.001f;
 		}
 
-		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, GlyphStyle.Knockout.WithNeutralColorABXY() );
+		var glyphStyle = GlyphStyle.Knockout.WithNeutralColorABXY();
+		if ( active )
+			glyphStyle = GlyphStyle.Dark.WithSolidABXY();
+		
+		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, glyphStyle );
 
 		if ( glyphTexture != null )
 		{

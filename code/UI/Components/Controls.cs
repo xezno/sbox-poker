@@ -19,6 +19,7 @@ internal class Controls : Panel
 
 	public InputHint ActionHint { get; set; }
 	public Panel PlayControlsPanel { get; set; }
+	public Panel CameraControlsPanel { get; set; }
 
 	private float incrementRate => 50f;
 	private int snapRate => 10;
@@ -29,11 +30,12 @@ internal class Controls : Panel
 
 		if ( Local.Pawn is not Player player )
 		{
-			SetClass( "visible", false );
+			CameraControlsPanel.SetClass( "visible", false );
+			PlayControlsPanel.SetClass( "visible", false );
 			return;
 		}
 
-		SetClass( "visible", true );
+		CameraControlsPanel.SetClass( "visible", true );
 		PlayControlsPanel.SetClass( "visible", player.IsMyTurn );
 
 		if ( !player.IsMyTurn )

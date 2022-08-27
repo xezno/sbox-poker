@@ -81,7 +81,11 @@
             }
 
             &.my-turn {
-                background-color: #777777;
+                background-color: $accent;
+                
+                label,text,icon,iconpanel {
+                    color: $accent-text;
+                }
             }
         }
     }
