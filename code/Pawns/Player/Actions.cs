@@ -1,6 +1,6 @@
 ﻿namespace Poker;
 
-public enum Action
+public enum Actions
 {
 	None,
 	Game_Idle,

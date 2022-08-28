@@ -1,4 +1,4 @@
-﻿namespace Poker.Backend;
+﻿namespace Poker;
 
 public struct Card
 {
@@ -29,66 +29,34 @@ public struct Card
 
 	public string ToShortString()
 	{
-		string suitString = "♠️";
-		switch ( Suit )
+		var valueLUT = new Dictionary< Value, string >()
 		{
-			case Suit.Diamonds:
-				suitString = "♦️";
-				break;
-			case Suit.Hearts:
-				suitString = "♥️";
-				break;
-			case Suit.Spades:
-				suitString = "♠️";
-				break;
-			case Suit.Clubs:
-				suitString = "♣️";
-				break;
-		}
+			{ Value.Ace, "A" },
+			{ Value.King, "K" },
+			{ Value.Queen, "Q" },
+			{ Value.Jack, "J" },
+			{ Value.Ten, "10" },
+			{ Value.Nine, "9" },
+			{ Value.Eight, "8" },
+			{ Value.Seven, "7" },
+			{ Value.Six, "6" },
+			{ Value.Five, "5" },
+			{ Value.Four, "4" },
+			{ Value.Three, "3" },
+			{ Value.Two, "2" },
+		};
 
-		string valueString = "";
-		switch ( Value )
+		var valueString = valueLUT[Value];
+		
+		var suitLUT = new Dictionary<Suit, string>()
 		{
-			case Value.Ace:
-				valueString = "A";
-				break;
-			case Value.King:
-				valueString = "K";
-				break;
-			case Value.Queen:
-				valueString = "Q";
-				break;
-			case Value.Jack:
-				valueString = "J";
-				break;
-			case Value.Ten:
-				valueString = "10";
-				break;
-			case Value.Nine:
-				valueString = "9";
-				break;
-			case Value.Eight:
-				valueString = "8";
-				break;
-			case Value.Seven:
-				valueString = "7";
-				break;
-			case Value.Six:
-				valueString = "6";
-				break;
-			case Value.Five:
-				valueString = "5";
-				break;
-			case Value.Four:
-				valueString = "4";
-				break;
-			case Value.Three:
-				valueString = "3";
-				break;
-			case Value.Two:
-				valueString = "2";
-				break;
-		}
+			{ Suit.Diamonds, "♦️" },
+			{ Suit.Hearts, "♥️" },
+			{ Suit.Spades, "♠️" },
+			{ Suit.Clubs, "♣️" },
+		};
+
+		var suitString = suitLUT[Suit];
 
 		return $"{suitString}{valueString}";
 	}

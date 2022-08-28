@@ -344,7 +344,7 @@
 				{
 					_class = "CBlendAnimNode"
 					m_sName = "Blend 1D - Voice"
-					m_vecPosition = [ 512.0, 480.0 ]
+					m_vecPosition = [ 512.0, 448.0 ]
 					m_nNodeID = 
 					{
 						m_id = 128858737
@@ -536,7 +536,7 @@
 				{
 					_class = "CBoneMaskAnimNode"
 					m_sName = "Override mouth morphs only"
-					m_vecPosition = [ 304.0, 480.0 ]
+					m_vecPosition = [ 304.0, 544.0 ]
 					m_nNodeID = 
 					{
 						m_id = 502886029
@@ -2138,7 +2138,7 @@
 				{
 					_class = "CRootAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 688.0, 480.0 ]
+					m_vecPosition = [ 688.0, 448.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1338594817
@@ -3999,7 +3999,7 @@
 				{
 					_class = "CSingleFrameAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 96.0, 496.0 ]
+					m_vecPosition = [ 112.0, 560.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1997722454

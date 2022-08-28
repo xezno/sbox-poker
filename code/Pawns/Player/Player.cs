@@ -2,29 +2,15 @@
 
 public partial class Player : AnimatedEntity
 {
-	public List<Backend.Card> Hand { get; set; }
-
 	[Net] public string AvatarData { get; set; }
-	[Net] public float Money { get; set; }
-	[Net] public float LastBet { get; set; }
-	[Net] public Backend.Move LastMove { get; set; }
-	[Net] public bool IsMyTurn { get; set; }
-	[Net] public bool HasFolded { get; set; }
-
-	[Net] public CardEntity LeftCard { get; set; }
-	[Net] public CardEntity RightCard { get; set; }
-
-	public string StatusText { get; set; } = "TODO.. this needs filling";
-
 	[Net] public float VoiceLevel { get; set; }
+	[Net] public PlayerAnimator Animator { get; set; }
 
 	public Camera Camera
 	{
 		get => Components.Get<Camera>();
 		set => Components.Add( value );
 	}
-
-	public SeatEntity Seat => Entity.All.OfType<SeatEntity>().First( x => x.Player == this );
 
 	public override void Spawn()
 	{
@@ -48,18 +34,21 @@ public partial class Player : AnimatedEntity
 	{
 		base.Simulate( cl );
 
+		Animator.Simulate( cl, this, null );
+
 		if ( IsServer )
 		{
 			IsMyTurn = Game.Instance?.IsTurn( this ) ?? false;
 		}
 
 		SetEyeTransforms();
-		SetAnimProperties();
 	}
 
 	public override void FrameSimulate( Client cl )
 	{
 		base.FrameSimulate( cl );
+
+		Animator.FrameSimulate( cl, this, null );
 
 		SetEyeTransforms();
 		SetBodyGroups();
@@ -67,7 +56,7 @@ public partial class Player : AnimatedEntity
 
 	private void SetBodyGroups()
 	{
-		if ( IsClient && IsLocalPawn && Camera.GetCameraTarget() != Camera.Targets.ThirdPerson )
+		if ( IsClient && IsLocalPawn )
 		{
 			SetBodyGroup( "Head", 1 );
 		}
@@ -77,69 +66,6 @@ public partial class Player : AnimatedEntity
 		}
 	}
 
-	public void SetAnimProperties()
-	{
-		if ( LifeState != LifeState.Alive )
-			return;
-
-		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) );
-
-		// TODO: remove this ( test )
-		if ( InputLayer.Evaluate( "emote.middle_finger" ) )
-			SetAnimParameter( "action", (int)Action.Emote_MiddleFinger );
-		else if ( InputLayer.Evaluate( "emote.thumbs_up" ) )
-			SetAnimParameter( "action", (int)Action.Emote_ThumbsUp );
-		else if ( InputLayer.Evaluate( "emote.thumbs_down" ) )
-			SetAnimParameter( "action", (int)Action.Emote_ThumbsDown );
-		else if ( InputLayer.Evaluate( "emote.pump" ) )
-			SetAnimParameter( "action", (int)Action.Emote_Pump );
-		else
-			SetAnimParameter( "action", 0 );
-
-		SetAnimParameter( "sit_pose", 0 );
-
-		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
-		Vector3 emoteAimPos = EyePosition + EyeRotation.Forward * 512;
-		emoteAimPos = emoteAimPos.WithZ( 128 );
-
-		SetAnimLookAt( "aim_head", lookPos );
-		SetAnimLookAt( "aim_emote", emoteAimPos );
-		SetAnimParameter( "aim_head_weight", 1.0f );
-		SetAnimParameter( "aim_emote_weight", 1.0f );
-
-		LeftCard.LocalPosition = GameSettings.Instance.LeftHandPosition;
-		LeftCard.LocalRotation = GameSettings.Instance.LeftHandRotation;
-
-		RightCard.LocalPosition = GameSettings.Instance.RightHandPosition;
-		RightCard.LocalRotation = GameSettings.Instance.RightHandRotation;
-
-		if ( Host.IsClient && Client.IsValid() )
-		{
-			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
-			DebugOverlay.ScreenText( Client.VoiceLevel.ToString() );
-		}
-	}
-
-	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
-	public static void OnDebugOverlay()
-	{
-		if ( !Host.IsClient )
-			return;
-
-		var player = Local.Pawn as Player;
-
-		if ( player == null )
-			return;
-
-		string handStr = "No hand";
-		if ( player.Hand != null )
-			handStr = string.Join( ", ", player.Hand );
-
-		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 400 ), "CL: Local Player",
-			$"Hand: {handStr}\n" +
-			$"Is my turn?: {player.IsMyTurn}" );
-	}
-
 	private void SetEyeTransforms()
 	{
 		var eyeTransform = GetAttachment( "eyes", false ) ?? default;
@@ -147,19 +73,6 @@ public partial class Player : AnimatedEntity
 		EyeLocalRotation = Input.Rotation;
 
 		Position = Position.WithZ( 6 );
-	}
-
-	[ClientRpc]
-	public void RpcSetHand( byte[] cardData )
-	{
-		var cards = RpcUtils.Decompress<Backend.Card[]>( cardData );
-		Hand = cards.ToList();
-	}
-
-	[ClientRpc]
-	public void RpcSetStatus( string status )
-	{
-		StatusText = status;
 	}
 
 	public override void BuildInput( InputBuilder inputBuilder )
@@ -181,13 +94,5 @@ public partial class Player : AnimatedEntity
 		);
 
 		inputBuilder.ViewAngles = clampedAngles;
-	}
-
-	public void Reset()
-	{
-		HasFolded = false;
-		LastBet = 0;
-		LastMove = Backend.Move.Bet;
-		Hand = null;
 	}
 }

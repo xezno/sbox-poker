@@ -1,9 +1,8 @@
-﻿using Poker.Backend;
-using Sandbox.UI;
+﻿using Sandbox.UI;
 using System;
 
 namespace Poker.UI;
-public class Card : Panel
+public class CardPanel : Panel
 {
 	public override void SetProperty( string name, string value )
 	{
@@ -29,7 +28,7 @@ public class Card : Panel
 		}
 	}
 
-	public Card()
+	public CardPanel()
 	{
 		StyleSheet.Load( "/UI/Components/Card.scss" );
 		SetClass( "card", true );
@@ -42,7 +41,7 @@ public class Card : Panel
 
 	public void SetCard( Suit suit, Value value )
 	{
-		var card = new Backend.Card( suit, value );
+		var card = new Card( suit, value );
 		Style.BackgroundImage = Texture.Load( FileSystem.Mounted, card.GetFilename() );
 	}
 }

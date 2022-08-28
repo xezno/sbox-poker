@@ -1,6 +1,4 @@
-﻿using Poker.Backend;
-
-namespace Poker;
+﻿namespace Poker;
 partial class Game
 {
 	[ConCmd.Admin( "poker_debug_forcewin" )]

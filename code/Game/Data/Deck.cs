@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Poker.Backend;
+namespace Poker;
 
 public class Deck
 {

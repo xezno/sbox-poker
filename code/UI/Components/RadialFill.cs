@@ -24,7 +24,7 @@ public class RadialFill : Panel
 			return;
 
 		var center = Box.Rect.Center;
-		var radius = Box.Rect.width * .5f;
+		var radius = Box.Rect.Width * .5f;
 		var draw = Render.Draw2D;
 
 		draw.Color = TrackColor;

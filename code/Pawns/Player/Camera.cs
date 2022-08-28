@@ -17,7 +17,6 @@ public class Camera : CameraMode
 	public enum Targets
 	{
 		FirstPerson,
-		ThirdPerson,
 		CommunityCards,
 		YourCards,
 	}

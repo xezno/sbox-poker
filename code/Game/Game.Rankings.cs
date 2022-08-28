@@ -1,5 +1,4 @@
-﻿using Poker.Backend;
-using Poker.UI;
+﻿using Poker.UI;
 
 namespace Poker;
 partial class Game

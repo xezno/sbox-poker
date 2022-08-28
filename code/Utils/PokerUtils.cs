@@ -1,6 +1,4 @@
-﻿using Poker.Backend;
-
-namespace Poker;
+﻿namespace Poker;
 
 public static class PokerUtils
 {

@@ -9,7 +9,7 @@ public class PlayerList : Panel
 	// @ref
 	public Panel WrapperPanel { get; set; }
 
-	private List<PlayerEntry> PlayerEntries { get; set; } = new();
+	private IEnumerable<PlayerEntry> PlayerEntries => WrapperPanel.ChildrenOfType<PlayerEntry>();
 
 	public static PlayerList Instance { get; private set; }
 
@@ -31,14 +31,7 @@ public class PlayerList : Panel
 		foreach ( var client in Client.All )
 		{
 			if ( !PlayerEntries.Any( x => x.Client == client ) && client.Pawn is Player )
-			{
-				var playerEntry = new PlayerEntry( client )
-				{
-					Parent = WrapperPanel
-				};
-
-				PlayerEntries.Add( playerEntry );
-			}
+				_ = new PlayerEntry( WrapperPanel, client );
 		}
 
 		foreach ( var playerEntry in PlayerEntries.ToArray() )
@@ -46,7 +39,6 @@ public class PlayerList : Panel
 			if ( playerEntry.Client.IsDormant || playerEntry == null )
 			{
 				playerEntry.Delete();
-				PlayerEntries.Remove( playerEntry );
 			}
 		}
 	}
@@ -55,6 +47,7 @@ public class PlayerList : Panel
 	{
 		private float VoiceLevel = 0.5f;
 		private float TargetVoiceLevel = 0.0f;
+		private TimeSince TimeSinceLastVoice;
 
 		public Client Client
 		{
@@ -69,7 +62,7 @@ public class PlayerList : Panel
 		private PokerLabel MoneyLabel { get; set; }
 		private PokerLabel StatusLabel { get; set; }
 
-		public PlayerEntry( Client client )
+		public PlayerEntry( Panel parent, Client client )
 		{
 			Avatar = AddChild<Avatar>();
 			Avatar.Client = client;
@@ -82,8 +75,9 @@ public class PlayerList : Panel
 			Add.Label( client.Name, "player-name" );
 
 			SetClass( "player", true );
-
 			BindClass( "has-folded", () => Player.HasFolded );
+
+			Parent = parent;
 		}
 
 		public override void Tick()
@@ -103,6 +97,7 @@ public class PlayerList : Panel
 		public void UpdateVoiceLevel( float level )
 		{
 			TargetVoiceLevel = level;
+			TimeSinceLastVoice = 0;
 		}
 
 		private void TickInfo()
@@ -116,6 +111,9 @@ public class PlayerList : Panel
 		private void TickVoice()
 		{
 			base.Tick();
+
+			if ( TimeSinceLastVoice > 0.5f )
+				TargetVoiceLevel = 0;
 
 			VoiceLevel = VoiceLevel.LerpTo( TargetVoiceLevel, 50f * Time.Delta );
 			Style.Left = VoiceLevel * 64f;

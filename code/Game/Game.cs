@@ -2,14 +2,13 @@
 global using SandboxEditor;
 global using System.Collections.Generic;
 global using System.Linq;
-using Poker.Backend;
 using Poker.UI;
 
 namespace Poker;
 
 public partial class Game : Sandbox.Game
 {
-	[Net] public IList<Backend.Card> CommunityCards { get; set; }
+	[Net] public IList<Card> CommunityCards { get; set; }
 	[Net] public float Pot { get; set; }
 	[Net] public float MinimumBet { get; set; }
 
@@ -78,8 +77,8 @@ public partial class Game : Sandbox.Game
 		cardEntity.Position = tr.EndPosition;
 		cardEntity.Rotation = Rotation.LookAt( -tr.Direction.WithZ( 0 ).Normal );
 
-		var backendCard = new Backend.Card( suit, value );
-		cardEntity.RpcSetCard( To.Everyone, backendCard );
+		var card = new Card( suit, value );
+		cardEntity.RpcSetCard( To.Everyone, card );
 	}
 
 	public override void ClientJoined( Client client )
@@ -130,6 +129,7 @@ public partial class Game : Sandbox.Game
 		var player = new Player
 		{
 			Camera = new Camera(),
+			Animator = new PlayerAnimator(),
 			AvatarData = clothingContainer.Serialize()
 		};
 

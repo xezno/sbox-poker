@@ -1,4 +1,4 @@
-﻿namespace Poker.Backend;
+﻿namespace Poker;
 
 /// <summary>
 /// Available card suits

@@ -15,7 +15,7 @@ public partial class CardEntity : ModelEntity
 	}
 
 	[ClientRpc]
-	private void RpcSetCard( Backend.Card card )
+	private void RpcSetCard( Card card )
 	{
 		Host.AssertClient();
 

@@ -5,39 +5,39 @@ namespace Poker.UI;
 [UseTemplate]
 internal class CommunityCards : Panel
 {
-	private TimeSince timeSinceLastRefresh = 0;
+    private TimeSince timeSinceLastRefresh = 0;
 
-	public override void Tick()
-	{
-		base.Tick();
+    public override void Tick()
+    {
+        base.Tick();
 
-		if ( timeSinceLastRefresh < 1 )
-			return;
+        if (timeSinceLastRefresh < 1)
+            return;
 
-		var cardPanels = Children.OfType<Card>().ToList();
-		Game instance;
+        var cardPanels = Children.OfType<CardPanel>().ToList();
+        Game instance;
 
-		if ( (instance = Game.Instance) == null )
-		{
-			cardPanels.ForEach( x => x.Reset() );
-			return;
-		}
+        if ((instance = Game.Instance) == null)
+        {
+            cardPanels.ForEach(x => x.Reset());
+            return;
+        }
 
-		for ( int i = 0; i < 5; ++i )
-		{
-			var cardPanel = cardPanels[i];
+        for (int i = 0; i < 5; ++i)
+        {
+            var cardPanel = cardPanels[i];
 
-			if ( instance.CommunityCards.Count <= i )
-			{
-				cardPanel.Reset();
-			}
-			else
-			{
-				var card = instance.CommunityCards[i];
-				cardPanel.SetCard( card.Suit, card.Value );
-			}
-		}
+            if (instance.CommunityCards.Count <= i)
+            {
+                cardPanel.Reset();
+            }
+            else
+            {
+                var card = instance.CommunityCards[i];
+                cardPanel.SetCard(card.Suit, card.Value);
+            }
+        }
 
-		timeSinceLastRefresh = 0;
-	}
+        timeSinceLastRefresh = 0;
+    }
 }

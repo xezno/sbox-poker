@@ -1,4 +1,4 @@
-﻿namespace Poker.Backend;
+﻿namespace Poker;
 
 public enum HandRank
 {
