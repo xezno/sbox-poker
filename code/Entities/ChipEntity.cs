@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Poker;
+﻿namespace Poker;
 
 [Title( "Chip" ), Category( "Poker" )]
 public partial class ChipEntity : ModelEntity

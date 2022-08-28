@@ -1,10 +1,9 @@
-﻿using Poker.Backend;
+﻿global using Sandbox;
+global using SandboxEditor;
+global using System.Collections.Generic;
+global using System.Linq;
+using Poker.Backend;
 using Poker.UI;
-using Sandbox;
-using Sandbox.Internal;
-using SandboxEditor;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Poker;
 

@@ -1,7 +1,4 @@
-﻿using Sandbox;
-using SandboxEditor;
-
-namespace Poker;
+﻿namespace Poker;
 
 [Library( "info_community_card_spawn" )]
 [EditorModel( "models/card/card.vmdl" )]

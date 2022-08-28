@@ -1,4 +1,3 @@
-using Sandbox;
 using Sandbox.UI;
 using System;
 
@@ -58,7 +57,7 @@ public partial class InputHint : Panel
 
 		SetClass( "using-controller", Input.UsingController );
 		SetClass( "active", active );
-		
+
 
 		if ( action is HoldAction holdAction )
 		{
@@ -77,7 +76,7 @@ public partial class InputHint : Panel
 		var glyphStyle = GlyphStyle.Knockout.WithNeutralColorABXY();
 		if ( active )
 			glyphStyle = GlyphStyle.Dark.WithSolidABXY();
-		
+
 		Texture glyphTexture = Input.GetGlyph( button, InputGlyphSize.Small, glyphStyle );
 
 		if ( glyphTexture != null )

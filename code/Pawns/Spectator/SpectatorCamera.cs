@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Poker;
+﻿namespace Poker;
 
 public class SpectatorCamera : CameraMode
 {

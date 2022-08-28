@@ -1,7 +1,4 @@
-﻿using Sandbox;
-using System.Linq;
-
-namespace Poker;
+﻿namespace Poker;
 
 public static class ClothingExtensions
 {

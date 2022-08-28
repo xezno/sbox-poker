@@ -1,7 +1,4 @@
-﻿using Sandbox;
-using SandboxEditor;
-
-namespace Poker;
+﻿namespace Poker;
 
 [EditorModel( "models/editor/playerstart.vmdl" )]
 [Library( "info_seat" )]

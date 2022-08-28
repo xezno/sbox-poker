@@ -1,9 +1,4 @@
-﻿using Sandbox;
-using SandboxEditor;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Poker;
+﻿namespace Poker;
 
 public partial class Player : AnimatedEntity
 {

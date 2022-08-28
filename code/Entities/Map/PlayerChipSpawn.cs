@@ -1,7 +1,4 @@
-﻿using Sandbox;
-using SandboxEditor;
-
-namespace Poker;
+﻿namespace Poker;
 
 [EditorModel( "models/chip/chip.vmdl" )]
 [Library( "info_player_chip_spawn" )]

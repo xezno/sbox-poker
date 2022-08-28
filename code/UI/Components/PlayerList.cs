@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Sandbox;
-using Sandbox.UI;
+﻿using Sandbox.UI;
 using Sandbox.UI.Construct;
 
 namespace Poker.UI;
@@ -27,7 +23,7 @@ public class PlayerList : Panel
 		var entry = PlayerEntries.FirstOrDefault( x => x.Client.PlayerId == steamId );
 		entry?.UpdateVoiceLevel( level );
 	}
-	
+
 	public override void Tick()
 	{
 		base.Tick();
@@ -103,7 +99,7 @@ public class PlayerList : Panel
 			TickInfo();
 			TickVoice();
 		}
-		
+
 		public void UpdateVoiceLevel( float level )
 		{
 			TargetVoiceLevel = level;
