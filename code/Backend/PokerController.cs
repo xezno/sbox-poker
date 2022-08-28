@@ -195,7 +195,7 @@ public partial class PokerController
 	{
 		var cards = Deck.Draw( count );
 		var cardsStr = string.Join( ", ", cards.Select( x => x.ToShortString() ) );
-		EventFeed.AddEvent( To.Everyone, $"Dealt community cards: {cardsStr}" );
+		Log.Trace( $"Dealt community cards: {cardsStr}" );
 
 		foreach ( var card in cards )
 			CommunityCards.Add( card );

@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using System;
 
 namespace Poker.UI;
 
@@ -13,6 +14,7 @@ public partial class EventFeed : Panel
 		Instance = this;
 	}
 
+	[Obsolete()]
 	[ConCmd.Client( "poker_add_event", CanBeCalledFromServer = true )]
 	public static void AddEvent( string text )
 	{

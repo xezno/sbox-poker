@@ -77,7 +77,7 @@ partial class PokerController
 
 	private void Fold( Player player )
 	{
-		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} folds" );
+		Log.Trace( $"{player.Client.Name} folds" );
 
 		player.HasFolded = true;
 	}
@@ -96,7 +96,7 @@ partial class PokerController
 		player.LastBet = parameter;
 		player.Money -= parameter;
 
-		EventFeed.AddEvent( To.Everyone, $"{player.Client.Name} bets ${parameter}" );
+		Log.Trace( $"{player.Client.Name} bets ${parameter}" );
 		return true;
 	}
 }
