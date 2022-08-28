@@ -7,7 +7,7 @@ namespace Poker;
 [Library( "info_seat" )]
 [Title( "Seat" ), Category( "Poker" )]
 [HammerEntity]
-public partial class Seat : Entity
+public partial class SeatEntity : Entity
 {
 	[Property]
 	public int SeatNumber { get; set; }

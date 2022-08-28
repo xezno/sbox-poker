@@ -82,7 +82,7 @@ public partial class Game : Sandbox.Game
 	{
 		base.ClientJoined( client );
 
-		if ( Entity.All.OfType<Seat>().Count() < Client.All.Count )
+		if ( Entity.All.OfType<SeatEntity>().Count() < Client.All.Count )
 			CreateSpectatorFor( client );
 		else
 			CreatePlayerFor( client );
@@ -137,7 +137,7 @@ public partial class Game : Sandbox.Game
 
 	private void MoveToSeat( Client client )
 	{
-		var orderedSeats = Entity.All.OfType<Seat>().OrderBy( x => x.SeatNumber );
+		var orderedSeats = Entity.All.OfType<SeatEntity>().OrderBy( x => x.SeatNumber );
 		var emptySeats = orderedSeats.Where( x => !x.IsOccupied );
 
 		var firstAvailableSeat = emptySeats.FirstOrDefault();

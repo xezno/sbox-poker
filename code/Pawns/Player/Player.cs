@@ -27,7 +27,7 @@ public partial class Player : AnimatedEntity
 		set => Components.Add( value );
 	}
 
-	public Seat Seat => Entity.All.OfType<Seat>().First( x => x.Player == this );
+	public SeatEntity Seat => Entity.All.OfType<SeatEntity>().First( x => x.Player == this );
 
 	public override void Spawn()
 	{
