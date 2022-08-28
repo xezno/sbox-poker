@@ -53,7 +53,7 @@ public partial class Player : AnimatedEntity
 
 		if ( IsServer )
 		{
-			IsMyTurn = Backend.PokerController.Instance?.IsTurn( this ) ?? false;
+			IsMyTurn = Game.Instance?.IsTurn( this ) ?? false;
 		}
 
 		SetEyeTransforms();
@@ -178,5 +178,13 @@ public partial class Player : AnimatedEntity
 		);
 
 		inputBuilder.ViewAngles = clampedAngles;
+	}
+
+	public void Reset()
+	{
+		HasFolded = false;
+		LastBet = 0;
+		LastMove = Backend.Move.Bet;
+		Hand = null;
 	}
 }

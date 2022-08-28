@@ -59,19 +59,19 @@ internal class Controls : Panel
 			return;
 
 		if ( !allInPressedLastFrame && allInPressed )
-			PokerController.CmdSubmitMove( Move.Bet, player.Money );
+			Game.CmdSubmitMove( Move.Bet, player.Money );
 	}
 
 	private void ProcessSubmitInput( bool submitPressed )
 	{
 		if ( !submitPressedLastFrame && submitPressed )
-			PokerController.CmdSubmitMove( Move.Bet, roundedBet );
+			Game.CmdSubmitMove( Move.Bet, roundedBet );
 	}
 
 	private void ProcessFoldInput( bool foldPressed )
 	{
 		if ( !foldPressedLastFrame && foldPressed )
-			PokerController.CmdSubmitMove( Move.Fold, 0 );
+			Game.CmdSubmitMove( Move.Fold, 0 );
 	}
 
 	private void ProcessBetInput( float betDelta )

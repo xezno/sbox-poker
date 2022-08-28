@@ -14,8 +14,6 @@ public partial class Game : Sandbox.Game
 	[Net] public float Pot { get; set; }
 	[Net] public float MinimumBet { get; set; }
 
-	public PokerController PokerController { get; set; }
-
 	public static Game Instance { get; set; }
 
 	public Game()
@@ -39,9 +37,7 @@ public partial class Game : Sandbox.Game
 	{
 		var instance = Game.Current as Game;
 
-		instance.PokerController = null;
-		instance.PokerController = new();
-		instance.PokerController.Run();
+		Instance.Run();
 	}
 
 	[ConCmd.Server( "poker_spawn_chip" )]

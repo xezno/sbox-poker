@@ -1,8 +1,10 @@
 ﻿using Sandbox;
+using System;
 using System.Text.Json.Serialization;
 
 namespace Poker;
 
+[Obsolete]
 [GameResource( "Poker Game Settings", "poker", "Game settings for Poker" )]
 public class GameSettings : GameResource
 {

@@ -1,41 +1,22 @@
-﻿using Sandbox;
-using Poker.UI;
+﻿using Poker.Backend;
+using Sandbox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Poker.Backend;
-
-public partial class PokerController
+namespace Poker;
+partial class Game
 {
-	private static PokerController instance;
-
-	public static PokerController Instance
-	{
-		get
-		{
-			Host.AssertServer();
-			return instance;
-		}
-		set
-		{
-			Host.AssertServer();
-			instance = value;
-		}
-	}
-
 	// TODO: Buy-ins
 	// List of players that have bought in
-	private List<Player> Players => Entity.All.OfType<Player>().ToList();
+	private List<Player> Players => Entity.All.OfType<Player>().Where( x => !x.HasFolded ).ToList();
 	private Deck Deck { get; set; }
 
 	private Player Dealer { get; set; }
 	private Player SmallBlind { get; set; }
 	private Player BigBlind { get; set; }
-
-	public IList<Card> CommunityCards { get => Game.Instance.CommunityCards; set => Game.Instance.CommunityCards = value; }
-	public float Pot { get => Game.Instance.Pot; set => Game.Instance.Pot = value; }
-	public float MinimumBet { get => Game.Instance.MinimumBet; set => Game.Instance.MinimumBet = value; }
 
 	public enum Rounds
 	{
@@ -50,21 +31,10 @@ public partial class PokerController
 
 	private Rounds Round { get; set; } = Rounds.Preflop;
 
-	public PokerController()
-	{
-		Host.AssertServer();
-
-		Instance = this;
-		Event.Register( this );
-	}
-
-	~PokerController()
-	{
-		Event.Unregister( this );
-	}
-
 	public void Run()
 	{
+		Host.AssertServer();
+		
 		/*
 		 * TODO:
 		 * - Buy-in
@@ -76,6 +46,9 @@ public partial class PokerController
 		CommunityCards.Clear();
 		Round = Rounds.Preflop;
 		Pot = 0;
+
+		// Reset players
+		Entity.All.OfType<Player>().ToList().ForEach( player => player.Reset() );
 
 		// Determine dealer
 		Dealer = Players[0];
@@ -106,6 +79,7 @@ public partial class PokerController
 		if ( !Bet( blind * 0.5f, SmallBlind ) )
 		{
 			/*
+			 * TODO:
 				When a player's stack is less than the amount of the small blind, they are 
 				automatically considered all-in in the next hand they play, regardless of position.
 				If the player's stack is larger than the small blind but smaller than the big blind,
@@ -132,12 +106,6 @@ public partial class PokerController
 
 			player.LeftCard.RpcSetCard( To.Single( player ), player.Hand[0] );
 			player.RightCard.RpcSetCard( To.Single( player ), player.Hand[1] );
-		} );
-
-		// Reset players.. TODO: should probably be a function on Player itself
-		Players.ForEach( player =>
-		{
-			player.HasFolded = false;
 		} );
 
 		// Delete chips
@@ -275,7 +243,7 @@ public partial class PokerController
 
 	public bool IsTurn( Player player )
 	{
-		return PlayerTurnQueue.Peek() == player;
+		return PlayerTurnQueue?.Peek() == player;
 	}
 
 	[Event.Tick.Server]

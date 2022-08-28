@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Poker.Backend;
-
-partial class PokerController
+namespace Poker;
+partial class Game
 {
 	class PlayerQueue
 	{
@@ -11,7 +13,7 @@ partial class PokerController
 
 		public void CreateQueue( List<Player> players )
 		{
-			InternalQueue = new( 
+			InternalQueue = new(
 				players.Where( x =>
 				{
 					return !x.HasFolded;
@@ -33,5 +35,4 @@ partial class PokerController
 	}
 
 	private PlayerQueue PlayerTurnQueue { get; set; }
-
 }

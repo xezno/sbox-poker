@@ -1,9 +1,8 @@
-﻿using Poker.UI;
-using Sandbox;
+﻿using Sandbox;
+using Poker.Backend;
 
-namespace Poker.Backend;
-
-partial class PokerController
+namespace Poker;
+partial class Game
 {
 	[ConCmd.Admin( "poker_debug_forcewin" )]
 	public static void ForceWin()
@@ -12,16 +11,16 @@ partial class PokerController
 			return;
 
 		Log.Trace( $"Forced {player.Client.Name} as winner" );
-		PokerController.Instance.ProcessWinner( player );
+		Instance.ProcessWinner( player );
 	}
-	
+
 	[ConCmd.Admin( "poker_force_next_player" )]
 	public static void ForceNextPlayer()
 	{
 		if ( !Host.IsServer )
 			return;
 
-		var instance = PokerController.Instance;
+		var instance = Instance;
 		if ( instance == null )
 			Log.Warning( "Instance was null!" );
 
@@ -43,7 +42,7 @@ partial class PokerController
 		if ( !Host.IsServer )
 			return;
 
-		var instance = PokerController.Instance;
+		var instance = Instance;
 		if ( instance == null )
 			Log.Error( "Instance was null!" );
 

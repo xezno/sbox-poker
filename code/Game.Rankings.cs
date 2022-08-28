@@ -1,9 +1,15 @@
-﻿using Poker.UI;
-using Sandbox;
+﻿using Poker.Backend;
+using Poker.UI;
+using Poker;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Sandbox;
 
-namespace Poker.Backend;
-partial class PokerController
+namespace Poker;
+partial class Game
 {
 	public HandRank RankPlayerHand( Player player, out int score )
 	{
