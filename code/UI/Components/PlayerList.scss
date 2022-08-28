@@ -26,6 +26,10 @@
         }
     }
 
+    &.has-folded {
+        opacity: 0.5;
+    }
+
     .player-name {
         opacity: 0;
         position: absolute;

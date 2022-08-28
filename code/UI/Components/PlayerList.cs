@@ -86,6 +86,8 @@ public class PlayerList : Panel
 			Add.Label( client.Name, "player-name" );
 
 			SetClass( "player", true );
+
+			BindClass( "has-folded", () => Player.HasFolded );
 		}
 
 		public override void Tick()
