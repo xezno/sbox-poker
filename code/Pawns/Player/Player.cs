@@ -16,6 +16,8 @@ public partial class Player : AnimatedEntity
 
 	public string StatusText { get; set; } = "TODO.. this needs filling";
 
+	[Net] public float VoiceLevel { get; set; }
+
 	public Camera Camera
 	{
 		get => Components.Get<Camera>();
@@ -110,6 +112,12 @@ public partial class Player : AnimatedEntity
 
 		RightCard.LocalPosition = GameSettings.Instance.RightHandPosition;
 		RightCard.LocalRotation = GameSettings.Instance.RightHandRotation;
+
+		if ( Host.IsClient && Client.IsValid() )
+		{
+			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
+			DebugOverlay.ScreenText( Client.VoiceLevel.ToString() );
+		}
 	}
 
 	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
@@ -135,7 +143,7 @@ public partial class Player : AnimatedEntity
 	private void SetEyeTransforms()
 	{
 		var eyeTransform = GetAttachment( "eyes", false ) ?? default;
-		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 8f - Vector3.Forward * 4f;
+		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 2f - Vector3.Forward * 4f;
 		EyeLocalRotation = Input.Rotation;
 
 		Position = Position.WithZ( 6 );

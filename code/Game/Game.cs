@@ -29,6 +29,11 @@ public partial class Game : Sandbox.Game
 	public override void OnVoicePlayed( Client cl )
 	{
 		PlayerList.Instance?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
+
+		if ( cl.Pawn is Player player )
+		{
+			player.VoiceLevel = cl.VoiceLevel;
+		}
 	}
 
 	[ConCmd.Server( "poker_start" )]
