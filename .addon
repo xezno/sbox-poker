@@ -14,7 +14,7 @@
   "RootNamespace": "Poker",
   "Metadata": {
     "MaxPlayers": 6,
-    "MinPlayers": 2,
+    "MinPlayers": 1,
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Tagged",
     "MapList": [

@@ -40,19 +40,19 @@ public class Avatar : Panel
 		{
 			World?.Delete();
 			World = new SceneWorld();
-			AmbientColor = Color.White * 0.5f;
+			Camera.AmbientLightColor = Color.White * 0.5f;
 
-			_ = new SceneLight( World, Vector3.Up * 128 + Vector3.Forward * 64f, 512f, Color.White * 50f );
+			_ = new SceneLight( World, Vector3.Up * 128 + Vector3.Forward * 64f, 512f, Color.White * 1f );
 			Citizen = new SceneModel( World, "models/citizen/citizen.vmdl", Transform.Zero );
 			Citizen.SetAnimGraph( "animgraphs/citizen_portrait.vanmgrph" );
 
 			Models = new() { Citizen };
-
 			Dress();
 
-			DisablePostProcessing = true;
-			IsDirty = false;
 			RenderOnce = true;
+			IsDirty = false;
+			
+			Camera.EnablePostProcessing = false;
 		}
 
 		private void Dress()
@@ -86,11 +86,11 @@ public class Avatar : Panel
 		{
 			var eyePosition = new Vector3( 0, 0, 64 );
 
-			CameraPosition = eyePosition + new Vector3( 64, 0, 0 );
-			CameraRotation = Rotation.LookAt( (eyePosition - CameraPosition).Normal, Vector3.Up );
-			FieldOfView = 20f;
-			ZNear = 0.1f;
-			ZFar = 512;
+			Camera.Position = eyePosition + new Vector3( 64, 0, 0 );
+			Camera.Rotation = Rotation.LookAt( (eyePosition - Camera.Position).Normal, Vector3.Up );
+			Camera.FieldOfView = 20f;
+			Camera.ZNear = 0.1f;
+			Camera.ZFar = 512;
 		}
 	}
 }

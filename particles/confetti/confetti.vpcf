@@ -160,7 +160,7 @@
 			m_LocalCoordinateSystemSpeedMin = 
 			{
 				m_nType = "PVEC_TYPE_LITERAL"
-				m_vLiteralValue = [ -100.0, -100.0, 300.0 ]
+				m_vLiteralValue = [ -32.0, -32.0, 128.0 ]
 				m_LiteralColor = [ 0, 0, 0, 0 ]
 				m_nVectorAttribute = 6
 				m_vVectorAttributeScale = [ 1.0, 1.0, 1.0 ]
@@ -360,7 +360,7 @@
 			m_LocalCoordinateSystemSpeedMax = 
 			{
 				m_nType = "PVEC_TYPE_LITERAL"
-				m_vLiteralValue = [ 100.0, 100.0, 400.0 ]
+				m_vLiteralValue = [ 32.0, 32.0, 256.0 ]
 				m_LiteralColor = [ 0, 0, 0, 0 ]
 				m_nVectorAttribute = 6
 				m_vVectorAttributeScale = [ 1.0, 1.0, 1.0 ]
@@ -906,7 +906,11 @@
 	[
 		{
 			_class = "C_OP_BasicMovement"
-			m_Gravity = [ 0.0, 0.0, -300.0 ]
+			m_fDrag = 0.1
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_Gravity = [ 0.0, 0.0, -100.0 ]
 		},
 		{
 			_class = "C_OP_VectorNoise"
@@ -915,6 +919,7 @@
 			m_vecOutputMax = [ 26.0, 26.0, 1.0 ]
 			m_fl4NoiseScale = 5.0
 			m_bAdditive = true
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_FadeAndKill"

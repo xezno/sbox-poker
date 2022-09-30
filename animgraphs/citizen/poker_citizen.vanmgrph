@@ -736,6 +736,34 @@
 			{
 				key = 
 				{
+					m_id = 774931590
+				}
+				value = 
+				{
+					_class = "CSubGraphAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ 768.0, 512.0 ]
+					m_nNodeID = 
+					{
+						m_id = 774931590
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = ""
+					m_inputNodeID = 
+					{
+						m_id = 1211331360
+					}
+					m_outputNodeID = 
+					{
+						m_id = 381067208
+					}
+					m_subGraphFilename = "facial\\animgraphs\\facial_face_graph.vsubgrph"
+					m_inputConnectionMap = [  ]
+				}
+			},
+			{
+				key = 
+				{
 					m_id = 861235951
 				}
 				value = 
@@ -2138,7 +2166,7 @@
 				{
 					_class = "CRootAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 688.0, 448.0 ]
+					m_vecPosition = [ 1024.0, 448.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1338594817
@@ -4150,6 +4178,40 @@
 				m_id = 
 				{
 					m_id = 1838615804
+				}
+				m_previewButton = "ANIMPARAM_BUTTON_NONE"
+				m_bNetwork = true
+				m_bUseMostRecentValue = false
+				m_bAutoReset = false
+				m_bPredicted = true
+				m_fDefaultValue = 0.0
+				m_fMinValue = 0.0
+				m_fMaxValue = 1.0
+				m_bInterpolate = false
+			},
+			{
+				_class = "CFloatAnimParameter"
+				m_name = "eye_L"
+				m_id = 
+				{
+					m_id = 1156429149
+				}
+				m_previewButton = "ANIMPARAM_BUTTON_NONE"
+				m_bNetwork = true
+				m_bUseMostRecentValue = false
+				m_bAutoReset = false
+				m_bPredicted = true
+				m_fDefaultValue = 0.0
+				m_fMinValue = 0.0
+				m_fMaxValue = 1.0
+				m_bInterpolate = false
+			},
+			{
+				_class = "CFloatAnimParameter"
+				m_name = "eye_R"
+				m_id = 
+				{
+					m_id = 952417712
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
 				m_bNetwork = true

@@ -75,6 +75,7 @@
 
         .status {
             padding: 2px 8px;
+            background: linear-gradient( $background, $background-dark );
             background-color: #000000;
             border-radius: 4px;
 
@@ -85,9 +86,9 @@
             }
 
             &.my-turn {
-                background-color: $accent;
-                
-                label,text,icon,iconpanel {
+                background: linear-gradient( $accent, $accent-dark );
+
+                label, text, icon, iconpanel {
                     color: $accent-text;
                 }
             }
