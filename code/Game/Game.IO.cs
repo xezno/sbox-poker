@@ -92,7 +92,7 @@ partial class Game
 		player.LastBet = parameter;
 		player.Money -= parameter;
 
-		Log.Trace( $"{player.Client.Name} bets ${parameter}" );
+		Log.Trace( $"{player} bets ${parameter}" );
 		return true;
 	}
 }

@@ -26,8 +26,6 @@ public partial class PokerChatBox : Panel
 		Input.AddEventListener( "onblur", () => Close() );
 		Input.AcceptsFocus = true;
 		Input.AllowEmojiReplace = true;
-
-		Sandbox.Hooks.Chat.OnOpenChat += Open;
 	}
 
 	void Open()
@@ -83,6 +81,9 @@ public partial class PokerChatBox : Panel
 	public override void Tick()
 	{
 		base.Tick();
+
+		if ( Sandbox.Input.Pressed( InputButton.Chat ) )
+			Open();
 
 		SetClass( "fade", timeSinceActive > 5 && !HasClass( "open" ) );
 

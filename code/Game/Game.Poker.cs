@@ -67,6 +67,11 @@ partial class Game
 			BigBlind = Players[2];
 		}
 
+		Log.Trace( $"Selected:" );
+		Log.Trace( $"\t- {Dealer} as the dealer" );
+		Log.Trace( $"\t- {SmallBlind} as small blind" );
+		Log.Trace( $"\t- {BigBlind} as big blind" );
+
 		float blind = 50;
 
 		// Take blinds
@@ -199,9 +204,6 @@ partial class Game
 	{
 		winner.Money += Pot;
 		Pot = 0;
-
-		GameServices.UpdateLeaderboard( winner.Client.PlayerId, 1, "wins" );
-		Players.Where( x => x != winner ).ToList().ForEach( x => GameServices.UpdateLeaderboard( x.Client.PlayerId, -1, "wins" ) );
 	}
 
 	private void MoveToNextPlayer()

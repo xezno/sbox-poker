@@ -95,4 +95,9 @@ public partial class Player : AnimatedEntity
 
 		inputBuilder.ViewAngles = clampedAngles;
 	}
+
+	public override string ToString()
+	{
+		return $"Player '{Client.Name}'";
+	}
 }
