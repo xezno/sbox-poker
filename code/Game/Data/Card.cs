@@ -29,7 +29,7 @@ public struct Card
 
 	public string ToShortString()
 	{
-		var valueLUT = new Dictionary< Value, string >()
+		var valueLUT = new Dictionary<Value, string>()
 		{
 			{ Value.Ace, "A" },
 			{ Value.King, "K" },
@@ -47,7 +47,7 @@ public struct Card
 		};
 
 		var valueString = valueLUT[Value];
-		
+
 		var suitLUT = new Dictionary<Suit, string>()
 		{
 			{ Suit.Diamonds, "♦️" },

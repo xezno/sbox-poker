@@ -158,9 +158,7 @@ public class InputLayer
 		new BoolAction( "emote.middle_finger", InputButton.Flashlight ),
 		new BoolAction( "emote.thumbs_up", InputButton.Slot1 ),
 		new BoolAction( "emote.thumbs_down", InputButton.Slot2 ),
-		new BoolAction( "emote.pump", InputButton.Slot3 ),
-
-		new BoolAction( "menu", InputButton.Menu )
+		new BoolAction( "emote.pump", InputButton.Slot3 )
 	};
 
 	public static List<BaseInputAction> PCActions = new()
@@ -176,9 +174,7 @@ public class InputLayer
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
 		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
 		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
-		new BoolAction( "emote.pump", InputButton.Slot4 ),
-
-		new BoolAction( "menu", InputButton.Menu )
+		new BoolAction( "emote.pump", InputButton.Slot4 )
 	};
 
 	public static List<BaseInputAction> Actions
@@ -213,7 +209,7 @@ public class InputLayer
 		if ( !Host.IsClient )
 			return;
 
-		OverlayUtils.BoxWithText( Render.Draw2D, new Vector2( 45, 175 ),
+		OverlayUtils.BoxWithText( new Vector2( 45, 175 ),
 			"Input Layer",
 			$"{string.Join( "\n", Actions )}" );
 	}

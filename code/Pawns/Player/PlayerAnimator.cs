@@ -27,15 +27,19 @@ public class PlayerAnimator : PawnAnimator
 		Vector3 emoteAimPos = Pawn.EyePosition + EyeRotation.Forward * 512;
 		emoteAimPos = emoteAimPos.WithZ( 128 );
 
+		Vector3 cardsAimPos = Pawn.EyePosition + EyeRotation.Forward * 512;
+		cardsAimPos = cardsAimPos.WithZ( 128 );
+
 		SetLookAt( "aim_head", lookPos );
 		SetLookAt( "aim_emote", emoteAimPos );
+		SetLookAt( "aim_cards", cardsAimPos );
 		SetAnimParameter( "aim_head_weight", 1.0f );
 		SetAnimParameter( "aim_emote_weight", 1.0f );
+		SetAnimParameter( "aim_cards_weight", 1.0f );
 
 		if ( Host.IsClient && Client.IsValid() )
 		{
 			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
-			DebugOverlay.ScreenText( Client.VoiceLevel.ToString() );
 		}
 	}
 }

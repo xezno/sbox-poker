@@ -51,7 +51,7 @@ public class Avatar : Panel
 
 			RenderOnce = true;
 			IsDirty = false;
-			
+
 			Camera.EnablePostProcessing = false;
 		}
 

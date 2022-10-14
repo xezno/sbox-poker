@@ -2009,6 +2009,29 @@
 							]
 						}
 					},
+					{
+						_class = "LookAtChain"
+						name = "CardChain"
+						lookat_chain = 
+						{
+							name = ""
+							bones = 
+							[
+								{
+									name = "arm_upper_R"
+									weight = 1.0
+								},
+								{
+									name = "clavicle_R"
+									weight = 1.0
+								},
+								{
+									name = "arm_lower_R"
+									weight = 0.25
+								},
+							]
+						}
+					},
 				]
 			},
 			{

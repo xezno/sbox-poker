@@ -25,7 +25,7 @@ public partial class CardEntity : ModelEntity
 		material = Material.Load( "materials/card/card.vmat" ).CreateCopy();
 		SetMaterialOverride( material, "isCardTarget" );
 	}
-	
+
 	[Event.Frame]
 	public void OnFrame()
 	{

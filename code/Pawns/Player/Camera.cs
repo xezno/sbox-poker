@@ -17,8 +17,7 @@ public class Camera : CameraMode
 	public enum Targets
 	{
 		FirstPerson,
-		CommunityCards,
-		YourCards,
+		CommunityCards
 	}
 
 	public Targets GetCameraTarget()
@@ -27,8 +26,6 @@ public class Camera : CameraMode
 
 		if ( InputLayer.Evaluate( "community_cards" ) )
 			cameraTarget = Targets.CommunityCards;
-		else if ( InputLayer.Evaluate( "your_cards" ) )
-			cameraTarget = Targets.YourCards;
 
 		return cameraTarget;
 	}
@@ -55,17 +52,6 @@ public class Camera : CameraMode
 					targetRotation = Rotation.LookAt( lookDir );
 					targetPosition = pawn.EyePosition;
 					targetFOV = 50f;
-
-					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
-
-					Viewer = pawn;
-					break;
-				}
-			case Targets.YourCards:
-				{
-					targetRotation = pawn.Rotation * Rotation.From( 75, 0, 0 );
-					targetPosition = pawn.EyePosition - targetRotation.Forward * 8f;
-					targetFOV = 70f;
 
 					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
 

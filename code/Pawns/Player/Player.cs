@@ -72,14 +72,14 @@ public partial class Player : AnimatedEntity
 		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 2f - Vector3.Forward * 4f;
 		EyeLocalRotation = Input.Rotation;
 
-		Position = Position.WithZ( 6 );
+		Position = Position.WithZ( 2 );
 	}
 
 	public override void BuildInput( InputBuilder inputBuilder )
 	{
 		base.BuildInput( inputBuilder );
 
-		if ( InputLayer.Evaluate( "your_cards" ) || InputLayer.Evaluate( "community_cards" ) )
+		if ( InputLayer.Evaluate( "community_cards" ) )
 		{
 			inputBuilder.ViewAngles = inputBuilder.OriginalViewAngles;
 			inputBuilder.StopProcessing = true;

@@ -20,7 +20,6 @@ public partial class Game : Sandbox.Game
 
 		if ( IsServer )
 		{
-			_ = new Menu();
 			_ = new Hud();
 		}
 	}
@@ -156,45 +155,6 @@ public partial class Game : Sandbox.Game
 		firstAvailableSeat.SetOccupiedBy( client.Pawn as Player );
 	}
 
-	public override void RenderHud()
-	{
-		base.RenderHud();
-
-		if ( !InputLayer.Evaluate( "list_players" ) )
-			return;
-
-		//
-		// scale the screen using a matrix, so the scale math doesn't invade everywhere
-		// (other than having to pass the new scale around)
-		//
-
-		var scale = Screen.Height / 1080.0f;
-		var screenSize = Screen.Size / scale;
-		var matrix = Matrix.CreateScale( scale );
-
-		using ( Render.Draw2D.MatrixScope( matrix ) )
-		{
-			Render.Draw2D.Color = Color.White;
-			Render.Draw2D.FontFamily = "Poppins";
-			Render.Draw2D.FontSize = 32;
-			Render.Draw2D.FontWeight = 500;
-
-			foreach ( var entity in Entity.All.OfType<Player>() )
-			{
-				if ( entity.IsLocalPawn )
-					continue;
-
-				var worldPos = entity.EyePosition + Vector3.Up * 8f;
-				var screenPos = (Vector2)worldPos.ToScreen();
-				var rect = new Rect( screenPos * screenSize, 1024f );
-				var textRect = Render.Draw2D.MeasureText( rect, entity.Client.Name );
-				var drawRect = new Rect( textRect.Position - textRect.Size / 2.0f, textRect.Size );
-
-				Render.Draw2D.DrawText( drawRect, entity.Client.Name, TextFlag.Center );
-			}
-		}
-	}
-
 	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
 	private static void DebugOverlay()
 	{
@@ -207,7 +167,8 @@ public partial class Game : Sandbox.Game
 
 		var communityCards = string.Join( ", ", instance.CommunityCards.Select( card => card.ToString() ) );
 
-		OverlayUtils.BoxWithText( Render.Draw2D, new Rect( 45, 200, 400, 100 ), "CL: Poker Controller",
+		OverlayUtils.BoxWithText( new Rect( 45, 200, 400, 100 ),
+			  "CL: Poker Controller",
 			  $"Pot: {instance.Pot}\n" +
 			  $"Minimum bet: {instance.MinimumBet}\n" +
 			  $"Community cards: {communityCards}" );
