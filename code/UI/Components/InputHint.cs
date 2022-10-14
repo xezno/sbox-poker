@@ -12,7 +12,6 @@ public partial class InputHint : Panel
 	public string Name { get; set; }
 	public string Text { get; set; }
 	public PokerLabel ActionLabel { get; set; }
-	public RadialFill RadialFill { get; set; }
 
 	public InputHint()
 	{
@@ -67,8 +66,8 @@ public partial class InputHint : Panel
 
 			float progress = holdAction.Progress.Clamp( 0, 1 );
 
-			RadialFill.Visible = Input.UsingController && progress > 0;
-			RadialFill.FillAmount = progress;
+			// RadialFill.Visible = Input.UsingController && progress > 0;
+			// RadialFill.FillAmount = progress;
 
 			active = holdAction.Progress > 0.001f;
 		}
