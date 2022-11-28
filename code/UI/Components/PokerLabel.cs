@@ -28,7 +28,7 @@ namespace Poker.UI
 			StyleSheet.Load( "/UI/Components/PokerLabel.scss" );
 		}
 
-		private void Update()
+		public void Update()
 		{
 			DeleteChildren( true );
 			string curr = "";

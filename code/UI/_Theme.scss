@@ -1,21 +1,23 @@
 ﻿$safe-area-x: 50px;
 $safe-area-y: 25px;
 
-$font-big: 28px;
+$font-big: 24px;
 $font-normal: 16px;
 
 $weight-normal: 500;
-$weight-big: 700;
+$weight-big: 600;
 
 $font: Poppins;
-$text-shadow: 1.5px 1.5px 1px rgba( black, 1 );
+$box-shadow: 0 2px 2px rgba( black, 0.75 );
+$text-shadow: 0 2px 2px rgba( black, 0.75 );
+$blur: blur( 25px );
 
-$accent: #5a2d8f;
+$accent: #6B51A1;
 $accent-dark: #391c5c;
 $accent-text: #d0aaff;
 
-$background: #413e37;
-$background-dark: #1b1a17;
+$background: #352850;
+$background-dark: #1C152A;
 
 text, label {
     font-family: $font;

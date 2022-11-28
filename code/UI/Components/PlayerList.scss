@@ -2,29 +2,24 @@
 
 .player-list {
     position: absolute;
-    bottom: $safe-area-y;
+    bottom: 0;
     left: $safe-area-x;
+    padding: 20px 20px $safe-area-y 20px;
     flex-direction: column;
+    background: linear-gradient(to top, rgba( $background-dark, 0.75 ), rgba( $background-dark, 0.0 ));
+    backdrop-filter: $blur;
+    border-radius: 10px;
 }
 
 .player {
     flex-direction: row;
-    padding: 8px;
-    padding-left: 0;
+    padding: 10px;
     transition: all 150ms ease;
-
-    &.expand {
-        .player-name {
-            opacity: 1;
-            transition: all 150ms ease;
-            transform: translateX( 0 );
-        }
-
-        .money {
-            transform: translateX( -10px );
-            opacity: 0;
-        }
-    }
+    background-color: $background;
+    border-radius: 10px;
+    margin: 3px 0;
+    width: 250px;
+    align-items: center;
 
     &.has-folded {
         opacity: 0.5;
@@ -44,54 +39,37 @@
     }
 
     .avatar {
-        width: 72px;
+        width: 64px;
         aspect-ratio: 1;
         aspect-ratio: 1;
-        border-radius: 4px;
         background-size: cover;
     }
 
     .right {
         padding-left: 8px;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: center;
         align-items: flex-start;
+        text-shadow: $text-shadow;
 
         .money {
             label, iconpanel {
                 font-size: $font-big;
                 font-weight: $weight-big;
             }
-
-            height: 42px;
-            transition: all 150ms ease;
-            font-weight: 700;
-            text-shadow: $text-shadow;
-
-            iconpanel {
-                margin-right: 8px;
-            }
         }
+    }
 
-        .status {
-            padding: 2px 8px;
-            background: linear-gradient( $background, $background-dark );
-            background-color: #000000;
-            border-radius: 4px;
+    .indicator {
+        width: 0px;
+        height: 75%;
+        background-color: white;
+        margin: 0 0;
+        border-radius: 100%;
+        transition: all 100ms ease;
+    }
 
-            &.winner {
-                background-color: #ffffff;
-                color: #000000;
-                font-weight: 600;
-            }
-
-            &.my-turn {
-                background: linear-gradient( $accent, $accent-dark );
-
-                label, text, icon, iconpanel {
-                    color: $accent-text;
-                }
-            }
-        }
+    &.my-turn {
+        background-color: $accent;
     }
 }
