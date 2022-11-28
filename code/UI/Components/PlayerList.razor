@@ -1,0 +1,29 @@
+﻿@using System;
+@using Sandbox.UI;
+@namespace Poker.UI
+@attribute [StyleSheet("/UI/Components/PlayerList.scss")]
+
+<root class="player-list">
+
+	@foreach (var player in GetActivePlayers())
+	{
+		<PlayerListEntry @Player="@player">
+
+		</PlayerListEntry>
+	}
+
+</root>
+
+@code
+{
+	List<Poker.Player> GetActivePlayers()
+	{
+		var players = Entity.All.OfType<Poker.Player>().ToList();
+		return players;
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(GetActivePlayers());
+	}
+}

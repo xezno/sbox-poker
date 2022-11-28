@@ -1,0 +1,36 @@
+﻿@using Sandbox.UI;
+@namespace Poker.UI
+@attribute [StyleSheet("/UI/Components/PlayerList.scss")]
+
+<root class="player @PlayerClasses( Player )">
+
+	<avatar @ref="Avatar"></avatar>
+
+	<div class="right">
+		<pokerlabel class="money">@Player.Money</pokerlabel>
+		<pokerlabel class="status">@Player.StatusText</pokerlabel>
+	</div>
+
+</root>
+
+@code
+{
+	public Player Player { get; set; }
+	public Avatar Avatar { get; set; }
+
+	string PlayerClasses(Poker.Player player)
+	{
+		if (player.IsMyTurn)
+			return "my-turn";
+
+		if (player.HasFolded)
+			return "has-folded";
+
+		return "";
+	}
+
+	protected override void OnAfterTreeRender(bool firstTime)
+	{
+		Avatar.Client = Player.Client;
+	}
+}

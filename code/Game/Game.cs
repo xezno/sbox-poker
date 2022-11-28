@@ -2,7 +2,6 @@
 global using SandboxEditor;
 global using System.Collections.Generic;
 global using System.Linq;
-using Poker.UI;
 
 namespace Poker;
 
@@ -26,7 +25,8 @@ public partial class Game : Sandbox.Game
 
 	public override void OnVoicePlayed( Client cl )
 	{
-		PlayerList.Instance?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
+		// TODO: Re-implement this in razor
+		// Old_PlayerList.Instance?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
 
 		if ( cl.Pawn is Player player )
 		{
