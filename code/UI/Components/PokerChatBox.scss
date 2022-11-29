@@ -7,10 +7,11 @@
     z-index: 100;
     flex-direction: column;
     width: 500px;
-    height: 325px;
+    height: 340px;
     border-radius: 5px;
     padding: 10px;
     transition: opacity 150ms ease;
+    padding-bottom: $safe-area-y;
 
     textentry {
         opacity: 0;
@@ -19,7 +20,7 @@
         width: 100%;
         position: absolute;
         left: 10px;
-        bottom: 10px;
+        bottom: 35px;
         right: 10px;
         background-color: $background;
         border-radius: 10px;

@@ -70,5 +70,5 @@ button {
 .gradient-panel {
     background: $background-gradient;
     backdrop-filter: $blur;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
 }
