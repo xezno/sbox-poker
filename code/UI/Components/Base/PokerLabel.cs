@@ -3,11 +3,10 @@ using Sandbox.UI.Construct;
 
 namespace Poker.UI
 {
-
 	[Alias( "p", "ptext", "plabel" )]
 	public class PokerLabel : Panel
 	{
-		private string text;
+		private string text = "$Unset";
 		public string Text
 		{
 			get => text;
@@ -20,6 +19,12 @@ namespace Poker.UI
 					Update();
 				}
 			}
+		}
+
+		public override void SetContent( string value )
+		{
+			base.SetContent( value );
+			Text = value;
 		}
 
 		public PokerLabel()

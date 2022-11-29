@@ -6,9 +6,6 @@
     left: $safe-area-x;
     padding: 20px 20px $safe-area-y 20px;
     flex-direction: column;
-    background: linear-gradient(to top, rgba( $background-dark, 0.75 ), rgba( $background-dark, 0.0 ));
-    backdrop-filter: $blur;
-    border-radius: 10px;
 }
 
 .player {

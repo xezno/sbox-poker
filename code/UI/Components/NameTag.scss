@@ -1,0 +1,47 @@
+﻿@import "/UI/_Theme.scss";
+
+NameTag {
+    transition: opacity 150ms ease;
+    opacity: 0;
+
+    &.visible {
+        opacity: 1;
+    }
+}
+
+.player {
+    flex-direction: row;
+    padding: 10px;
+    transition: all 150ms ease;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: space-between;
+    text-shadow: $text-shadow;
+    position: absolute;
+    left: 50%;
+    bottom: 250px;
+    transform: translateX( -50% );
+    background: linear-gradient(to right, rgba( $background-dark, 0.75 ), rgba( $background-dark, 0.0 ));
+
+    .right {
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 20px;
+    }
+
+    &.has-folded {
+        opacity: 0.5;
+    }
+
+    .name label {
+        font-size: $font-big;
+        font-weight: $weight-big;
+    }
+
+    .avatar {
+        width: 64px;
+        aspect-ratio: 1;
+        background-size: cover;
+        border-radius: 100%;
+    }
+}

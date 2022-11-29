@@ -1,0 +1,34 @@
+﻿@using Sandbox.UI;
+@using System;
+@namespace Poker.UI
+@attribute [StyleSheet("/UI/Components/Pots.scss")]
+
+<div class="pots">
+
+	<div class="pot">
+
+		<text class="name">Pot</text>
+		<plabel class="value">@PotValue()</plabel>
+
+	</div>
+
+</div>
+
+@code
+{
+	string PotValue()
+	{
+		Game instance;
+
+		if ((instance = Game.Instance) == null)
+			return "N/A";
+
+		var potValue = instance.Pot;
+		return $"${potValue}";
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(PotValue());
+	}
+}

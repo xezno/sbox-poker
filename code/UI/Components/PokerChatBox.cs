@@ -85,6 +85,7 @@ public partial class PokerChatBox : Panel
 		if ( Sandbox.Input.Pressed( InputButton.Chat ) )
 			Open();
 
+		Input.Placeholder = string.IsNullOrEmpty( Input.Text ) ? "Say something..." : "";
 		SetClass( "fade", timeSinceActive > 5 && !HasClass( "open" ) );
 
 		if ( !HasClass( "open" ) )

@@ -2,9 +2,9 @@
 
 .controls {
     position: absolute;
-    bottom: $safe-area-y;
     right: $safe-area-x;
     flex-direction: column;
+    bottom: 0;
 }
 
 .play-controls, .camera-controls {
@@ -13,9 +13,19 @@
     transition: opacity 150ms ease;
     font-size: $font-normal;
     text-shadow: $text-shadow;
+    padding: 10px;
+    padding-bottom: $safe-area-y;
 
     &.visible {
         opacity: 1;
+    }
+
+    .input-hint {
+        padding: 2px 10px;
+
+        .glyph-wrapper {
+            margin-left: 10px;
+        }
     }
 }
 

@@ -2,36 +2,53 @@
 
 .chat-box {
     position: absolute;
-    bottom: 300px;
-    right: $safe-area-x;
+    bottom: 0px;
+    left: $safe-area-x;
     z-index: 100;
     flex-direction: column;
     width: 500px;
-    height: 300px;
+    height: 325px;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
     transition: opacity 150ms ease;
 
     textentry {
         opacity: 0;
         color: white;
-        padding: 10px;
-        flex-shrink: 0;
-        flex-grow: 0;
+        padding: 10px 15px;
         width: 100%;
         position: absolute;
-        bottom: 0;
+        left: 10px;
+        bottom: 10px;
+        right: 10px;
+        background-color: $background;
+        border-radius: 10px;
+
+        .placeholder {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            color: rgba( white, 0.5 );
+        }
+
+        &.has-text {
+            .placeholder {
+                opacity: 0;
+            }
+        }
     }
 
     .chat-canvas {
         flex-direction: column;
-        align-items: flex-end;
+        align-items: flex-start;
         overflow: scroll;
-        margin-bottom: 40px;
+        margin-bottom: 60px;
     }
 
     &.open {
-        background-color: black;
+        background: $background-gradient;
+        backdrop-filter: $blur;
+        border-radius: 10px;
 
         textentry {
             opacity: 1;
@@ -51,13 +68,15 @@ chatentry {
     transition: all 0.1s ease-out;
     opacity: 1;
     max-height: 200px;
-    flex-shrink: 0;
-    flex-grow: 0;
-    padding: 5px;
     max-width: 100%;
     text-shadow: $text-shadow;
     justify-content: flex-end;
     align-items: center;
+    background-color: $background;
+    padding: 5px 15px;
+    border-radius: 10px;
+    margin-bottom: 3px;
+    flex-shrink: 0;
 
     &:intro {
         max-height: 0px;
@@ -81,7 +100,10 @@ chatentry {
     }
 
     image {
-        display: none;
+        border-radius: 100%;
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
     }
 
     .name {
