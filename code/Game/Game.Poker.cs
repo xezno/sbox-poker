@@ -12,6 +12,9 @@ partial class Game
 	private Player SmallBlind { get; set; }
 	private Player BigBlind { get; set; }
 
+	[ConVar.Server( "poker_sv_blind_amount" )]
+	public static float BlindAmount { get; set; } = 50f;
+
 	public enum Rounds
 	{
 		Preflop,
@@ -72,10 +75,8 @@ partial class Game
 		Log.Trace( $"\t- {SmallBlind} as small blind" );
 		Log.Trace( $"\t- {BigBlind} as big blind" );
 
-		float blind = 50;
-
 		// Take blinds
-		if ( !Bet( blind * 0.5f, SmallBlind ) )
+		if ( !Bet( BlindAmount * 0.5f, SmallBlind ) )
 		{
 			/*
 			 * TODO:
@@ -90,7 +91,7 @@ partial class Game
 			*/
 		}
 
-		if ( !Bet( blind, BigBlind ) )
+		if ( !Bet( BlindAmount, BigBlind ) )
 		{
 			// (same as above)
 		}

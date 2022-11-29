@@ -6,6 +6,9 @@ public partial class Player : AnimatedEntity
 	[Net] public float VoiceLevel { get; set; }
 	[Net] public PlayerAnimator Animator { get; set; }
 
+	[ConVar.Server( "poker_sv_starting_cash" )]
+	public static float StartingCash { get; set; } = 1000f;
+
 	public Camera Camera
 	{
 		get => Components.Get<Camera>();
@@ -19,7 +22,7 @@ public partial class Player : AnimatedEntity
 		EnableAllCollisions = true;
 		EnableDrawing = true;
 
-		Money = 1000;
+		Money = StartingCash;
 
 		LeftCard = new CardEntity() { Owner = this };
 		LeftCard.SetParent( this, "cards" );

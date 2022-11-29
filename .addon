@@ -3,6 +3,7 @@
   "Type": "game",
   "Org": "alex",
   "Ident": "poker",
+  "Tags": "",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
@@ -18,7 +19,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Tagged",
     "MapList": [
-      "alex.poker_dev"
+      "alex.poker_hotel"
     ],
     "RankType": "Increment",
     "PerMapRanking": false,
@@ -67,6 +68,40 @@
       "RootNamespace": "Sandbox",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
       "NoWarn": "1701;1702;1591;"
-    }
+    },
+    "DefaultLeaderboards": null,
+    "Summary": "deal me in",
+    "Description": "ALEX\u0027S POKER is a faithful implementation of Texas Hold\u0027em you can play with your mates in s\u0026box.\n\n\u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \n\nThis game is work-in-progress.\n\nFull source code is available at https://github.com/xezno/sbox-poker.",
+    "ReplaceTags": "",
+    "Public": false,
+    "GeneralExtensions": true,
+    "TargettedExtensions": true,
+    "ExtensionApiVersion": 1001,
+    "PackageSettings": [
+      {
+        "DisplayType": "Float",
+        "Choices": [],
+        "ConVarName": "poker_sv_starting_cash",
+        "DisplayName": "Starting Cash",
+        "DefaultValue": "1000",
+        "Description": "",
+        "Group": "Game Setup",
+        "Minimum": 1000,
+        "Maximum": 10000,
+        "Step": 100
+      },
+      {
+        "DisplayType": "Float",
+        "Choices": [],
+        "ConVarName": "poker_sv_blind_amount",
+        "DisplayName": "Blind Amount",
+        "DefaultValue": "50",
+        "Description": "",
+        "Group": "Game Setup",
+        "Minimum": 50,
+        "Maximum": 250,
+        "Step": 10
+      }
+    ]
   }
 }
