@@ -1,60 +1,39 @@
 ﻿@using Sandbox.UI;
 @using System;
-@inherits GradientPanel
 @namespace Poker.UI
-@attribute [StyleSheet("/UI/Components/Betting.scss")]
 
 <root class="betting @VisibilityClass()">
 
-	<div class="top" @ref="@CirclePanel">
-		<plabel></plabel>
-		<plabel class="big">@BetText</plabel>
-		<plabel>@ActionText</plabel>
+	<plabel class="selected-action @HoverClass()">@HoverText()</plabel>
 
-		<div class="indicator" @ref="IndicatorPanel">
-			<div class="indicator-inner"></div>
-		</div>
-	</div>
+	<radialmenu class="radial-wheel" @ref="RadialWheel">
+		<radialmenuitem name="Raise" icon="circle-arrow-up" action="adjust_amount">
+		</RadialMenuItem>
 
-	<div class="bottom">
-		<inputhint btn="submit">Bet</inputhint>
-	</div>
+		<radialmenuitem name="Fold" icon="circle-xmark" action="fold">
+		</radialmenuitem>
+
+		<radialmenuitem name="Check" icon="circle-check" action="submit">
+		</radialmenuitem>
+	</radialmenu>
 
 </root>
 
 @code
 {
-	//
-	//
-	//
-	private bool submitPressedLastFrame;
-	private bool foldPressedLastFrame;
-	private bool allInPressedLastFrame;
-	private float rawBet;
-	private int roundedBet;
+	public RadialMenu RadialWheel { get; set; }
 
-	//
-	//
-	//
-	private float velocity;
-	private float incrementRate;
-	private int snapRate => 10;
-	private float accel => 500;
-
-	//
-	//
-	//
-	private string BetText { get; set; }
-	private string ActionText { get; set; }
-
-	//
-	//
-	//
-	private Panel IndicatorPanel { get; set; }
-
-	protected override int BuildHash()
+	string HoverText()
 	{
-		return HashCode.Combine(DateTime.Now);
+		return RadialWheel?.HoverText ?? "NONE";
+	}
+
+	string HoverClass()
+	{
+		if (RadialWheel?.IsActive ?? false)
+			return "visible";
+
+		return "";
 	}
 
 	string VisibilityClass()
@@ -63,88 +42,5 @@
 			return "visible";
 
 		return "";
-	}
-
-	public override void Tick()
-	{
-		base.Tick();
-
-		if (Local.Pawn is not Player player)
-			return;
-
-		if (!player.IsMyTurn)
-		{
-			rawBet = 0;
-			return;
-		}
-
-		ProcessInputs(out var submitPressed, out var foldPressed, out var betDelta, out var allInPressed);
-		ProcessSubmitInput(submitPressed);
-		ProcessFoldInput(foldPressed);
-		ProcessBetInput(betDelta);
-		ProcessAllInInput(allInPressed);
-
-		submitPressedLastFrame = submitPressed;
-	}
-
-	private void ProcessAllInInput(bool allInPressed)
-	{
-		if (Local.Pawn is not Player player)
-			return;
-
-		if (!allInPressedLastFrame && allInPressed)
-			Game.CmdSubmitMove(Move.Bet, player.Money);
-	}
-
-	private void ProcessSubmitInput(bool submitPressed)
-	{
-		if (!submitPressedLastFrame && submitPressed)
-			Game.CmdSubmitMove(Move.Bet, roundedBet);
-	}
-
-	private void ProcessFoldInput(bool foldPressed)
-	{
-		if (!foldPressedLastFrame && foldPressed)
-			Game.CmdSubmitMove(Move.Fold, 0);
-	}
-
-	private void ProcessBetInput(float betDelta)
-	{
-		DebugOverlay.ScreenText($"betDelta: {betDelta}", 0);
-		DebugOverlay.ScreenText($"velocity: {velocity}", 1);
-		DebugOverlay.ScreenText($"incrementRate: {incrementRate}", 2);
-
-		if (MathF.Abs(betDelta) > 0.5f)
-		{
-			rawBet += betDelta * Time.Delta * incrementRate;
-
-			velocity += MathF.Abs( betDelta ) * Time.Delta * accel;
-			incrementRate += velocity * Time.Delta;
-		}
-		else
-		{
-			velocity = 0;
-			incrementRate = 0;
-		}
-		
-		rawBet = rawBet.Clamp(Game.Instance.MinimumBet, 5000);
-		roundedBet = snapRate * (rawBet.CeilToInt() / snapRate);
-
-		ActionText = PokerUtils.GetMoveName(roundedBet);
-		BetText = $"${roundedBet}";
-
-		float t = rawBet / 5000;
-		var tx = new PanelTransform();
-		tx.AddRotation(0, 0, (180f * t));
-
-		IndicatorPanel.Style.Transform = tx;
-	}
-
-	private void ProcessInputs(out bool submitPressed, out bool foldPressed, out float betDelta, out bool allInPressed)
-	{
-		submitPressed = InputLayer.Evaluate("submit");
-		foldPressed = InputLayer.Evaluate("fold");
-		betDelta = InputLayer.EvaluateRaw("adjust_amount");
-		allInPressed = InputLayer.Evaluate("all_in");
 	}
 }
