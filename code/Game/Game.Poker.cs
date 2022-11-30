@@ -242,23 +242,4 @@ partial class Game
 	{
 		return PlayerTurnQueue?.Peek() == player;
 	}
-
-	[Event.Tick.Server]
-	public void UpdateStatuses()
-	{
-		foreach ( var player in Players )
-		{
-			if ( player.HasFolded )
-			{
-				player.RpcSetStatus( To.Everyone, "Folded" );
-			}
-			else
-			{
-				player.RpcSetStatus( To.Everyone, $"${player.LastBet}, Bet" );
-
-				if ( player.IsMyTurn )
-					player.RpcSetStatus( To.Single( player.Client ), $"$0, Your turn" );
-			}
-		}
-	}
 }
