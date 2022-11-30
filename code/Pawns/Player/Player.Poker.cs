@@ -17,8 +17,7 @@ partial class Player
 	[ClientRpc]
 	public void RpcSetHand( byte[] cardData )
 	{
-		var cards = RpcUtils.Decompress<Card[]>( cardData );
-		Hand = cards.ToList();
+		Hand = RpcUtils.Decompress<List<Card>>( cardData );
 	}
 
 	[ClientRpc]

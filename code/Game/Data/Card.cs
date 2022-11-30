@@ -2,8 +2,9 @@
 
 public struct Card
 {
-	public Suit Suit { get; }
-	public Value Value { get; }
+	public Suit Suit { get; set; }
+
+	public Value Value { get; set; }
 
 	public Card( Suit suit, Value value )
 	{
