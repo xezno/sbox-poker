@@ -30,7 +30,6 @@ namespace Poker.UI
 		public PokerLabel()
 		{
 			AddClass( "poker-label" );
-			StyleSheet.Load( "/UI/Components/PokerLabel.scss" );
 		}
 
 		public void Update()

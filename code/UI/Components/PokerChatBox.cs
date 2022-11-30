@@ -17,7 +17,6 @@ public partial class PokerChatBox : Panel
 		Current = this;
 
 		SetClass( "chat-box", true );
-		StyleSheet.Load( "/UI/Components/PokerChatBox.scss" );
 
 		Canvas = Add.Panel( "chat-canvas" );
 

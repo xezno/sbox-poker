@@ -30,7 +30,6 @@ public class CardPanel : Panel
 
 	public CardPanel()
 	{
-		StyleSheet.Load( "/UI/Components/Card.scss" );
 		SetClass( "card", true );
 	}
 

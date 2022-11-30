@@ -14,7 +14,6 @@ public class Avatar : Panel
 
 	public Avatar()
 	{
-		StyleSheet.Load( "/UI/Components/Avatar.scss" );
 		SetClass( "avatar", true );
 
 		Scene = AddChild<AvatarScene>();

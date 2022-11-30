@@ -7,7 +7,6 @@ public class DebugMenu : Panel
 {
 	public DebugMenu()
 	{
-		StyleSheet.Load( "/UI/DebugMenu.scss" );
 		SetClass( "debug-menu", true );
 
 		_ = Add.Label( "Poker Debug", "title" );

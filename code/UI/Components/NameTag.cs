@@ -3,7 +3,6 @@ using System;
 
 namespace Poker.UI;
 
-[StyleSheet( "/UI/Components/NameTag.scss" )]
 public class NameTag : WorldPanel
 {
 	private NameTagPanel NameTagPanel { get; set; }
@@ -15,6 +14,10 @@ public class NameTag : WorldPanel
 
 	public NameTag( Player player )
 	{
+		// This is a world panel, and therefore does not inherit the loaded
+		// Hud.html stylesheet - so we load one here.
+		StyleSheet.Load( "/Code/UI/Styles/NameTag.scss" );
+
 		AddClass( "name-tag" );
 
 		NameTagPanel = AddChild<NameTagPanel>();
