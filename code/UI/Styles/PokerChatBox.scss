@@ -105,12 +105,13 @@ chatentry {
         width: 32px;
         height: 32px;
         margin-right: 10px;
+        margin-left: -5px;
     }
 
     .name {
         padding-right: 10px;
         font-weight: 600;
-        font-weight: 800;
+        color: $accent;
     }
 
     .message {

@@ -10,7 +10,6 @@
 @import "/UI/Styles/EventFeed.scss";
 @import "/UI/Styles/InputHint.scss";
 @import "/UI/Styles/NameTag.scss";
-@import "/UI/Styles/PlayerList.scss";
 @import "/UI/Styles/PokerChatBox.scss";
 @import "/UI/Styles/PokerLabel.scss";
 @import "/UI/Styles/Pots.scss";
@@ -38,7 +37,6 @@
 }
 
 .wip {
-    opacity: 0.25;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -46,6 +44,11 @@
 .spectating {
     opacity: 0;
     left: $safe-area-x;
+    align-items: center;
+
+    icon {
+        margin-right: 10px;
+    }
 }
 
 .spectating, .wip {
@@ -53,8 +56,15 @@
     top: $safe-area-y;
 }
 
+.wip, .spectating, .spectating text
+{
+    // Extrabold italic
+    font-weight: $weight-big;
+    font-size: $font-big;
+}
+
 .is-spectator {
     .spectating {
-        opacity: 0.25;
+        opacity: 1;
     }
 }
