@@ -11,11 +11,11 @@ public class PlayerAnimator : PawnAnimator
 
 		// TODO: remove this ( test )
 		if ( InputLayer.Evaluate( "emote.middle_finger" ) )
-			SetAnimParameter( "action", (int)Actions.Emote_MiddleFinger );
+			SetAnimParameter( "action", (int)Actions.Game_Bet );
 		else if ( InputLayer.Evaluate( "emote.thumbs_up" ) )
-			SetAnimParameter( "action", (int)Actions.Emote_ThumbsUp );
+			SetAnimParameter( "action", (int)Actions.Game_Check );
 		else if ( InputLayer.Evaluate( "emote.thumbs_down" ) )
-			SetAnimParameter( "action", (int)Actions.Emote_ThumbsDown );
+			SetAnimParameter( "action", (int)Actions.Game_Fold );
 		else if ( InputLayer.Evaluate( "emote.pump" ) )
 			SetAnimParameter( "action", (int)Actions.Emote_Pump );
 		else

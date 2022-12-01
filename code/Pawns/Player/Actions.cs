@@ -4,9 +4,9 @@ public enum Actions
 {
 	None,
 	Game_Idle,
-	Game_Unused0,
-	Game_Unused1,
-	Game_Unused2,
+	Game_Bet,
+	Game_Check,
+	Game_Fold,
 	Emote_MiddleFinger,
 	Emote_ThumbsUp,
 	Emote_ThumbsDown,

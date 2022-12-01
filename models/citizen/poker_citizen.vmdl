@@ -1942,8 +1942,16 @@
 						weights = 
 						[
 							{
+								bone = "clavicle_L"
+								weight = 1.0
+							},
+							{
 								bone = "clavicle_R"
 								weight = 0.0
+							},
+							{
+								bone = "neck_0"
+								weight = 1.0
 							},
 							{
 								bone = "spine_0"
@@ -1951,11 +1959,11 @@
 							},
 							{
 								bone = "spine_1"
-								weight = 1.0
+								weight = 0.0
 							},
 							{
 								bone = "spine_2"
-								weight = 1.0
+								weight = 0.0
 							},
 						]
 						master_morph_weight = -1.0
