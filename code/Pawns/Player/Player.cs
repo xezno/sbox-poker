@@ -31,6 +31,8 @@ public partial class Player : AnimatedEntity
 
 		RightCard = new CardEntity() { Owner = this };
 		RightCard.SetParent( this, "cards" );
+		RightCard.LocalPosition = 0;
+		RightCard.LocalRotation = Rotation.Identity;
 	}
 
 	public override void Simulate( Client cl )
@@ -75,7 +77,7 @@ public partial class Player : AnimatedEntity
 		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 2f - Vector3.Forward * 4f;
 		EyeLocalRotation = Input.Rotation;
 
-		Position = Position.WithZ( 2 );
+		Position = Position.WithZ( 8 );
 	}
 
 	public override void BuildInput( InputBuilder inputBuilder )

@@ -25,7 +25,6 @@ public partial class EventFeed : Panel
 
 class EventEntry : Panel
 {
-	Panel inner;
 	TimeSince timeSinceCreated;
 
 	public EventEntry( string text )

@@ -30,6 +30,6 @@ public partial class CardEntity : ModelEntity
 	public void OnFrame()
 	{
 		if ( texture?.IsLoaded ?? false )
-			material.OverrideTexture( "Color", texture );
+			material.Set( "Color", texture );
 	}
 }

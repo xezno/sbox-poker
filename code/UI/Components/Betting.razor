@@ -23,6 +23,14 @@
 {
 	public RadialMenu RadialWheel { get; set; }
 
+	private bool WasMyTurn { get; set; }
+	private TimeUntil TimeUntilTurnEnds { get; set; }
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(DateTime.Now.ToString());
+	}
+
 	string HoverText()
 	{
 		return RadialWheel?.HoverText ?? "NONE";
@@ -42,5 +50,33 @@
 			return "visible";
 
 		return "";
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+		if (Local.Pawn is not Player player)
+			return;
+
+		if (!WasMyTurn && player.IsMyTurn)
+			TimeUntilTurnEnds = 30f;
+
+		float t = ( TimeUntilTurnEnds / 30f ) * 100f;
+		t = t.UnsignedMod( 99 );
+
+		WasMyTurn = player.IsMyTurn;
+	}
+
+	public override void DrawBackground(ref RenderState state)
+	{
+		base.DrawBackground(ref state);
+
+		float t = ( TimeUntilTurnEnds / 30f ) * 360f;
+		t = t.UnsignedMod( 360 );
+
+		float radius = 180f * 0.5f;
+		float borderWidth = 2f;
+
+		GraphicsX.Circle(RadialWheel.Box.Rect.Center, radius, radius - borderWidth, Color.White, 64, 0, t);
 	}
 }
