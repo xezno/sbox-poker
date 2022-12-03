@@ -4,32 +4,32 @@ public static class GraphicsX
 {
 	public static List<Vertex> VertexList { get; } = new();
 
-	public static void AddVertex( in Vertex v )
+	public static void AddVertex( in Vertex position )
 	{
-		VertexList.Add( v );
+		VertexList.Add( position );
 	}
 
-	public static void AddVertex( in Vector2 v, in Color color )
+	public static void AddVertex( in Vector2 position, in Color color )
 	{
-		Vertex v2 = new Vertex
+		var vertex = new Vertex
 		{
-			Position = v,
+			Position = position,
 			Color = color
 		};
 
-		AddVertex( in v2 );
+		AddVertex( in vertex );
 	}
 
-	public static void AddVertex( in Vector2 v, in Color color, in Vector2 uv )
+	public static void AddVertex( in Vector2 position, in Color color, in Vector2 uv )
 	{
-		Vertex v2 = new Vertex
+		var vertex = new Vertex
 		{
-			Position = v,
+			Position = position,
 			Color = color,
 			TexCoord0 = uv
 		};
 
-		AddVertex( in v2 );
+		AddVertex( in vertex );
 	}
 
 	public static void MeshStart()
@@ -42,8 +42,8 @@ public static class GraphicsX
 		RenderAttributes attributes = _attributes ?? new RenderAttributes();
 
 		attributes.Set( "Texture", Texture.White );
-		Span<Vertex> vertices = VertexList.ToArray();
-		Graphics.Draw( vertices, VertexList.Count, Material.UI.Basic, attributes );
+
+		Graphics.Draw( VertexList.ToArray(), VertexList.Count, Material.UI.Basic, attributes );
 		VertexList.Clear();
 	}
 
@@ -52,115 +52,113 @@ public static class GraphicsX
 		Circle( in center, radius, 0f, in color, points );
 	}
 
-	public static void Ring( in Vector2 center, float radius, in Color color, float hole_radius, int points = 32 )
+	public static void Ring( in Vector2 center, float radius, in Color color, float holeRadius, int points = 32 )
 	{
-		Circle( in center, radius, hole_radius, in color, points );
+		Circle( in center, radius, holeRadius, in color, points );
 	}
 
-	public static void Circle( in Vector2 center, float outer, float inner, in Color color, int points = 32, float startAngle = 0f, float endAngle = 360f, float uv = 0f )
+	public static void Circle( in Vector2 center, float outerRadius, float innerRadius, in Color color, int pointCount = 32, float startAngle = 0f, float endAngle = 360f, float uv = 0f )
 	{
 		MeshStart();
+
 		float twoPI = MathF.PI * 2f;
 		startAngle = startAngle.NormalizeDegrees().DegreeToRadian();
-		for ( endAngle = endAngle.NormalizeDegrees().DegreeToRadian(); endAngle <= startAngle; endAngle += twoPI )
-		{
-		}
 
-		float num2 = (endAngle - startAngle) % (twoPI + 0.01f);
-		if ( num2 <= 0f )
-		{
+		for ( endAngle = endAngle.NormalizeDegrees().DegreeToRadian(); endAngle <= startAngle; endAngle += twoPI ) ;
+
+		if ( endAngle <= startAngle )
 			return;
-		}
 
-		float num3 = twoPI / (float)points;
+		float angleStep = twoPI / (float)pointCount;
 
-		for ( float num4 = startAngle; num4 < endAngle; num4 += num3 )
+		for ( float currentAngle = startAngle; currentAngle < endAngle + angleStep; currentAngle += angleStep )
 		{
-			float num5 = num4;
-			float num6 = num4 + num3;
+			float startRadians = currentAngle;
+			float endRadians = currentAngle + angleStep;
 
-			if ( num6 > endAngle )
+			if ( endRadians > endAngle )
 			{
-				num6 = endAngle;
+				endRadians = endAngle;
 			}
 
-			num5 += MathF.PI;
-			num6 += MathF.PI;
+			startRadians += MathF.PI;
+			endRadians += MathF.PI;
 
-			Vector2 vector = new Vector2( MathF.Sin( 0f - num5 ), MathF.Cos( 0f - num5 ) );
-			Vector2 vector2 = new Vector2( MathF.Sin( 0f - num6 ), MathF.Cos( 0f - num6 ) );
-			Vector2 uv2 = vector / 2f + 0.5f;
-			Vector2 uv3 = vector2 / 2f + 0.5f;
-			Vector2 uv4 = vector * inner / outer / 2f + 0.5f;
-			Vector2 uv5 = vector2 * inner / outer / 2f + 0.5f;
+			Vector2 startVector = new Vector2( MathF.Sin( -startRadians ), MathF.Cos( -startRadians ) );
+			Vector2 endVector = new Vector2( MathF.Sin( -endRadians ), MathF.Cos( -endRadians ) );
+			Vector2 startUV = startVector / 2f + 0.5f;
+			Vector2 endUV = endVector / 2f + 0.5f;
+			Vector2 innerStartUV = startVector * innerRadius / outerRadius / 2f + 0.5f;
+			Vector2 innerEndUV = endVector * innerRadius / outerRadius / 2f + 0.5f;
 
 			if ( uv > 0f )
 			{
-				uv2 = new Vector2( (num5 - MathF.PI - startAngle) * uv / twoPI, 0f );
-				uv3 = new Vector2( (num6 - MathF.PI - startAngle) * uv / twoPI, 0f );
-				uv4 = uv2.WithY( 1f );
-				uv5 = uv3.WithY( 1f );
+				startUV = new Vector2( (startRadians - MathF.PI - startAngle) * uv / twoPI, 0f );
+				endUV = new Vector2( (endRadians - MathF.PI - startAngle) * uv / twoPI, 0f );
+				innerStartUV = startUV.WithY( 1f );
+				innerEndUV = endUV.WithY( 1f );
 			}
 
-			Vector2 v = center + vector * outer;
-			AddVertex( in v, in color, in uv2 );
+			Vector2 v = center + startVector * outerRadius;
+			AddVertex( in v, in color, in startUV );
 
-			v = center + vector2 * outer;
-			AddVertex( in v, in color, in uv3 );
+			v = center + endVector * outerRadius;
+			AddVertex( in v, in color, in endUV );
 
-			v = center + vector * inner;
-			AddVertex( in v, in color, in uv4 );
+			v = center + startVector * innerRadius;
+			AddVertex( in v, in color, in innerStartUV );
 
-			if ( inner > 0f )
+			if ( innerRadius > 0f )
 			{
-				v = center + vector2 * outer;
-				AddVertex( in v, in color, in uv3 );
+				v = center + endVector * outerRadius;
+				AddVertex( in v, in color, in endUV );
 
-				v = center + vector2 * inner;
-				AddVertex( in v, in color, in uv5 );
+				v = center + endVector * innerRadius;
+				AddVertex( in v, in color, in innerEndUV );
 
-				v = center + vector * inner;
-				AddVertex( in v, in color, in uv4 );
+				v = center + startVector * innerRadius;
+				AddVertex( in v, in color, in innerStartUV );
 			}
 		}
 
 		MeshEnd();
 	}
 
-	public static void Line( in Color color, in float thickness0, in Vector2 pos0, in float thickness1, in Vector2 pos1 )
+	public static void Line( in Color color, in float startThickness, in Vector2 startPosition, in float endThickness, in Vector2 endPosition )
 	{
 		MeshStart();
 
-		Vector2 vector = pos1 - pos0;
-		Vector2 vector2 = vector.Perpendicular.Normal * -0.5f;
-		Vector2 v = pos0 + vector2 * thickness0;
-		Vector2 v2 = pos0 + vector + vector2 * thickness1;
-		Vector2 v3 = pos0 + vector - vector2 * thickness1;
-		Vector2 v4 = pos0 - vector2 * thickness0;
+		Vector2 directionVector = endPosition - startPosition;
+		Vector2 perpendicularVector = directionVector.Perpendicular.Normal * -0.5f;
+
+		Vector2 startCorner = startPosition + perpendicularVector * startThickness;
+		Vector2 endCorner = startPosition + directionVector + perpendicularVector * endThickness;
+		Vector2 endCorner2 = startPosition + directionVector - perpendicularVector * endThickness;
+		Vector2 startCorner2 = startPosition - perpendicularVector * startThickness;
 
 		Vector2 uv = new Vector2( 0f, 0f );
-		AddVertex( in v, in color, in uv );
+		AddVertex( in startCorner, in color, in uv );
 
 		uv = new Vector2( 1f, 0f );
-		AddVertex( in v2, in color, in uv );
+		AddVertex( in endCorner, in color, in uv );
 
 		uv = new Vector2( 0f, 1f );
-		AddVertex( in v4, in color, in uv );
+		AddVertex( in startCorner2, in color, in uv );
 
 		uv = new Vector2( 1f, 0f );
-		AddVertex( in v2, in color, in uv );
+		AddVertex( in endCorner, in color, in uv );
 
 		uv = new Vector2( 1f, 1f );
-		AddVertex( in v3, in color, in uv );
+		AddVertex( in endCorner2, in color, in uv );
 
 		uv = new Vector2( 0f, 1f );
-		AddVertex( in v4, in color, in uv );
+		AddVertex( in startCorner2, in color, in uv );
 
 		MeshEnd();
 	}
 
-	public static void Line( in Color color, in float t0, in Vector2 p0, in Vector2 p1 )
+	public static void Line( in Color color, in float thickness, in Vector2 startPosition, in Vector2 endPosition )
 	{
-		Line( in color, in t0, in p0, in t0, in p1 );
+		Line( in color, in thickness, in startPosition, in thickness, in endPosition );
 	}
 }
