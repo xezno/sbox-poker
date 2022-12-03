@@ -56,11 +56,11 @@
     top: $safe-area-y;
 }
 
-.wip, .spectating, .spectating text
-{
+.wip, .spectating, .spectating text {
     // Extrabold italic
     font-weight: $weight-big;
     font-size: $font-big;
+    text-shadow: $text-shadow;
 }
 
 .is-spectator {
