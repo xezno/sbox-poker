@@ -1,0 +1,33 @@
+﻿@import "/UI/Styles/_Theme.scss";
+
+.money {
+    position: absolute;
+    top: $safe-area-y;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .row {
+        padding: 10px;
+        padding-right: $safe-area-x;
+        align-items: center;
+        justify-content: flex-end;
+        text-shadow: $text-shadow;
+        margin-bottom: 5px;
+
+        iconpanel, label {
+            font-size: $font-normal;
+            font-weight: $weight-normal;
+        }
+
+        plabel.value label {
+            font-size: $font-big;
+            margin-left: 10px;
+            text-align: right;
+
+            iconpanel {
+                margin-right: 8px;
+            }
+        }
+    }
+}

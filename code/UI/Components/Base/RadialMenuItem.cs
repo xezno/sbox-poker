@@ -8,7 +8,7 @@ namespace Poker.UI;
 public class RadialMenuItem : Panel
 {
 	private Label IconLabel { get; set; }
-	private Panel ActionPanel { get; set; }
+	private InputHint ActionPanel { get; set; }
 
 	public Action Callback { get; set; }
 
@@ -16,10 +16,10 @@ public class RadialMenuItem : Panel
 
 	public RadialMenuItem()
 	{
-		AddClass( "icon" );
+		AddClass( "item" );
 
 		IconLabel = Add.Label( "", "icon" );
-		ActionPanel = Add.Panel( "action" );
+		ActionPanel = AddChild<InputHint>( "action" );
 	}
 
 	public override void SetProperty( string name, string value )
@@ -32,7 +32,7 @@ public class RadialMenuItem : Panel
 		}
 		else if ( name == "action" )
 		{
-			Log.Trace( $"TODO: set action to {value}" );
+			ActionPanel.SetButton( value );
 		}
 		else if ( name == "name" )
 		{

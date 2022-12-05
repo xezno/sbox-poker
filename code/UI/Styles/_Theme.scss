@@ -1,4 +1,4 @@
-﻿$safe-area-x: 50px;
+﻿$safe-area-x: 25px;
 $safe-area-y: 25px;
 
 $font-big: 24px;
@@ -16,7 +16,9 @@ $accent: #A6B8DD;
 
 $background: #35518D;
 $background-dark: #16223B;
-$background-gradient: linear-gradient(to top, rgba( $background-dark, 0.75 ), rgba( $background-dark, 0.0 ));
+
+$gradient-a: rgba( $background-dark, 0.75 );
+$gradient-b: rgba( $background-dark, 0.25 );
 
 text, label {
     font-family: $font;
@@ -65,8 +67,26 @@ button {
     }
 }
 
-.gradient-panel {
-    background: $background-gradient;
+.gradient-bottom, .gradient-top, .gradient-left, .gradient-right {
     backdrop-filter: $blur;
+}
+
+.gradient-bottom {
     border-radius: 10px 10px 0 0;
+    background: linear-gradient(to top, $gradient-a, $gradient-b);
+}
+
+.gradient-top {
+    border-radius: 0 0 10px 10px;
+    background: linear-gradient(to bottom, $gradient-a, $gradient-b);
+}
+
+.gradient-left {
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(to left, $gradient-a, $gradient-b);
+}
+
+.gradient-right {
+    border-radius: 10px 0 0 10px;
+    background: linear-gradient(to right, $gradient-a, $gradient-b);
 }

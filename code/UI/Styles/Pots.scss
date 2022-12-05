@@ -1,29 +1,24 @@
 ﻿@import "/UI/Styles/_Theme.scss";
 
-.pots {
+.pot {
     position: absolute;
     top: $safe-area-y;
-    right: $safe-area-x;
-    flex-direction: column;
-}
-
-.pot {
+    right: 0;
+    padding: 10px;
+    padding-right: $safe-area-x;
     align-items: center;
     justify-content: flex-end;
     text-shadow: $text-shadow;
 
     iconpanel, label {
+        font-size: $font-normal;
+        font-weight: $weight-normal;
+    }
+
+    plabel.value label {
         font-size: $font-big;
-        font-weight: $weight-big;
-    }
-
-    .name {
-    }
-
-    .value {
         margin-left: 10px;
         text-align: right;
-        font-weight: 800;
 
         iconpanel {
             margin-right: 8px;

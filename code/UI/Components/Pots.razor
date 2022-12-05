@@ -2,14 +2,10 @@
 @using System;
 @namespace Poker.UI
 
-<root class="pots">
+<root class="pot gradient-right">
 
-	<div class="pot">
-
-		<text class="name">Pot</text>
-		<plabel class="value">@PotValue()</plabel>
-
-	</div>
+	<text class="name">Pot</text>
+	<plabel class="value">@PotValue()</plabel>
 
 </root>
 
@@ -17,12 +13,10 @@
 {
 	string PotValue()
 	{
-		Game instance;
-
-		if ((instance = Game.Instance) == null)
+		if (Game.Instance is not Game game)
 			return "N/A";
 
-		var potValue = instance.Pot;
+		var potValue = game.Pot;
 		return $"${potValue}";
 	}
 

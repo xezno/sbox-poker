@@ -7,8 +7,10 @@
 @import "/UI/Styles/CommunityCards.scss";
 @import "/UI/Styles/Controls.scss";
 @import "/UI/Styles/DebugMenu.scss";
+@import "/UI/Styles/Emotes.scss";
 @import "/UI/Styles/EventFeed.scss";
 @import "/UI/Styles/InputHint.scss";
+@import "/UI/Styles/Money.scss";
 @import "/UI/Styles/NameTag.scss";
 @import "/UI/Styles/PokerChatBox.scss";
 @import "/UI/Styles/PokerLabel.scss";
@@ -39,6 +41,7 @@
 .wip {
     left: 50%;
     transform: translateX(-50%);
+    opacity: 0.5;
 }
 
 .spectating {
@@ -58,13 +61,13 @@
 
 .wip, .spectating, .spectating text {
     // Extrabold italic
-    font-weight: $weight-big;
-    font-size: $font-big;
+    font-weight: $weight-normal;
+    font-size: $font-normal;
     text-shadow: $text-shadow;
 }
 
 .is-spectator {
     .spectating {
-        opacity: 1;
+        opacity: 0.5;
     }
 }

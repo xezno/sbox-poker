@@ -1,0 +1,54 @@
+﻿@using Sandbox.UI;
+@using System;
+@namespace Poker.UI
+
+<root class="emotes @VisibilityClass()">
+		
+	<plabel class="selected-action @HoverClass()">@HoverText()</plabel>
+	
+	<radialmenu class="radial-wheel" @ref="RadialWheel">
+		<radialmenuitem name="Flip Off" icon="hand-middle-finger">
+		</RadialMenuItem>
+
+		<radialmenuitem name="Thumbs Down" icon="thumbs-down">
+		</radialmenuitem>
+
+		<radialmenuitem name="Wanker" icon="hand-fist">
+		</radialmenuitem>
+
+		<radialmenuitem name="Thumbs Up" icon="thumbs-up">
+		</radialmenuitem>
+	</radialmenu>	
+
+</root>
+
+@code
+{
+	public RadialMenu RadialWheel { get; set; }
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(Time.Now);
+	}
+
+	string HoverText()
+	{
+		return RadialWheel?.HoverText ?? "NONE";
+	}
+
+	string HoverClass()
+	{
+		if (RadialWheel?.IsActive ?? false)
+			return "visible";
+
+		return "";
+	}
+
+	string VisibilityClass()
+	{
+		if (InputLayer.Evaluate( "show_emotes" ))
+			return "visible";
+
+		return "";
+	}
+}

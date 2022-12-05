@@ -26,4 +26,38 @@ partial class Player
 		LastMove = Move.Bet;
 		Hand = null;
 	}
+
+	private bool CanSubmitMove()
+	{
+		Host.AssertClient();
+
+		if ( !IsMyTurn )
+			return false;
+
+		return true;
+	}
+
+	public void Raise( float amount )
+	{
+		if ( !CanSubmitMove() )
+			return;
+
+		Game.CmdSubmitMove( Move.Bet, amount );
+	}
+
+	public void Check()
+	{
+		if ( !CanSubmitMove() )
+			return;
+
+		Game.CmdSubmitMove( Move.Bet, 0f );
+	}
+
+	public void Fold()
+	{
+		if ( !CanSubmitMove() )
+			return;
+
+		Game.CmdSubmitMove( Move.Fold, 0f );
+	}
 }

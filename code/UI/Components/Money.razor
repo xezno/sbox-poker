@@ -1,0 +1,44 @@
+﻿@using Sandbox.UI;
+@using System;
+@namespace Poker.UI
+
+<root class="money">
+
+
+	<div class="row gradient-right">
+		<text class="name">Pot</text>
+		<plabel class="value">@PotValue()</plabel>
+	</div>
+
+	<div class="row gradient-right">
+		<text class="name">Your Money</text>
+		<plabel class="value">@MoneyValue()</plabel>
+	</div>
+	
+</root>
+
+@code
+{
+	string MoneyValue()
+	{
+		if (Local.Pawn is not Player player)
+			return "N/A";
+
+		var moneyValue = player.Money;
+		return $"${moneyValue}";
+	}
+	
+	string PotValue()
+	{
+		if (Game.Instance is not Game game)
+			return "N/A";
+
+		var potValue = game.Pot;
+		return $"${potValue}";
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(MoneyValue() + PotValue());
+	}
+}

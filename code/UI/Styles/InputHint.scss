@@ -1,8 +1,8 @@
 @import "/UI/Styles/_Theme.scss";
 
 .input-hint {
-    align-items: center;
     flex-direction: row;
+    padding: 2px 10px;
 
     .radial-fill {
         display: none;
@@ -25,8 +25,6 @@
     }
 
     .glyph, .glyph-shadow {
-        height: 100%;
-        border-radius: 10px;
         background-size: contain;
         background-repeat: no-repeat;
     }
@@ -44,9 +42,10 @@
     .glyph-wrapper {
         align-items: center;
         justify-content: flex-end;
+        margin-left: 10px;
     }
 
-    .action {
+    label, text, .action {
         font-size: $font-normal;
         text-shadow: $text-shadow;
         color: white;

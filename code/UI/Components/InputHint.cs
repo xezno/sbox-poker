@@ -50,6 +50,9 @@ public partial class InputHint : Panel
 	{
 		base.Tick();
 
+		if ( string.IsNullOrEmpty( Name ) )
+			return;
+
 		var action = InputLayer.GetAction( Name );
 		var button = action.GetDisplayButton();
 		bool active = MathF.Abs( action.Evaluate() ) > 0.5f;

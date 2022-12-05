@@ -16,7 +16,7 @@ public partial class PokerChatBox : Panel
 	{
 		Current = this;
 
-		SetClass( "chat-box", true );
+		AddClass( "chat-box" );
 
 		Canvas = Add.Panel( "chat-canvas" );
 

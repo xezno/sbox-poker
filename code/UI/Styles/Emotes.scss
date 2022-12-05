@@ -1,18 +1,22 @@
 ﻿@import "/UI/Styles/_Theme.scss";
 
-.betting {
+.emotes {
     position: absolute;
-    bottom: 0;
-    left: 43.5%; // HACK
+    top: 50%;
+    left: 50%;
     padding: 10px;
     padding-bottom: $safe-area-y;
     opacity: 0;
     flex-direction: column;
     align-items: center;
     width: 250px;
+    transform: translate( -50% -50% ) scale( 1.1 );
+    transition: all 150ms ease;
 
     &.visible {
+        transform: translate( -50% -50% ) scale( 1.0 );
         opacity: 1;
+        pointer-events: all;
     }
 
     .selected-action {
@@ -32,10 +36,10 @@
     .radial-wheel {
         width: 200px;
         height: 200px;
-        background: $background-gradient;
         border-radius: 100%;
         position: relative;
         backdrop-filter: $blur;
+        background: radial-gradient( $gradient-a, $gradient-b );
 
         .item {
             position: absolute;
@@ -49,7 +53,7 @@
 
             .icon {
                 font-family: fa6-solid;
-                font-size: 32px;
+                font-size: 24px;
                 border: 1px solid transparent;
                 transition: border 150ms ease;
                 width: 48px;
@@ -57,28 +61,16 @@
                 padding: 1px 0 0 1px;
                 align-items: center;
                 justify-content: center;
+                border-radius: 100%;
+
+                &:hover {
+                    border: 1px solid white;
+                }
             }
 
             .action {
-                // position: absolute;
-                // bottom: -16px;
-                // right: -16px;
-                border-radius: -1;
-                margin-top: -5px;
-                transform: scale( 0.75 );
+                display: none;
             }
-        }
-    }
-
-    .row {
-        position: absolute;
-        bottom: 0;
-        padding: 10px;
-        padding-bottom: $safe-area-y;
-
-        .input-hint {
-            flex-direction: row-reverse;
-            align-items: center;
         }
     }
 }

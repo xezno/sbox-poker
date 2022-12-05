@@ -3,8 +3,10 @@
 .controls {
     position: absolute;
     right: $safe-area-x;
-    flex-direction: column;
     bottom: 0;
+    flex-direction: column;
+    padding: 10px;
+    padding-bottom: $safe-area-y;
 }
 
 .play-controls, .camera-controls {
@@ -13,31 +15,8 @@
     transition: opacity 150ms ease;
     font-size: $font-normal;
     text-shadow: $text-shadow;
-    padding: 10px;
-    padding-bottom: $safe-area-y;
 
     &.visible {
         opacity: 1;
-    }
-
-    .input-hint {
-        padding: 2px 10px;
-
-        .glyph-wrapper {
-            margin-left: 10px;
-        }
-    }
-}
-
-row {
-    align-items: center;
-    justify-content: flex-end;
-
-    text:first-child {
-        margin-right: 8px;
-    }
-
-    text:nth-child(4) {
-        margin-right: -4px;
     }
 }

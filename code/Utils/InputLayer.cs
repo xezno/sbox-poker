@@ -148,33 +148,28 @@ public class InputLayer
 	public static List<BaseInputAction> ControllerActions = new()
 	{
 		new HoldAction( "fold", InputButton.Use ),
-		new AxisAction( "adjust_amount", () => Input.Forward, InputButton.Run ),
-		new HoldAction( "submit", InputButton.Jump ),
+		new AxisAction( "raise", () => Input.Forward, InputButton.Run ),
+		new HoldAction( "check", InputButton.Jump ),
 		new BoolAction( "your_cards", InputButton.SecondaryAttack ),
 		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
-		new BoolAction( "list_players", InputButton.Score ),
-		new HoldAction( "all_in", InputButton.Duck ),
 
-		new BoolAction( "emote.middle_finger", InputButton.Flashlight ),
-		new BoolAction( "emote.thumbs_up", InputButton.Slot1 ),
-		new BoolAction( "emote.thumbs_down", InputButton.Slot2 ),
-		new BoolAction( "emote.pump", InputButton.Slot3 )
+		new BoolAction( "show_emotes", InputButton.Score )
 	};
 
 	public static List<BaseInputAction> PCActions = new()
 	{
 		new HoldAction( "fold", InputButton.Flashlight ),
-		new FloatAction( "adjust_amount", InputButton.Forward, InputButton.Back ),
-		new HoldAction( "submit", InputButton.Jump ),
+		new FloatAction( "raise", InputButton.Forward, InputButton.Back ),
+		new HoldAction( "check", InputButton.Jump ),
 		new BoolAction( "your_cards", InputButton.Run ),
 		new BoolAction( "community_cards", InputButton.Duck ),
-		new BoolAction( "list_players", InputButton.Score ),
-		new HoldAction( "all_in", InputButton.Use ),
 
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
 		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
 		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
-		new BoolAction( "emote.pump", InputButton.Slot4 )
+		new BoolAction( "emote.pump", InputButton.Slot4 ),
+
+		new BoolAction( "show_emotes", InputButton.Score )
 	};
 
 	public static List<BaseInputAction> Actions
