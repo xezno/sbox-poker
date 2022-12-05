@@ -2,7 +2,7 @@
 
 public class Camera : CameraMode
 {
-	private float UserFOV = 90f;
+	private float UserFOV = 70f;
 	private float fac = 1.0f;
 
 	public override void Activated()
