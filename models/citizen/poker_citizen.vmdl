@@ -1580,6 +1580,14 @@
 									{
 										_class = "AnimFile"
 										name = "Emotes_MiddleFinger"
+										children = 
+										[
+											{
+												_class = "AnimSubtract"
+												anim_name = "bindPose"
+												frame = 0
+											},
+										]
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1601,6 +1609,14 @@
 									{
 										_class = "AnimFile"
 										name = "Emotes_ThumbsUp"
+										children = 
+										[
+											{
+												_class = "AnimSubtract"
+												anim_name = "bindPose"
+												frame = 0
+											},
+										]
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1622,6 +1638,14 @@
 									{
 										_class = "AnimFile"
 										name = "Emotes_ThumbsDown"
+										children = 
+										[
+											{
+												_class = "AnimSubtract"
+												anim_name = "bindPose"
+												frame = 0
+											},
+										]
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1643,6 +1667,14 @@
 									{
 										_class = "AnimFile"
 										name = "Emotes_Pump"
+										children = 
+										[
+											{
+												_class = "AnimSubtract"
+												anim_name = "bindPose"
+												frame = 0
+											},
+										]
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1671,6 +1703,14 @@
 									{
 										_class = "AnimFile"
 										name = "Bet"
+										children = 
+										[
+											{
+												_class = "AnimSubtract"
+												anim_name = "bindPose"
+												frame = 0
+											},
+										]
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1692,6 +1732,14 @@
 									{
 										_class = "AnimFile"
 										name = "Check"
+										children = 
+										[
+											{
+												_class = "AnimSubtract"
+												anim_name = "bindPose"
+												frame = 0
+											},
+										]
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1713,6 +1761,14 @@
 									{
 										_class = "AnimFile"
 										name = "Fold"
+										children = 
+										[
+											{
+												_class = "AnimSubtract"
+												anim_name = "bindPose"
+												frame = 0
+											},
+										]
 										activity_name = ""
 										activity_weight = 1
 										weight_list_name = ""
@@ -1778,6 +1834,14 @@
 							{
 								_class = "AnimFile"
 								name = "LeftIdle"
+								children = 
+								[
+									{
+										_class = "AnimSubtract"
+										anim_name = "bindPose"
+										frame = 0
+									},
+								]
 								activity_name = ""
 								activity_weight = 1
 								weight_list_name = ""
