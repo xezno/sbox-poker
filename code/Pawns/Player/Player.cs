@@ -15,7 +15,7 @@ public partial class Player : BasePawn
 			var eyeTransform = GetAttachment( "eyes" ) ?? default;
 
 			return new Ray(
-				eyeTransform.Position + Vector3.Up * 2f - Vector3.Forward * 8f,
+				eyeTransform.Position + Vector3.Up * 2f + Vector3.Right * 4f,
 				ViewAngles.Forward
 			);
 		}
