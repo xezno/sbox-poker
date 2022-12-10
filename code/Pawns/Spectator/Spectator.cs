@@ -1,11 +1,26 @@
 ﻿namespace Poker;
 
-public class Spectator : Entity
+public class Spectator : BasePawn
 {
-	public override void Spawn()
-	{
-		base.Spawn();
+	private SpectatorCamera Camera { get; set; }
 
-		var camera = Components.Create<SpectatorCamera>();
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+		Camera = new();
+	}
+
+	public override void BuildInput()
+	{
+		base.BuildInput();
+
+		Camera.BuildInput();
+	}
+
+	public override void FrameSimulate( Client cl )
+	{
+		base.FrameSimulate( cl );
+
+		Camera.Update();
 	}
 }

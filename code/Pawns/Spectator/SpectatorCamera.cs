@@ -1,6 +1,6 @@
 ﻿namespace Poker;
 
-public class SpectatorCamera : CameraMode
+public class SpectatorCamera
 {
 	private Angles LookAngles;
 	private Vector3 MoveInput;
@@ -14,58 +14,54 @@ public class SpectatorCamera : CameraMode
 
 	public SpectatorCamera()
 	{
-		TargetPos = CurrentView.Position;
-		TargetRot = CurrentView.Rotation;
-		TargetFOV = 90f;
+		TargetPos = Camera.Position;
+		TargetRot = Camera.Rotation;
+		TargetFOV = Screen.CreateVerticalFieldOfView( 90f );
 
-		Position = TargetPos;
-		Rotation = TargetRot;
-		FieldOfView = TargetFOV;
-
-		LookAngles = Rotation.Angles();
+		LookAngles = Camera.Rotation.Angles();
 	}
 
-	public override void Update()
+	public void Update()
 	{
 		var player = Local.Client;
 		if ( !player.IsValid() )
 			return;
 
-		Viewer = null;
+		Camera.FirstPersonViewer = null;
 
 		Move();
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public void BuildInput()
 	{
-		MoveInput = input.AnalogMove;
+		MoveInput = Input.AnalogMove;
 
 		moveMul = 1;
 
-		if ( input.Down( InputButton.Run ) )
+		if ( Input.Down( InputButton.Run ) )
 			moveMul = 5;
-		if ( input.Down( InputButton.Duck ) )
+		if ( Input.Down( InputButton.Duck ) )
 			moveMul = 0.2f;
 
-		LookAngles += input.AnalogLook;
+		LookAngles += Input.AnalogLook;
 		LookAngles.roll = 0;
 
-		TargetFOV -= input.MouseWheel * 4f;
+		TargetFOV -= Input.MouseWheel * 4f;
 		TargetFOV = TargetFOV.Clamp( 30f, 100f );
 
-		input.ClearButton( InputButton.PrimaryAttack );
-		input.StopProcessing = true;
+		Input.ClearButton( InputButton.PrimaryAttack );
+		Input.StopProcessing = true;
 	}
 
 	void Move()
 	{
-		var mv = MoveInput.Normal * FlySpeed * RealTime.Delta * Rotation * moveMul;
+		var mv = MoveInput.Normal * FlySpeed * RealTime.Delta * Camera.Rotation * moveMul;
 
 		TargetRot = Rotation.From( LookAngles );
 		TargetPos += mv;
 
-		Position = Vector3.Lerp( Position, TargetPos, 10 * RealTime.Delta );
-		Rotation = Rotation.Slerp( Rotation, TargetRot, 10 * RealTime.Delta );
-		FieldOfView = FieldOfView.LerpTo( TargetFOV, 10 * RealTime.Delta );
+		Camera.Position = Vector3.Lerp( Camera.Position, TargetPos, 10 * RealTime.Delta );
+		Camera.Rotation = Rotation.Slerp( Camera.Rotation, TargetRot, 10 * RealTime.Delta );
+		Camera.FieldOfView = Camera.FieldOfView.LerpTo( TargetFOV, 10 * RealTime.Delta );
 	}
 }

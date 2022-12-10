@@ -52,11 +52,11 @@ internal class NameTagComponent : EntityComponent<Player>
 	/// <summary>
 	/// Called for every tag, while it's active
 	/// </summary>
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void FrameUpdate()
 	{
 		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
-		var dir = (tx.Position - CurrentView.Position).Normal;
+		var dir = (tx.Position - Camera.Position).Normal;
 		var rot = Rotation.LookAt( dir );
 
 		var screenPos = (Vector2)tx.Position.ToScreen();
@@ -64,7 +64,7 @@ internal class NameTagComponent : EntityComponent<Player>
 
 		tx.Position += rot.Right * 20.0f;
 		tx.Position += rot.Down * 16.0f;
-		tx.Rotation = Rotation.LookAt( -CurrentView.Rotation.Forward );
+		tx.Rotation = Rotation.LookAt( -Camera.Rotation.Forward );
 
 		var opacity = MathF.Abs( center.x ).LerpInverse( 0.05f, 0f );
 
@@ -75,7 +75,7 @@ internal class NameTagComponent : EntityComponent<Player>
 	/// <summary>
 	/// Called once per frame to manage component creation/deletion
 	/// </summary>
-	[Event.Frame]
+	[Event.Client.Frame]
 	public static void SystemUpdate()
 	{
 		foreach ( var player in Sandbox.Entity.All.OfType<Player>() )
@@ -87,7 +87,7 @@ internal class NameTagComponent : EntityComponent<Player>
 				continue;
 			}
 
-			var shouldRemove = player.Position.Distance( CurrentView.Position ) > 500;
+			var shouldRemove = player.Position.Distance( Camera.Position ) > 500;
 			shouldRemove = shouldRemove || player.LifeState != LifeState.Alive;
 			shouldRemove = shouldRemove || player.IsDormant;
 

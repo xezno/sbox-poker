@@ -1,11 +1,11 @@
-﻿global using Sandbox;
-global using SandboxEditor;
+﻿global using Editor;
+global using Sandbox;
 global using System.Collections.Generic;
 global using System.Linq;
 
 namespace Poker;
 
-public partial class Game : Sandbox.Game
+public partial class Game : GameManager
 {
 	[Net] public IList<Card> CommunityCards { get; set; }
 	[Net] public float Pot { get; set; }
@@ -127,8 +127,6 @@ public partial class Game : Sandbox.Game
 
 		var player = new Player
 		{
-			Camera = new Camera(),
-			Animator = new PlayerAnimator(),
 			AvatarData = clothingContainer.Serialize()
 		};
 
@@ -155,7 +153,7 @@ public partial class Game : Sandbox.Game
 		firstAvailableSeat.SetOccupiedBy( client.Pawn as Player );
 	}
 
-	[DebugOverlay( "poker_debug", "Poker Debug", "style" )]
+	[Event.Debug.Overlay( "poker_debug", "Poker Debug", "style" )]
 	private static void DebugOverlay()
 	{
 		if ( !Host.IsServer )

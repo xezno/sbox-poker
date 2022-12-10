@@ -50,7 +50,7 @@ public class HoldAction : BoolAction
 		return (Progress >= 1f && Input.Down( Button )) ? 1.0f : 0.0f;
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void OnFrame()
 	{
 		if ( Input.Pressed( Button ) || Input.Released( Button ) )
@@ -148,7 +148,7 @@ public class InputLayer
 	public static List<BaseInputAction> ControllerActions = new()
 	{
 		new HoldAction( "fold", InputButton.Use ),
-		new AxisAction( "raise", () => Input.Forward, InputButton.Run ),
+		new AxisAction( "raise", () => Input.AnalogMove.x, InputButton.Run ),
 		new HoldAction( "check", InputButton.Jump ),
 		new BoolAction( "your_cards", InputButton.SecondaryAttack ),
 		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
@@ -198,7 +198,7 @@ public class InputLayer
 		return GetAction( name ).Evaluate() > 0.5f;
 	}
 
-	[DebugOverlay( "inputlayer", "Input Layer", "sports_esports" )]
+	[Event.Debug.Overlay( "inputlayer", "Input Layer", "sports_esports" )]
 	public static void OnDrawHud()
 	{
 		if ( !Host.IsClient )

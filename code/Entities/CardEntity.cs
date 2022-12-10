@@ -26,7 +26,7 @@ public partial class CardEntity : ModelEntity
 		SetMaterialOverride( material, "isCardTarget" );
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void OnFrame()
 	{
 		if ( texture?.IsLoaded ?? false )

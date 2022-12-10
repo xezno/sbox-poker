@@ -1,18 +1,9 @@
 ﻿namespace Poker;
 
-public class Camera : CameraMode
+public class PlayerCamera
 {
 	private float UserFOV = 70f;
 	private float fac = 1.0f;
-
-	public override void Activated()
-	{
-		var pawn = Local.Pawn;
-		if ( pawn == null ) return;
-
-		Position = pawn.EyePosition;
-		Rotation = Rotation.Identity;
-	}
 
 	public enum Targets
 	{
@@ -30,13 +21,13 @@ public class Camera : CameraMode
 		return cameraTarget;
 	}
 
-	public override void Update()
+	public void Update()
 	{
-		var pawn = Local.Pawn;
+		var pawn = Local.Pawn as Player;
 		if ( pawn == null ) return;
 
-		ZNear = 1;
-		ZFar = 5000;
+		Camera.ZNear = 1;
+		Camera.ZFar = 5000;
 
 		float targetFOV;
 		Vector3 targetPosition;
@@ -51,43 +42,41 @@ public class Camera : CameraMode
 					var lookDir = (communityCardSpawnPos - pawn.EyePosition).Normal;
 					targetRotation = Rotation.LookAt( lookDir );
 					targetPosition = pawn.EyePosition;
-					targetFOV = 50f;
+					targetFOV = Screen.CreateVerticalFieldOfView( 50f );
 
 					fac = fac.LerpTo( 1.0f, 50f * Time.Delta );
 
-					Viewer = pawn;
+					Camera.FirstPersonViewer = pawn;
 					break;
 				}
 			default:
 				{
 					targetPosition = pawn.EyePosition;
 					targetRotation = pawn.EyeRotation;
-					targetFOV = UserFOV;
+					targetFOV = Screen.CreateVerticalFieldOfView( UserFOV );
 
 					fac = fac.LerpTo( 0.0f, .5f * Time.Delta );
 
-					Viewer = pawn;
+					Camera.FirstPersonViewer = pawn;
 					break;
 				}
 		}
 
-		Position = Position.LerpTo( targetPosition, 10f * Time.Delta );
-		Rotation = Rotation.LerpTo( targetRotation, 10f * Time.Delta );
+		Camera.Position = Camera.Position.LerpTo( targetPosition, 10f * Time.Delta );
+		Camera.Rotation = Camera.Rotation.LerpTo( targetRotation, 10f * Time.Delta );
 
-		Position = Position.LerpTo( pawn.EyePosition, 1.0f - fac );
-		Rotation = Rotation.LerpTo( pawn.EyeRotation, 1.0f - fac );
+		Camera.Position = Camera.Position.LerpTo( pawn.EyePosition, 1.0f - fac );
+		Camera.Rotation = Camera.Rotation.LerpTo( pawn.EyeRotation, 1.0f - fac );
 
-		FieldOfView = FieldOfView.LerpTo( targetFOV, 10f * Time.Delta );
+		Camera.FieldOfView = Camera.FieldOfView.LerpTo( targetFOV, 10f * Time.Delta );
 	}
 
-	public override void BuildInput( InputBuilder inputBuilder )
+	public void BuildInput()
 	{
-		base.BuildInput( inputBuilder );
-
-		if ( inputBuilder.StopProcessing )
+		if ( Input.StopProcessing )
 			return;
 
-		UserFOV -= inputBuilder.MouseWheel * 10f;
+		UserFOV -= Input.MouseWheel * 10f;
 		UserFOV = UserFOV.Clamp( 10, 90 );
 	}
 }

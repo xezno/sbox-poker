@@ -119,6 +119,6 @@ public partial class PokerChatBox : Panel
 			return;
 
 		Log.Info( $"{ConsoleSystem.Caller}: {message}" );
-		AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}" );
+		AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.SteamId}" );
 	}
 }

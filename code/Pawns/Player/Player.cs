@@ -1,19 +1,30 @@
 ﻿namespace Poker;
 
-public partial class Player : AnimatedEntity
+public partial class Player : BasePawn
 {
 	[Net] public string AvatarData { get; set; }
 	[Net] public float VoiceLevel { get; set; }
-	[Net] public PlayerAnimator Animator { get; set; }
 
 	[ConVar.Server( "poker_sv_starting_cash" )]
 	public static float StartingCash { get; set; } = 1000f;
 
-	public Camera Camera
+	public override Ray AimRay
 	{
-		get => Components.Get<Camera>();
-		set => Components.Add( value );
+		get
+		{
+			var eyeTransform = GetAttachment( "eyes" ) ?? default;
+
+			return new Ray(
+				eyeTransform.Position + Vector3.Up * 2f - Vector3.Forward * 8f,
+				ViewAngles.Forward
+			);
+		}
 	}
+
+	public Vector3 EyePosition => AimRay.Position;
+	public Rotation EyeRotation => Rotation.LookAt( AimRay.Forward );
+
+	private PlayerCamera Camera { get; set; }
 
 	public override void Spawn()
 	{
@@ -35,11 +46,20 @@ public partial class Player : AnimatedEntity
 		RightCard.LocalRotation = Rotation.From( 0, 15, 0 );
 	}
 
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+
+		ViewAngles = Rotation.Angles();
+
+		Camera = new();
+	}
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
 
-		Animator.Simulate( cl, this, null );
+		Animate();
 
 		if ( IsServer )
 		{
@@ -53,7 +73,8 @@ public partial class Player : AnimatedEntity
 	{
 		base.FrameSimulate( cl );
 
-		Animator.FrameSimulate( cl, this, null );
+		Animate();
+		Camera.Update();
 
 		SetEyeTransforms();
 		SetBodyGroups();
@@ -73,36 +94,62 @@ public partial class Player : AnimatedEntity
 
 	private void SetEyeTransforms()
 	{
-		var eyeTransform = GetAttachment( "eyes", false ) ?? default;
-		EyeLocalPosition = eyeTransform.Position + Vector3.Up * 2f - Vector3.Forward * 8f;
-		EyeLocalRotation = Input.Rotation;
-
 		Position = Position.WithZ( 8 );
 	}
 
-	public override void BuildInput( InputBuilder inputBuilder )
+	public override void BuildInput()
 	{
-		base.BuildInput( inputBuilder );
+		base.BuildInput();
 
 		if ( InputLayer.Evaluate( "community_cards" ) )
 		{
-			inputBuilder.ViewAngles = inputBuilder.OriginalViewAngles;
-			inputBuilder.StopProcessing = true;
+			Input.StopProcessing = true;
 			return;
 		}
 
-		var inputAngles = inputBuilder.ViewAngles;
-		var clampedAngles = new Angles(
-			inputAngles.pitch.Clamp( -45, 45 ),
-			inputAngles.yaw,
-			inputAngles.roll
-		);
-
-		inputBuilder.ViewAngles = clampedAngles;
+		Camera.BuildInput();
 	}
 
 	public override string ToString()
 	{
 		return $"Player '{Client.Name}'";
+	}
+
+	private void Animate()
+	{
+		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) );
+
+		// TODO: remove this ( test )
+		if ( InputLayer.Evaluate( "emote.middle_finger" ) )
+			SetAnimParameter( "action", (int)Actions.Game_Bet );
+		else if ( InputLayer.Evaluate( "emote.thumbs_up" ) )
+			SetAnimParameter( "action", (int)Actions.Game_Check );
+		else if ( InputLayer.Evaluate( "emote.thumbs_down" ) )
+			SetAnimParameter( "action", (int)Actions.Game_Fold );
+		else if ( InputLayer.Evaluate( "emote.pump" ) )
+			SetAnimParameter( "action", (int)Actions.Emote_Pump );
+		else
+			SetAnimParameter( "action", 0 );
+
+		SetAnimParameter( "sit_pose", 0 );
+
+		Vector3 lookPos = EyePosition + EyeRotation.Forward * 512;
+		Vector3 emoteAimPos = EyePosition + EyeRotation.Forward * 512;
+		emoteAimPos = emoteAimPos.WithZ( 128 );
+
+		Vector3 cardsAimPos = EyePosition + EyeRotation.Forward * 512;
+		cardsAimPos = cardsAimPos.WithZ( 128 );
+
+		SetAnimLookAt( "aim_head", EyePosition, lookPos );
+		SetAnimLookAt( "aim_emote", EyePosition, emoteAimPos );
+		SetAnimLookAt( "aim_cards", EyePosition, cardsAimPos );
+		SetAnimParameter( "aim_head_weight", 1.0f );
+		SetAnimParameter( "aim_emote_weight", 1.0f );
+		SetAnimParameter( "aim_cards_weight", 1.0f );
+
+		if ( Host.IsClient && Client.IsValid )
+		{
+			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
+		}
 	}
 }
