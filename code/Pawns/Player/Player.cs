@@ -25,6 +25,8 @@ public partial class Player : BasePawn
 	public Vector3 EyePosition => AimRay.Position;
 	public Rotation EyeRotation => Rotation.LookAt( AimRay.Forward );
 
+	private TimeSince timeSinceTurnChange;
+
 	private PlayerCamera Camera { get; set; }
 
 	public override void Spawn()
@@ -64,7 +66,20 @@ public partial class Player : BasePawn
 
 		if ( Game.IsServer )
 		{
+			var wasMyTurn = IsMyTurn;
 			IsMyTurn = PokerGame.Instance?.IsTurn( this ) ?? false;
+
+			if ( IsMyTurn != wasMyTurn )
+			{
+				timeSinceTurnChange = 0;
+			}
+		}
+
+		// Hacky bot behaviour, just check after 1 second
+		if ( Client.IsBot && Game.IsServer && IsMyTurn && timeSinceTurnChange > 1f )
+		{
+			Log.Info( $"{Client.IsBot} && {Game.IsClient} && {IsMyTurn}" );
+			PokerGame.SubmitMove( this, Move.Bet, 0f );
 		}
 
 		SetEyeTransforms();

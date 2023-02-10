@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Poker;
+﻿namespace Poker;
 partial class PokerGame
 {
 	// TODO: Buy-ins
@@ -195,19 +193,6 @@ partial class PokerGame
 		{
 			MoveToNextPlayer();
 		}
-
-		// HACK: This just means the game won't get stuck whenever a bot plays - forces them to do minimum bet
-		if ( PlayerTurnQueue.Peek().Client.IsBot )
-		{
-			_ = BotThink();
-		}
-	}
-
-	private async Task BotThink()
-	{
-		await Task.Delay( 1000 );
-		Bet( MinimumBet, PlayerTurnQueue.Peek() );
-		MoveToNextPlayer();
 	}
 
 	public bool IsTurn( Player player )

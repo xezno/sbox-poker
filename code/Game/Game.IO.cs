@@ -51,6 +51,13 @@ partial class PokerGame
 
 		Log.Trace( $"Player {player.Name} ({caller.Name}) submitted move {move} with param {parameter}" );
 
+		SubmitMove( player, move, parameter );
+	}
+
+	public static void SubmitMove( Player player, Move move, float parameter )
+	{
+		var instance = Instance;
+
 		if ( instance.IsTurn( player ) )
 		{
 			switch ( move )
