@@ -108,34 +108,6 @@ partial class PokerGame
 			player.RightCard.RpcSetCard( To.Single( player ), player.Hand[1] );
 		} );
 
-		// Delete chips
-		// TODO: Move this elsewhere
-		Entity.All.OfType<ChipEntity>().ToList().ForEach( x => x.Delete() );
-		Entity.All.OfType<ChipStackEntity>().ToList().ForEach( x => x.Delete() );
-
-		// Spawn chips
-		// TODO: Move this elsewhere and do it properly
-		Players.ForEach( player =>
-		{
-			var seat = player.Seat;
-			var chipSpawn = Entity.All.OfType<PlayerChipSpawn>().First( x => x.SeatNumber == seat.SeatNumber );
-			float spacing = 2.5f;
-
-			var chipOffsets = new (int, float, Vector3)[]
-			{
-				// Count, Value, Position
-				new( 2, 500, Vector3.Zero ),
-				new( 5, 250, new Vector3( 0,  spacing  ) * player.Rotation ),
-				new( 7, 100, new Vector3( spacing, spacing ) * player.Rotation ),
-				new( 10, 50, new Vector3( 0, spacing*2 ) * player.Rotation )
-			};
-
-			foreach ( var offset in chipOffsets )
-			{
-				ChipStackEntity.CreateStack( offset.Item1, offset.Item2, chipSpawn.Position + offset.Item3 );
-			}
-		} );
-
 		// Kick broke people
 		Players.ForEach( player =>
 		{
