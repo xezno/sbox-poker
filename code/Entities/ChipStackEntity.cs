@@ -43,6 +43,9 @@ public partial class ChipStackEntity : Entity
 			_ => Color.Red
 		};
 
+		if ( Count <= 0 )
+			Particles.Destroy();
+
 		Particles.SetPosition( 0, Position );
 		Particles.SetPositionComponent( 1, 0, Count );
 		Particles.SetPosition( 2, new Vector3( color.r, color.g, color.b ) );
