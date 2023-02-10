@@ -69,6 +69,21 @@ partial class PokerGame
 
 			instance.MoveToNextPlayer();
 		}
+
+		switch ( move )
+		{
+			case Move.Fold:
+				_ = player.SetAction( Actions.Game_Fold );
+
+				break;
+			case Move.Bet:
+				if ( parameter == 0 )
+					_ = player.SetAction( Actions.Game_Check );
+				else
+					_ = player.SetAction( Actions.Game_Bet );
+
+				break;
+		}
 	}
 
 	private void Fold( Player player )

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Poker;
 partial class Player
@@ -71,6 +72,17 @@ partial class Player
 			return;
 
 		PokerGame.CmdSubmitMove( Move.Fold, 0f );
+	}
+
+	public async Task SetAction( Actions newAction )
+	{
+		Game.AssertServer();
+
+		CurrentAction = newAction;
+		await Task.Delay( 700 ); // ms
+
+		// Reset action
+		CurrentAction = Actions.None;
 	}
 
 	[Category( "Poker" )] private List<Entity> PlayerChips { get; } = new();

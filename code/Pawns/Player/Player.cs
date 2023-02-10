@@ -4,6 +4,7 @@ public partial class Player : BasePawn
 {
 	[Net] public string AvatarData { get; set; }
 	[Net] public float VoiceLevel { get; set; }
+	[Net] public Actions CurrentAction { get; set; }
 
 	[ConVar.Server( "poker_sv_starting_cash" )]
 	public static float StartingCash { get; set; } = 1000f;
@@ -119,17 +120,7 @@ public partial class Player : BasePawn
 	{
 		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) );
 
-		// TODO: remove this ( test )
-		if ( InputLayer.Evaluate( "emote.middle_finger" ) )
-			SetAnimParameter( "action", (int)Actions.Game_Bet );
-		else if ( InputLayer.Evaluate( "emote.thumbs_up" ) )
-			SetAnimParameter( "action", (int)Actions.Game_Check );
-		else if ( InputLayer.Evaluate( "emote.thumbs_down" ) )
-			SetAnimParameter( "action", (int)Actions.Game_Fold );
-		else if ( InputLayer.Evaluate( "emote.pump" ) )
-			SetAnimParameter( "action", (int)Actions.Emote_Pump );
-		else
-			SetAnimParameter( "action", 0 );
+		SetAnimParameter( "action", (int)CurrentAction );
 
 		SetAnimParameter( "sit_pose", 0 );
 
