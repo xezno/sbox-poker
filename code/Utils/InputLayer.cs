@@ -147,11 +147,16 @@ public class InputLayer
 {
 	public static List<BaseInputAction> ControllerActions = new()
 	{
-		new HoldAction( "fold", InputButton.Use ),
-		new AxisAction( "raise", () => Input.AnalogMove.x, InputButton.Run ),
+		new HoldAction( "fold", InputButton.Duck ),
+		new HoldAction( "raise", InputButton.Use ),
 		new HoldAction( "check", InputButton.Jump ),
 		new BoolAction( "your_cards", InputButton.SecondaryAttack ),
 		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
+
+		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
+		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
+		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
+		new BoolAction( "emote.pump", InputButton.Slot4 ),
 
 		new BoolAction( "show_emotes", InputButton.Score )
 	};
@@ -159,8 +164,8 @@ public class InputLayer
 	public static List<BaseInputAction> PCActions = new()
 	{
 		new HoldAction( "fold", InputButton.Flashlight ),
-		new FloatAction( "raise", InputButton.Forward, InputButton.Back ),
-		new HoldAction( "check", InputButton.Jump ),
+		new HoldAction( "raise", InputButton.Reload ),
+		new HoldAction( "check", InputButton.View ),
 		new BoolAction( "your_cards", InputButton.Run ),
 		new BoolAction( "community_cards", InputButton.Duck ),
 
