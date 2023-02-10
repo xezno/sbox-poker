@@ -79,7 +79,7 @@ partial class Player
 		Game.AssertServer();
 
 		CurrentAction = newAction;
-		await Task.Delay( 700 ); // ms
+		await Task.Delay( 500 ); // ms
 
 		// Reset action
 		CurrentAction = Actions.None;
