@@ -2,19 +2,24 @@
 
 .emotes {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     padding: 10px;
     padding-bottom: $safe-area-y;
     opacity: 0;
     flex-direction: column;
     align-items: center;
-    width: 250px;
-    transform: translate( -50% -50% ) scale( 1.1 );
+    transform: scale( 1.1 );
     transition: all 150ms ease;
+    z-index: 100;
+    justify-content: center;
+
+    backdrop-filter: blur( 10px ) brightness( 0.5 );
 
     &.visible {
-        transform: translate( -50% -50% ) scale( 1.0 );
+        transform: scale( 1.0 );
         opacity: 1;
         pointer-events: all;
     }
@@ -38,7 +43,6 @@
         height: 200px;
         border-radius: 100%;
         position: relative;
-        backdrop-filter: $blur;
         background: radial-gradient( $gradient-a, $gradient-b );
 
         .item {
