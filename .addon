@@ -12,7 +12,6 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
-  "RootNamespace": "Poker",
   "Metadata": {
     "MaxPlayers": 6,
     "MinPlayers": 1,

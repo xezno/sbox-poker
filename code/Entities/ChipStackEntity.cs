@@ -62,7 +62,7 @@ public partial class ChipStackEntity : Entity
 	{
 		base.OnDestroy();
 
-		if ( IsClient && Particles != null )
+		if ( Game.IsClient && Particles != null )
 			Particles.Destroy( true );
 	}
 }

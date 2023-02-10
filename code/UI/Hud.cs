@@ -6,18 +6,18 @@ public class Hud : HudEntity<RootPanel>
 {
 	public Hud()
 	{
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			RootPanel.SetTemplate( "/Code/UI/Hud.html" );
 
 			RootPanel.BindClass( "is-spectator", () =>
 			{
-				return Local.Pawn is Spectator;
+				return Game.LocalPawn is Spectator;
 			} );
 
 			RootPanel.BindClass( "is-player", () =>
 			{
-				return Local.Pawn is Player;
+				return Game.LocalPawn is Player;
 			} );
 
 			LoadStyleSheet();

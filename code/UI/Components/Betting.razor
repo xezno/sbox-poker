@@ -43,11 +43,11 @@
 	private bool WasMyTurn { get; set; }
 	private TimeUntil TimeUntilTurnEnds { get; set; }
 
-	private Player Player => Local.Pawn as Player;
+	private Player Player => Game.LocalPawn as Player;
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine(DateTime.Now.ToString());
+		return HashCode.Combine(Time.Tick);
 	}
 
 	string HoverText()

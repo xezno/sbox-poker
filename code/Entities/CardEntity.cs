@@ -17,7 +17,7 @@ public partial class CardEntity : ModelEntity
 	[ClientRpc]
 	public void RpcSetCard( Card card )
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		texture = Texture.Load( FileSystem.Mounted, card.GetFilename() );
 		Log.Trace( $"Set card texture to {texture.ResourcePath}" );

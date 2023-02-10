@@ -55,21 +55,21 @@ public partial class Player : BasePawn
 		Camera = new();
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 
 		Animate();
 
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
-			IsMyTurn = Game.Instance?.IsTurn( this ) ?? false;
+			IsMyTurn = PokerGame.Instance?.IsTurn( this ) ?? false;
 		}
 
 		SetEyeTransforms();
 	}
 
-	public override void FrameSimulate( Client cl )
+	public override void FrameSimulate( IClient cl )
 	{
 		base.FrameSimulate( cl );
 
@@ -82,7 +82,7 @@ public partial class Player : BasePawn
 
 	private void SetBodyGroups()
 	{
-		if ( IsClient && IsLocalPawn )
+		if ( Game.IsClient && IsLocalPawn )
 		{
 			SetBodyGroup( "Head", 1 );
 		}
@@ -147,9 +147,9 @@ public partial class Player : BasePawn
 		SetAnimParameter( "aim_emote_weight", 1.0f );
 		SetAnimParameter( "aim_cards_weight", 1.0f );
 
-		if ( Host.IsClient && Client.IsValid )
+		if ( Game.IsClient && Client.IsValid )
 		{
-			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
+			SetAnimParameter( "voice", Client.Voice.LastHeard < 0.5f ? Client.Voice.CurrentLevel : 0.0f );
 		}
 	}
 }

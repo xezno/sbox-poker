@@ -201,7 +201,7 @@ public class InputLayer
 	[Event.Debug.Overlay( "inputlayer", "Input Layer", "sports_esports" )]
 	public static void OnDrawHud()
 	{
-		if ( !Host.IsClient )
+		if ( !Game.IsClient )
 			return;
 
 		OverlayUtils.BoxWithText( new Vector2( 45, 175 ),

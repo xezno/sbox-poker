@@ -1,7 +1,7 @@
 ﻿using Poker.UI;
 
 namespace Poker;
-partial class Game
+partial class PokerGame
 {
 	public HandRank RankPlayerHand( Player player, out int score )
 	{

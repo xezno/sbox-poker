@@ -20,6 +20,7 @@ public partial class BasePawn : AnimatedEntity
 			0
 		);
 
+
 		ViewAngles = clampedAngles.Normal;
 	}
 }

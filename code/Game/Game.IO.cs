@@ -1,5 +1,5 @@
 ﻿namespace Poker;
-partial class Game
+partial class PokerGame
 {
 	[ConCmd.Admin( "poker_debug_forcewin" )]
 	public static void ForceWin()
@@ -14,7 +14,7 @@ partial class Game
 	[ConCmd.Admin( "poker_force_next_player" )]
 	public static void ForceNextPlayer()
 	{
-		if ( !Host.IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		var instance = Instance;
@@ -36,7 +36,7 @@ partial class Game
 	[ConCmd.Server( "poker_submit_move" )]
 	public static void CmdSubmitMove( Move move, float parameter )
 	{
-		if ( !Host.IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		var instance = Instance;

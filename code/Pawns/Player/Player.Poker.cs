@@ -29,7 +29,7 @@ partial class Player
 
 	private bool CanSubmitMove()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		if ( !IsMyTurn )
 			return false;
@@ -42,7 +42,7 @@ partial class Player
 		if ( !CanSubmitMove() )
 			return;
 
-		Game.CmdSubmitMove( Move.Bet, amount );
+		PokerGame.CmdSubmitMove( Move.Bet, amount );
 	}
 
 	public void Check()
@@ -50,7 +50,7 @@ partial class Player
 		if ( !CanSubmitMove() )
 			return;
 
-		Game.CmdSubmitMove( Move.Bet, 0f );
+		PokerGame.CmdSubmitMove( Move.Bet, 0f );
 	}
 
 	public void Fold()
@@ -58,6 +58,6 @@ partial class Player
 		if ( !CanSubmitMove() )
 			return;
 
-		Game.CmdSubmitMove( Move.Fold, 0f );
+		PokerGame.CmdSubmitMove( Move.Fold, 0f );
 	}
 }

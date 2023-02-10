@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 namespace Poker;
-partial class Game
+partial class PokerGame
 {
 	// TODO: Buy-ins
 	// List of players that have bought in
@@ -30,7 +30,7 @@ partial class Game
 
 	public void Run()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		/*
 		 * TODO:

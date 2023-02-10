@@ -21,7 +21,7 @@
 {
 	string MoneyValue()
 	{
-		if (Local.Pawn is not Player player)
+		if (Game.LocalPawn is not Player player)
 			return "N/A";
 
 		var moneyValue = player.Money;
@@ -30,7 +30,7 @@
 	
 	string PotValue()
 	{
-		if (Game.Instance is not Game game)
+		if (PokerGame.Instance is not PokerGame game)
 			return "N/A";
 
 		var potValue = game.Pot;

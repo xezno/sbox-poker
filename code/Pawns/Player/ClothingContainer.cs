@@ -32,7 +32,7 @@ public class ClothingContainer
 	/// point than just calling Deserialize directly because if we have
 	/// inventory based skins at some point, we can validate ownership here
 	/// </summary>
-	public void LoadFromClient( Client cl )
+	public void LoadFromClient( IClient cl )
 	{
 		var data = cl.GetClientData( "avatar" );
 		Deserialize( data );

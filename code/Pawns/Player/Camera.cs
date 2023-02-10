@@ -23,7 +23,7 @@ public class PlayerCamera
 
 	public void Update()
 	{
-		var pawn = Local.Pawn as Player;
+		var pawn = Game.LocalPawn as Player;
 		if ( pawn == null ) return;
 
 		Camera.ZNear = 1;

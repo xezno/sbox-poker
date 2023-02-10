@@ -5,39 +5,39 @@ global using System.Linq;
 
 namespace Poker;
 
-public partial class Game : GameManager
+public partial class PokerGame : GameManager
 {
 	[Net] public IList<Card> CommunityCards { get; set; }
 	[Net] public float Pot { get; set; }
 	[Net] public float MinimumBet { get; set; }
 
-	public static Game Instance { get; set; }
+	public static PokerGame Instance { get; set; }
 
-	public Game()
+	public PokerGame()
 	{
 		Instance = this;
 
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			_ = new Hud();
 		}
 	}
 
-	public override void OnVoicePlayed( Client cl )
+	public override void OnVoicePlayed( IClient cl )
 	{
 		// TODO: Re-implement this in razor
 		// Old_PlayerList.Instance?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
 
 		if ( cl.Pawn is Player player )
 		{
-			player.VoiceLevel = cl.VoiceLevel;
+			player.VoiceLevel = cl.Voice.CurrentLevel;
 		}
 	}
 
 	[ConCmd.Server( "poker_start" )]
 	public static void StartPokerGame()
 	{
-		var instance = Game.Current as Game;
+		var instance = PokerGame.Current as PokerGame;
 
 		Instance.Run();
 	}
@@ -54,8 +54,9 @@ public partial class Game : GameManager
 		{
 			for ( float y = -4; y < 4; ++y )
 			{
-				var count = Rand.Int( 16, 32 );
-				var value = Rand.FromArray( new[] { 50, 100, 250, 500 } );
+				var count = Game.Random.Int( 16, 32 );
+				var value = Game.Random.FromArray( new[] { 50, 100, 250, 500 } );
+
 				ChipStackEntity.CreateStack( count, value, tr.EndPosition + new Vector3( x * 3, y * 3, 0 ) );
 			}
 		}
@@ -80,17 +81,17 @@ public partial class Game : GameManager
 		cardEntity.RpcSetCard( To.Everyone, card );
 	}
 
-	public override void ClientJoined( Client client )
+	public override void ClientJoined( IClient client )
 	{
 		base.ClientJoined( client );
 
-		if ( Entity.All.OfType<SeatEntity>().Count() < Client.All.Count )
+		if ( Entity.All.OfType<SeatEntity>().Count() < Game.Clients.Count )
 			CreateSpectatorFor( client );
 		else
 			CreatePlayerFor( client );
 	}
 
-	public void CreateSpectatorFor( Client client )
+	public void CreateSpectatorFor( IClient client )
 	{
 		client.Pawn?.Delete();
 
@@ -106,15 +107,15 @@ public partial class Game : GameManager
 
 		if ( pawn is Player )
 		{
-			Game.Instance.CreateSpectatorFor( client );
+			PokerGame.Instance.CreateSpectatorFor( client );
 		}
 		else if ( pawn is Spectator )
 		{
-			Game.Instance.CreatePlayerFor( client );
+			PokerGame.Instance.CreatePlayerFor( client );
 		}
 	}
 
-	public void CreatePlayerFor( Client client )
+	public void CreatePlayerFor( IClient client )
 	{
 		client.Pawn?.Delete();
 
@@ -136,7 +137,7 @@ public partial class Game : GameManager
 		MoveToSeat( client );
 	}
 
-	private void MoveToSeat( Client client )
+	private void MoveToSeat( IClient client )
 	{
 		var orderedSeats = Entity.All.OfType<SeatEntity>().OrderBy( x => x.SeatNumber );
 		var emptySeats = orderedSeats.Where( x => !x.IsOccupied );
@@ -156,10 +157,10 @@ public partial class Game : GameManager
 	[Event.Debug.Overlay( "poker_debug", "Poker Debug", "style" )]
 	private static void DebugOverlay()
 	{
-		if ( !Host.IsServer )
+		if ( !Game.IsServer )
 			return;
 
-		var instance = Game.Instance;
+		var instance = PokerGame.Instance;
 		if ( instance == null )
 			return;
 

@@ -25,7 +25,7 @@ public partial class SeatEntity : Entity
 
 	public void SetOccupiedBy( Player player )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		player.Transform = this.Transform;
 		this.Player = player;

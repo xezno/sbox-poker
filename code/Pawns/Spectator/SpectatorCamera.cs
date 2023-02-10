@@ -23,7 +23,7 @@ public class SpectatorCamera
 
 	public void Update()
 	{
-		var player = Local.Client;
+		var player = Game.LocalClient;
 		if ( !player.IsValid() )
 			return;
 

@@ -1,5 +1,5 @@
 ﻿namespace Poker;
-partial class Game
+partial class PokerGame
 {
 	class PlayerQueue
 	{

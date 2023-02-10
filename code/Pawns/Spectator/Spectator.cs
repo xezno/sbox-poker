@@ -17,7 +17,7 @@ public class Spectator : BasePawn
 		Camera.BuildInput();
 	}
 
-	public override void FrameSimulate( Client cl )
+	public override void FrameSimulate( IClient cl )
 	{
 		base.FrameSimulate( cl );
 

@@ -21,7 +21,7 @@ internal class CardHint : Panel
 
 		SetClass( "visible", yourCardsButton || communityCardsButton );
 
-		if ( Local.Pawn is not Player player )
+		if ( Game.LocalPawn is not Player player )
 			return;
 
 		if ( player.Hand == null )
@@ -32,7 +32,7 @@ internal class CardHint : Panel
 		if ( yourCardsButton )
 			cards = player.Hand.Select( x => x.ToString() );
 		else if ( communityCardsButton )
-			cards = Game.Instance.CommunityCards.Select( x => x.ToString() );
+			cards = PokerGame.Instance.CommunityCards.Select( x => x.ToString() );
 		else
 			return;
 

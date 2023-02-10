@@ -1,4 +1,5 @@
-﻿using Sandbox.UI;
+﻿using Sandbox.Diagnostics;
+using Sandbox.UI;
 using Sandbox.UI.Construct;
 
 namespace Poker.UI;
@@ -97,7 +98,7 @@ public partial class PokerChatBox : Panel
 		Current?.AddEntry( name, message, avatar, lobbyState );
 
 		// Only log clientside if we're not the listen server host
-		if ( !Global.IsListenServer )
+		if ( !Game.IsListenServer )
 		{
 			Log.Info( $"{name}: {message}" );
 		}
