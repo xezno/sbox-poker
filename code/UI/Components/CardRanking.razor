@@ -1,0 +1,30 @@
+﻿@using Sandbox.UI;
+@using System;
+@namespace Poker.UI
+
+<root class="ranking">
+
+	<div class="row gradient">
+		<plabel class="value">@Ranking()</plabel>
+	</div>
+	
+</root>
+
+@code
+{
+	string Ranking()
+	{
+		if (PokerGame.Instance is not PokerGame game)
+			return "N/A";
+
+		if (Game.LocalPawn is not Player player)
+			return "N/A";
+
+		return $"{game.RankPlayerHand(player, out int _)}";
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(Ranking());
+	}
+}

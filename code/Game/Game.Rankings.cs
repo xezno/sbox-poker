@@ -8,6 +8,12 @@ partial class PokerGame
 		// TODO
 		// For each 5 card combination in (communitycards + playerHand) calculate the rank
 
+		if ( CommunityCards == null || CommunityCards.Count < 3 )
+		{
+			score = -1;
+			return HandRank.None;
+		}
+
 		var playerHand = player.Hand;
 		var cards = playerHand.ToArray().Concat( CommunityCards ).ToArray();
 

@@ -69,9 +69,9 @@
       "NoWarn": "1701;1702;1591;"
     },
     "DefaultLeaderboards": null,
-    "Summary": "deal me in",
-    "Description": "ALEX\u0027S POKER is a faithful implementation of Texas Hold\u0027em you can play with your mates in s\u0026box.\n\n\u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \u2660\uFE0F \u2665\uFE0F \u2663\uFE0F \u2666\uFE0F \n\nThis game is work-in-progress.\n\nFull source code is available at https://github.com/xezno/sbox-poker.",
-    "ReplaceTags": "",
+    "Summary": "Deal me in",
+    "Description": "A faithful implementation of Texas Hold\u0027em you can play with your mates in s\u0026box",
+    "ReplaceTags": "poker texasholdem casino",
     "Public": false,
     "GeneralExtensions": true,
     "TargettedExtensions": true,
@@ -101,6 +101,7 @@
         "Maximum": 250,
         "Step": 10
       }
-    ]
+    ],
+    "CsProjName": ""
   }
 }

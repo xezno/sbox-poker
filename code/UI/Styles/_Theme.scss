@@ -67,8 +67,13 @@ button {
     }
 }
 
-.gradient-bottom, .gradient-top, .gradient-left, .gradient-right {
+.gradient-bottom, .gradient-top, .gradient-left, .gradient-right, .gradient {
     backdrop-filter: $blur;
+}
+
+.gradient {
+    border-radius: 10px;
+    background: linear-gradient(to top, $gradient-a, $gradient-b);
 }
 
 .gradient-bottom {

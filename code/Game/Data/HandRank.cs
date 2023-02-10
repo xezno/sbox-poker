@@ -11,5 +11,7 @@ public enum HandRank
 	FullHouse = 6,
 	FourOfAKind = 7,
 	StraightFlush = 8,
-	RoyalFlush = 9
+	RoyalFlush = 9,
+
+	None = 255
 }
