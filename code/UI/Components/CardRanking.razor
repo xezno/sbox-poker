@@ -20,7 +20,7 @@
 		if (Game.LocalPawn is not Player player)
 			return "N/A";
 
-		return $"{game.RankPlayerHand(player, out int _)}";
+		return $"{game.RankPlayerHand(player, out int _).ToDisplayString()}";
 	}
 
 	protected override int BuildHash()
