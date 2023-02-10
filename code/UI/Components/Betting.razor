@@ -10,7 +10,7 @@
 		
 		<plabel class="selected-action @HoverClass()">@HoverText()</plabel>
 
-		<radialmenu class="radial-wheel" @ref="RadialWheel">
+		<radialmenu class="radial-wheel gradient-bottom" @ref="RadialWheel">
 			<radialmenuitem @onclick=@Raise name="Raise" icon="circle-arrow-up" action="raise">
 			</RadialMenuItem>
 
@@ -108,6 +108,18 @@
 		t = t.UnsignedMod( 99 );
 
 		WasMyTurn = Player.IsMyTurn;
+
+		//
+		// Evaluate inputs
+		//
+		{
+			if ( InputLayer.Evaluate( "raise" ) )
+				Raise();
+			if ( InputLayer.Evaluate( "fold" ) )
+				Fold();
+			if ( InputLayer.Evaluate( "check" ) )
+				Check();
+		}
 	}
 
 	public override void DrawBackground(ref RenderState state)

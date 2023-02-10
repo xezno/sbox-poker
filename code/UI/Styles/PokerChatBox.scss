@@ -18,12 +18,10 @@
         color: white;
         padding: 10px 15px;
         width: 100%;
-        position: absolute;
-        left: 10px;
         bottom: 35px;
-        right: 10px;
         background-color: $background;
         border-radius: 10px;
+        height: 70px;
 
         .placeholder {
             position: absolute;
@@ -44,6 +42,7 @@
         align-items: flex-start;
         overflow: scroll;
         margin-bottom: 60px;
+        height: 100%;
     }
 
     &.open {

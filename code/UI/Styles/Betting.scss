@@ -36,6 +36,7 @@
         border-radius: 100%;
         position: relative;
         backdrop-filter: $blur;
+        margin-bottom: 40px;
 
         .item {
             position: absolute;
@@ -65,6 +66,7 @@
                 // right: -16px;
                 border-radius: -1;
                 margin-top: -5px;
+                margin-left: -10px;
                 transform: scale( 0.75 );
             }
         }

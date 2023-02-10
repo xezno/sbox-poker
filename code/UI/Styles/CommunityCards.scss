@@ -2,7 +2,9 @@
 
 .community-cards {
     position: absolute;
+    padding: 10px;
+    padding-left: $safe-area-x;
     top: $safe-area-y;
-    left: $safe-area-x;
+    left: 0;
     flex-direction: row;
 }
