@@ -14,7 +14,7 @@ public struct Card
 
 	public override string ToString()
 	{
-		return $"{Value} of {Suit}";
+		return ToShortString();
 	}
 
 	public string GetFilename()
@@ -26,6 +26,11 @@ public struct Card
 			fileName += "2";
 
 		return $"{fileName}.png";
+	}
+
+	public string ToLongString()
+	{
+		return $"{Value} of {Suit}";
 	}
 
 	public string ToShortString()
