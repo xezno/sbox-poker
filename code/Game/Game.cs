@@ -42,45 +42,6 @@ public partial class PokerGame : GameManager
 		Instance.Run();
 	}
 
-	[ConCmd.Server( "poker_spawn_chip" )]
-	public static void SpawnChip()
-	{
-		Log.Trace( $"Spawning chip" );
-
-		var player = ConsoleSystem.Caller.Pawn as Player;
-		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 1024f ).Ignore( player ).Run();
-
-		for ( float x = -8; x < 8; ++x )
-		{
-			for ( float y = -4; y < 4; ++y )
-			{
-				var count = Game.Random.Int( 16, 32 );
-				var value = Game.Random.FromArray( new[] { 50, 100, 250, 500 } );
-
-				ChipStackEntity.CreateStack( count, value, tr.EndPosition + new Vector3( x * 3, y * 3, 0 ) );
-			}
-		}
-	}
-
-	[ConCmd.Server( "poker_spawn_card" )]
-	public static void SpawnCard( string suitStr, string valueStr )
-	{
-		var suit = System.Enum.Parse<Suit>( suitStr, true );
-		var value = System.Enum.Parse<Value>( valueStr, true );
-
-		Log.Trace( $"Spawning {suit}, {value}" );
-
-		var player = ConsoleSystem.Caller.Pawn as Player;
-		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 1024f ).Ignore( player ).Run();
-
-		var cardEntity = new CardEntity();
-		cardEntity.Position = tr.EndPosition;
-		cardEntity.Rotation = Rotation.LookAt( -tr.Direction.WithZ( 0 ).Normal );
-
-		var card = new Card( suit, value );
-		cardEntity.RpcSetCard( To.Everyone, card );
-	}
-
 	public override void ClientJoined( IClient client )
 	{
 		base.ClientJoined( client );
