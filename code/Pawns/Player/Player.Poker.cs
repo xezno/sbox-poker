@@ -74,12 +74,17 @@ partial class Player
 		PokerGame.CmdSubmitMove( Move.Fold, 0f );
 	}
 
-	public async Task SetAction( Actions newAction )
+	public void Emote( Emote emote )
+	{
+		PokerGame.CmdEmote( emote );
+	}
+
+	public async Task SetAction( Actions newAction, int delay = 500 )
 	{
 		Game.AssertServer();
 
 		CurrentAction = newAction;
-		await Task.Delay( 500 ); // ms
+		await Task.Delay( delay ); // ms
 
 		// Reset action
 		CurrentAction = Actions.None;

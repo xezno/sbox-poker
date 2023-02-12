@@ -93,6 +93,39 @@ partial class PokerGame
 		}
 	}
 
+	[ConCmd.Server( "poker_emote" )]
+	public static void CmdEmote( Emote emote )
+	{
+		if ( !Game.IsServer )
+			return;
+
+		var instance = Instance;
+		if ( instance == null )
+			Log.Error( "Instance was null!" );
+
+		var caller = ConsoleSystem.Caller;
+		var player = caller.Pawn as Player;
+
+		if ( player == null )
+			Log.Error( "Player was null!" );
+
+		switch ( emote )
+		{
+			case Emote.MiddleFinger:
+				_ = player.SetAction( Actions.Emote_MiddleFinger, 1000 );
+				break;
+			case Emote.ThumbsUp:
+				_ = player.SetAction( Actions.Emote_ThumbsUp, 1000 );
+				break;
+			case Emote.ThumbsDown:
+				_ = player.SetAction( Actions.Emote_ThumbsDown, 1000 );
+				break;
+			case Emote.Pump:
+				_ = player.SetAction( Actions.Emote_Pump, 1000 );
+				break;
+		}
+	}
+
 	private void Fold( Player player )
 	{
 		Log.Trace( $"{player.Client.Name} folds" );

@@ -7,16 +7,16 @@
 	<plabel class="selected-action @HoverClass()">@HoverText()</plabel>
 	
 	<radialmenu class="radial-wheel" @ref="RadialWheel">
-		<radialmenuitem name="Flip Off" icon="hand-middle-finger">
+		<radialmenuitem @onclick=@MiddleFinger name="Flip Off" icon="hand-middle-finger">
 		</RadialMenuItem>
 
-		<radialmenuitem name="Thumbs Down" icon="thumbs-down">
+		<radialmenuitem @onclick=@ThumbsDown name="Thumbs Down" icon="thumbs-down">
 		</radialmenuitem>
 
-		<radialmenuitem name="Wanker" icon="hand-fist">
+		<radialmenuitem @onclick=@Pump name="Wanker" icon="hand-fist">
 		</radialmenuitem>
 
-		<radialmenuitem name="Thumbs Up" icon="thumbs-up">
+		<radialmenuitem @onclick=@ThumbsUp name="Thumbs Up" icon="thumbs-up">
 		</radialmenuitem>
 	</radialmenu>	
 
@@ -24,6 +24,7 @@
 
 @code
 {
+	private Player Player => Game.LocalPawn as Player;
 	public RadialMenu RadialWheel { get; set; }
 
 	protected override int BuildHash()
@@ -50,5 +51,37 @@
 			return "visible";
 
 		return "";
+	}
+
+	void MiddleFinger()
+	{
+		if (Player == null)
+			return;
+
+		Player.Emote( Emote.MiddleFinger );
+	}
+
+	void ThumbsDown()
+	{
+		if (Player == null)
+			return;
+
+		Player.Emote( Emote.ThumbsDown );
+	}
+
+	void Pump()
+	{
+		if (Player == null)
+			return;
+
+		Player.Emote( Emote.Pump );
+	}
+
+	void ThumbsUp()
+	{
+		if (Player == null)
+			return;
+
+		Player.Emote( Emote.ThumbsUp );
 	}
 }
