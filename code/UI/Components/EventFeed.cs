@@ -17,6 +17,8 @@ public partial class EventFeed : Panel
 	[ConCmd.Client( "poker_add_event", CanBeCalledFromServer = true )]
 	public static void AddEvent( string text )
 	{
+		Log.Trace( "poker_add_event" );
+
 		Game.AssertClient();
 
 		Instance.AddChild( new EventEntry( text ) );

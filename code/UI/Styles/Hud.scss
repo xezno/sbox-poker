@@ -3,7 +3,6 @@
 @import "/UI/Styles/Avatar.scss";
 @import "/UI/Styles/Betting.scss";
 @import "/UI/Styles/Card.scss";
-@import "/UI/Styles/CardHint.scss";
 @import "/UI/Styles/CommunityCards.scss";
 @import "/UI/Styles/Controls.scss";
 @import "/UI/Styles/DebugMenu.scss";
@@ -40,35 +39,35 @@
 }
 
 .wip {
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0.5;
-}
-
-.spectating {
-    opacity: 0;
     left: $safe-area-x;
-    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 150px;
+    gap: 5px;
+    width: 350px;
 
-    icon {
-        margin-right: 10px;
+    cell {
+        flex-grow: 1;
+        align-items: center;
+        gap: 5px;
+
+        row {
+            padding: 5px 10px;
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+
+            iconpanel {
+                margin-right: 8px;
+            }
+        }
     }
 }
 
-.spectating, .wip {
-    position: absolute;
-    top: $safe-area-y;
-}
-
-.wip, .spectating, .spectating text {
+.wip {
     // Extrabold italic
     font-weight: $weight-normal;
     font-size: $font-normal;
     text-shadow: $text-shadow;
-}
-
-.is-spectator {
-    .spectating {
-        opacity: 0.5;
-    }
 }

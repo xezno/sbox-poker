@@ -95,6 +95,8 @@ public partial class PokerChatBox : Panel
 	[ConCmd.Client( "poker_chat_add", CanBeCalledFromServer = true )]
 	public static void AddChatEntry( string name, string message, string avatar = null, string lobbyState = null )
 	{
+		Log.Trace( "poker_chat_add" );
+
 		Current?.AddEntry( name, message, avatar, lobbyState );
 
 		// Only log clientside if we're not the listen server host
@@ -107,12 +109,16 @@ public partial class PokerChatBox : Panel
 	[ConCmd.Client( "poker_chat_addinfo", CanBeCalledFromServer = true )]
 	public static void AddInformation( string message, string avatar = null )
 	{
+		Log.Trace( "poker_chat_addinfo" );
+
 		Current?.AddEntry( null, message, avatar, className: "info" );
 	}
 
 	[ConCmd.Server( "poker_chat_say" )]
 	public static void Say( string message )
 	{
+		Log.Trace( "poker_chat_say" );
+
 		Assert.NotNull( ConsoleSystem.Caller );
 
 		// todo - reject more stuff

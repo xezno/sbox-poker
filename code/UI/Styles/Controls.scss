@@ -7,16 +7,9 @@
     flex-direction: column;
     padding: 10px;
     padding-bottom: $safe-area-y;
-}
 
-.play-controls, .camera-controls {
-    flex-direction: column;
-    opacity: 0;
-    transition: opacity 150ms ease;
-    font-size: $font-normal;
-    text-shadow: $text-shadow;
-
-    &.visible {
-        opacity: 1;
+    .input-hint {
+        flex-direction: row-reverse;
+        align-items: center;
     }
 }

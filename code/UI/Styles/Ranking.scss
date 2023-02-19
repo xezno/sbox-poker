@@ -1,13 +1,9 @@
 ﻿@import "/UI/Styles/_Theme.scss";
 
 .ranking {
-    position: absolute;
-    bottom: $safe-area-y;
-    left: 50%;
     flex-direction: column;
     align-items: flex-end;
-    margin-bottom: -25px;
-    transform: translate( -50% );
+    opacity: 0;
 
     .row {
         width: 200px;
@@ -29,5 +25,9 @@
                 margin-right: 8px;
             }
         }
+    }
+
+    &.visible {
+        opacity: 1;
     }
 }

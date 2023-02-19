@@ -3,13 +3,12 @@
 @namespace Poker.UI
 
 <root class="betting @VisibilityClass()">
-
+	
 	@if ( Input.UsingController )
 	{
-		// Display controls in a wheel
-		
 		<plabel class="selected-action @HoverClass()">@HoverText()</plabel>
-
+		
+		// Display controls in a wheel
 		<radialmenu class="radial-wheel gradient-bottom" @ref="RadialWheel">
 			<radialmenuitem @onclick=@Raise name="Raise" icon="circle-arrow-up" action="raise">
 			</RadialMenuItem>
@@ -20,11 +19,14 @@
 			<radialmenuitem @onclick=@Check name="Check" icon="circle-check" action="check">
 			</radialmenuitem>
 		</radialmenu>		
+		
+		<cardranking></cardranking>
 	}
 	else
 	{
-		// Display controls in a row
+		<cardranking></cardranking>
 
+		// Display controls in a row
 		<div class="row gradient-bottom">
 
 			<inputhint btn="raise">Raise</inputhint>

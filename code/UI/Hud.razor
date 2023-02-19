@@ -1,0 +1,52 @@
+﻿@using Sandbox.UI;
+@using System;
+@inherits RootPanel
+@namespace Poker.UI
+@attribute [StyleSheet("/Code/UI/Styles/Hud.scss")]
+
+<root class="outer">
+	<div class="main-panel">
+
+		<div class="wip">
+			<cell>
+				<row class="gradient">
+					<label>Alex's Poker: Work-In-Progress</label>
+				</row>
+			</cell>
+
+			<!--
+			<cell>
+				<row class="gradient">
+					<iconpanel class="brand">twitter</iconpanel>
+					<label>RealXezno</label>
+				</row>
+
+				<row class="gradient">
+					<iconpanel class="brand">github</iconpanel>
+					<label>xezno</label>
+				</row>
+			</cell>
+			-->
+		</div>
+
+		<controls></controls>
+		<debugmenu></debugmenu>
+		<pokerchatbox></pokerchatbox>
+		<eventfeed></eventfeed>
+		<betting></betting>
+		<voicespeaker></voicespeaker>
+		<emotes></emotes>
+		<money></money>
+		<communitycards></communitycards>
+
+	</div>
+</root>
+
+
+@code
+{
+	public override void Tick()
+	{
+		SetClass("is-player", Game.LocalPawn is Player);
+	}
+}

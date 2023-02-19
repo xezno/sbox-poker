@@ -7,7 +7,7 @@
     z-index: 100;
     flex-direction: column;
     width: 500px;
-    height: 340px;
+    height: 320px;
     border-radius: 5px;
     padding: 10px;
     transition: opacity 150ms ease;
@@ -17,11 +17,10 @@
         opacity: 0;
         color: white;
         padding: 10px 15px;
+        padding-bottom: 20px;
         width: 100%;
-        bottom: 35px;
-        background-color: $background;
+        background-color: $background-dark;
         border-radius: 10px;
-        height: 70px;
 
         .placeholder {
             position: absolute;
@@ -41,7 +40,6 @@
         flex-direction: column;
         align-items: flex-start;
         overflow: scroll;
-        margin-bottom: 60px;
         height: 100%;
     }
 
@@ -73,7 +71,7 @@ chatentry {
     text-shadow: $text-shadow;
     justify-content: flex-end;
     align-items: center;
-    background-color: $background;
+    background-color: rgba( $background-dark, 0.5 );
     padding: 5px 15px;
     border-radius: 10px;
     margin-bottom: 3px;

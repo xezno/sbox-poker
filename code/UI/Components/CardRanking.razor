@@ -2,8 +2,8 @@
 @using System;
 @namespace Poker.UI
 
-<root class="ranking">
-
+<root class="ranking @Class()">
+	
 	<div class="row gradient">
 		<plabel class="value">@Ranking()</plabel>
 	</div>
@@ -12,6 +12,14 @@
 
 @code
 {
+	string Class()
+	{
+		if (Ranking() == "None")
+			return "";
+
+		return "visible";
+	}
+
 	string Ranking()
 	{
 		if (PokerGame.Instance is not PokerGame game)
