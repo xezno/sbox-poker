@@ -9,15 +9,35 @@ public partial class Player : BasePawn
 	[ConVar.Server( "poker_sv_starting_cash" )]
 	public static float StartingCash { get; set; } = 1000f;
 
+	private Vector3[] _offsets = new Vector3[]
+	{
+		new Vector3( 10, 0, -3 ),
+		new Vector3( 10, 0, -4 ),
+		new Vector3( 10, 0, -6 ),
+		new Vector3( 10, 0, -2 ),
+		new Vector3( 10, -1, -3 ),
+		new Vector3( 10, 0, -2 )
+	};
+
 	public override Ray AimRay
 	{
 		get
 		{
 			var eyeTransform = GetAttachment( "eyes" ) ?? default;
+			var position = eyeTransform.Position + Vector3.Up * 2f + Vector3.Right * 4f;
+			var forward = ViewAngles.Forward;
+
+			if ( Client.IsBot )
+			{
+				var offset = _offsets[Seat.SeatNumber];
+
+				var lookPoint = Position + (Rotation * offset);
+				forward = (lookPoint - Position).Normal;
+			}
 
 			return new Ray(
-				eyeTransform.Position + Vector3.Up * 2f + Vector3.Right * 4f,
-				ViewAngles.Forward
+				position,
+				forward
 			);
 		}
 	}
