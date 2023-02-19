@@ -15,6 +15,13 @@ partial class PokerGame
 		}
 
 		var playerHand = player.Hand;
+
+		if ( playerHand == null )
+		{
+			score = -1;
+			return HandRank.None;
+		}
+
 		var cards = playerHand.ToArray().Concat( CommunityCards ).ToArray();
 
 		return PokerUtils.RankPokerHand( cards, out score );
