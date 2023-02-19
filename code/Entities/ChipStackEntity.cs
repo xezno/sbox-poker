@@ -3,8 +3,8 @@
 [Title( "Chip Stack" ), Category( "Poker" )]
 public partial class ChipStackEntity : Entity
 {
-	[Net] public float Value { get; set; }
-	[Net] public int Count { get; set; }
+	[Net, Change( nameof( SetParticleProperties ) )] public float Value { get; set; }
+	[Net, Change( nameof( SetParticleProperties ) )] public int Count { get; set; }
 	public Particles Particles { get; set; }
 
 	public override void Spawn()
@@ -17,12 +17,6 @@ public partial class ChipStackEntity : Entity
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
-		SetParticleProperties();
-	}
-
-	[Event.Tick.Client]
-	public void OnServerTick()
-	{
 		SetParticleProperties();
 	}
 
