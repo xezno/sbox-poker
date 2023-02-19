@@ -13,6 +13,11 @@ partial class PokerGame
 					return !x.HasFolded;
 				} )
 			);
+
+			// Sort InternalQueue based on seat index
+			InternalQueue = new(
+				InternalQueue.OrderBy( x => x.Seat.SeatNumber )
+			);
 		}
 
 		public Player Pop()
