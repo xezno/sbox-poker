@@ -145,6 +145,7 @@ public class AxisAction : BaseInputAction
 
 public class InputLayer
 {
+	[SkipHotload]
 	public static List<BaseInputAction> ControllerActions = new()
 	{
 		new HoldAction( "fold", InputButton.Duck ),
@@ -161,6 +162,7 @@ public class InputLayer
 		new BoolAction( "show_emotes", InputButton.Score )
 	};
 
+	[SkipHotload]
 	public static List<BaseInputAction> PCActions = new()
 	{
 		new HoldAction( "fold", InputButton.Flashlight ),
