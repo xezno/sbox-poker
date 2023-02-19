@@ -2,6 +2,7 @@
 global using Sandbox;
 global using System.Collections.Generic;
 global using System.Linq;
+using Poker.UI;
 
 namespace Poker;
 
@@ -17,9 +18,9 @@ public partial class PokerGame : GameManager
 	{
 		Instance = this;
 
-		if ( Game.IsServer )
+		if ( Game.IsClient )
 		{
-			_ = new Hud();
+			Game.RootPanel = new Hud();
 		}
 	}
 
