@@ -3370,7 +3370,7 @@
 								{
 									_class = "CBlendAnimNode"
 									m_sName = "Blend 1D - Voice"
-									m_vecPosition = [ 112.0, 8.0 ]
+									m_vecPosition = [ 112.0, 16.0 ]
 									m_nNodeID = 
 									{
 										m_id = 128858737
@@ -3451,11 +3451,11 @@
 									{
 										m_nodeID = 
 										{
-											m_id = 4294967295
+											m_id = 660897457
 										}
 										m_outputID = 
 										{
-											m_id = 4294967295
+											m_id = 573667418
 										}
 									}
 									m_inputConnection2 = 
@@ -3493,7 +3493,7 @@
 								{
 									_class = "CGroupInputAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ -64.0, -48.0 ]
+									m_vecPosition = [ -288.0, 16.0 ]
 									m_nNodeID = 
 									{
 										m_id = 660897457
@@ -3571,7 +3571,7 @@
 								{
 									_class = "CSingleFrameAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ -80.0, 32.0 ]
+									m_vecPosition = [ -288.0, 96.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1997722454

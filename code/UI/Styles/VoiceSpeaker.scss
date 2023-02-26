@@ -2,9 +2,8 @@
 
 voicespeaker {
     position: absolute;
-    bottom: $safe-area-y;
-    left: 50%;
-    transform: translate( -50% );
+    bottom: 100px;
+    right: $safe-area-x;
     opacity: 0.0;
     font-family: "material icons";
     font-size: 80px;
