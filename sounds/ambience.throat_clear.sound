@@ -1,11 +1,19 @@
 {
   "UI": false,
   "Volume": "1.00,1.00,0",
-  "Pitch": "1.00,1.00,0",
+  "Pitch": "0.95,1.05,1",
   "Decibels": 70,
-  "SelectionMode": "Random",
+  "SelectionMode": "RandomExclusive",
   "Sounds": [
-    "sounds/ambience.throat_clear.vsnd"
+    "sounds/ambience.throat_clear.0.vsnd",
+    "sounds/ambience.throat_clear.1.vsnd",
+    "sounds/ambience.throat_clear.2.vsnd",
+    "sounds/ambience.throat_clear.3.vsnd",
+    "sounds/ambience.throat_clear.4.vsnd",
+    "sounds/ambience.throat_clear.5.vsnd",
+    "sounds/ambience.throat_clear.6.vsnd",
+    "sounds/ambience.throat_clear.7.vsnd",
+    "sounds/ambience.throat_clear.8.vsnd"
   ],
   "MaximumDistance": 1143.9335,
   "MinimumDistance": 57.196674
