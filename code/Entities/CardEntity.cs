@@ -1,6 +1,6 @@
 ﻿namespace Poker;
 
-[Title( "Playing Card" ), Category( "Poker" )]
+[Prefab, Title( "Playing Card" ), Category( "Poker" )]
 public partial class CardEntity : ModelEntity
 {
 	private Texture texture;

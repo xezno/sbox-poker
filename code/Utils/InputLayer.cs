@@ -151,7 +151,6 @@ public class InputLayer
 		new HoldAction( "fold", InputButton.Duck ),
 		new HoldAction( "raise", InputButton.Use ),
 		new HoldAction( "check", InputButton.Jump ),
-		new BoolAction( "your_cards", InputButton.SecondaryAttack ),
 		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
 
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
@@ -168,7 +167,6 @@ public class InputLayer
 		new HoldAction( "fold", InputButton.Flashlight ),
 		new HoldAction( "raise", InputButton.Reload ),
 		new HoldAction( "check", InputButton.View ),
-		new BoolAction( "your_cards", InputButton.Run ),
 		new BoolAction( "community_cards", InputButton.Duck ),
 
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),

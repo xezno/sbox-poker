@@ -1,5 +1,6 @@
 ﻿namespace Poker;
 
+[Prefab, Title( "Player" ), Category( "Poker" )]
 public partial class Player : BasePawn
 {
 	[Net] public string AvatarData { get; set; }
@@ -58,15 +59,15 @@ public partial class Player : BasePawn
 
 		Money = StartingCash;
 
-		LeftCard = new CardEntity() { Owner = this };
-		LeftCard.SetParent( this, "cards" );
-		LeftCard.LocalPosition = 0;
-		LeftCard.LocalRotation = Rotation.Identity;
+		// WHAT THE FUCK!!! TAGS R SHIT??
+		// WHY IS IT NOT "card,leftcard"!?!?!?!?
+		LeftCard = Children.OfType<CardEntity>().First( x => x.Tags.Has( "card leftcard" ) );
+		RightCard = Children.OfType<CardEntity>().First( x => x.Tags.Has( "card rightcard" ) );
 
-		RightCard = new CardEntity() { Owner = this };
-		RightCard.SetParent( this, "cards" );
-		RightCard.LocalPosition = new Vector3( 0, -2, 0.1f );
-		RightCard.LocalRotation = Rotation.From( 0, 15, 0 );
+		if ( LeftCard == null || RightCard == null )
+		{
+			Log.Error( "No cards for you, fuck off" );
+		}
 	}
 
 	public override void ClientSpawn()
@@ -151,11 +152,15 @@ public partial class Player : BasePawn
 		return $"Player '{Client.Name}'";
 	}
 
+	float _aimCardsWeight = 0.0f;
+	float _aimEmoteWeight = 0.0f;
+	float _aimHeadWeight = 1.0f;
+
 	private void Animate()
 	{
-		SetAnimParameter( "b_showcards", InputLayer.Evaluate( "your_cards" ) );
-
 		SetAnimParameter( "action", (int)CurrentAction );
+
+		_aimEmoteWeight = _aimEmoteWeight.LerpTo( (CurrentAction >= Actions.Emote_MiddleFinger) ? 1.0f : 0.0f, Time.Delta * 10f );
 
 		SetAnimParameter( "sit_pose", 0 );
 
@@ -169,9 +174,9 @@ public partial class Player : BasePawn
 		SetAnimLookAt( "aim_head", EyePosition, lookPos );
 		SetAnimLookAt( "aim_emote", EyePosition, emoteAimPos );
 		SetAnimLookAt( "aim_cards", EyePosition, cardsAimPos );
-		SetAnimParameter( "aim_head_weight", 1.0f );
-		SetAnimParameter( "aim_emote_weight", 1.0f );
-		SetAnimParameter( "aim_cards_weight", 1.0f );
+		SetAnimParameter( "aim_head_weight", _aimHeadWeight );
+		SetAnimParameter( "aim_emote_weight", _aimEmoteWeight );
+		SetAnimParameter( "aim_cards_weight", _aimCardsWeight );
 
 		if ( Game.IsClient && Client.IsValid )
 		{

@@ -1,0 +1,95 @@
+{
+  "SchemaVersion": 1,
+  "Name": null,
+  "Description": null,
+  "Root": {
+    "Guid": "25e0de65-2a68-4dbe-9706-b506392a4314",
+    "Class": "Player",
+    "Entities": [
+      {
+        "Guid": "eef78caf-a0af-407e-973e-93cda4207314",
+        "Class": "CardEntity",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "Model": {
+            "Type": "Model",
+            "Value": "\u0022models/card/card.vmdl\u0022"
+          },
+          "_attachment": {
+            "Type": "String",
+            "Value": "\u0022hold_R\u0022"
+          },
+          "_name": {
+            "Value": "\u0022Left Card\u0022"
+          },
+          "_localposition": {
+            "Value": "\u00221.95,-1.8,0.75\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u002287.95,0,-90\u0022"
+          },
+          "_scale": {
+            "Value": "1.25"
+          },
+          "_tags": {
+            "Value": "\u0022card leftcard\u0022"
+          }
+        }
+      },
+      {
+        "Guid": "4eefc506-d9f5-4a6c-8e88-8a7fb21534a7",
+        "Class": "CardEntity",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "Model": {
+            "Type": "Model",
+            "Value": "\u0022models/card/card.vmdl\u0022"
+          },
+          "_attachment": {
+            "Type": "String",
+            "Value": "\u0022hold_R\u0022"
+          },
+          "_name": {
+            "Value": "\u0022Right Card\u0022"
+          },
+          "_localposition": {
+            "Value": "\u00220.75,-1.55,0.4\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u002276.5,-4.35,-91.5\u0022"
+          },
+          "_scale": {
+            "Value": "1.25"
+          },
+          "_tags": {
+            "Value": "\u0022card rightcard\u0022"
+          }
+        }
+      }
+    ],
+    "Components": [],
+    "Keys": {
+      "Model": {
+        "Type": "Model",
+        "Value": "\u0022models/citizen/poker_citizen.vmdl\u0022"
+      },
+      "_name": {
+        "Value": "\u0022Player\u0022"
+      },
+      "_localposition": {
+        "Value": "\u00220,0,0\u0022"
+      },
+      "_localrotation": {
+        "Value": "\u00220,0,0\u0022"
+      },
+      "_scale": {
+        "Value": "1"
+      },
+      "_tags": {
+        "Value": "\u0022player\u0022"
+      }
+    }
+  }
+}

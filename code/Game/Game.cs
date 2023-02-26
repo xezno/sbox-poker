@@ -88,11 +88,8 @@ public partial class PokerGame : GameManager
 		else
 			clothingContainer.LoadFromClient( client );
 
-		var player = new Player
-		{
-			AvatarData = clothingContainer.Serialize()
-		};
-
+		var player = PrefabLibrary.Spawn<Player>( "prefabs/poker.prefab" );
+		player.AvatarData = clothingContainer.Serialize();
 		clothingContainer.DressEntity( player );
 
 		client.Pawn = player;

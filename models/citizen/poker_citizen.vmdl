@@ -1584,7 +1584,7 @@
 										[
 											{
 												_class = "AnimSubtract"
-												anim_name = "bindPose"
+												anim_name = "HoldCards"
 												frame = 0
 											},
 										]
@@ -1613,7 +1613,7 @@
 										[
 											{
 												_class = "AnimSubtract"
-												anim_name = "bindPose"
+												anim_name = "HoldCards"
 												frame = 0
 											},
 										]
@@ -1642,7 +1642,7 @@
 										[
 											{
 												_class = "AnimSubtract"
-												anim_name = "bindPose"
+												anim_name = "HoldCards"
 												frame = 0
 											},
 										]
@@ -1671,7 +1671,7 @@
 										[
 											{
 												_class = "AnimSubtract"
-												anim_name = "bindPose"
+												anim_name = "HoldCards"
 												frame = 0
 											},
 										]
@@ -1707,7 +1707,7 @@
 										[
 											{
 												_class = "AnimSubtract"
-												anim_name = "bindPose"
+												anim_name = "HoldCards"
 												frame = 0
 											},
 										]
@@ -1736,7 +1736,7 @@
 										[
 											{
 												_class = "AnimSubtract"
-												anim_name = "bindPose"
+												anim_name = "HoldCards"
 												frame = 0
 											},
 										]
@@ -1765,7 +1765,7 @@
 										[
 											{
 												_class = "AnimSubtract"
-												anim_name = "bindPose"
+												anim_name = "HoldCards"
 												frame = 0
 											},
 										]
@@ -1805,28 +1805,7 @@
 								disable_compression = false
 								source_filename = "models/citizen/citizen@HoldCards.fbx"
 								start_frame = -1
-								end_frame = -1
-								framerate = -1.0
-								take = 0
-								reverse = false
-							},
-							{
-								_class = "AnimFile"
-								name = "HideCards"
-								activity_name = ""
-								activity_weight = 1
-								weight_list_name = ""
-								fade_in_time = 0.2
-								fade_out_time = 0.2
-								looping = false
-								delta = false
-								worldSpace = false
-								hidden = false
-								anim_markup_ordered = false
-								disable_compression = false
-								source_filename = "models/citizen/citizen@HideCards.fbx"
-								start_frame = -1
-								end_frame = -1
+								end_frame = 99
 								framerate = -1.0
 								take = 0
 								reverse = false
@@ -1838,7 +1817,7 @@
 								[
 									{
 										_class = "AnimSubtract"
-										anim_name = "bindPose"
+										anim_name = "HoldCards"
 										frame = 0
 									},
 								]
@@ -1888,8 +1867,8 @@
 						_class = "Attachment"
 						name = "cards"
 						parent_bone = "hold_R"
-						relative_origin = [ -2.539676, -0.209639, -2.093342 ]
-						relative_angles = [ 63.708714, -26.781942, -85.567535 ]
+						relative_origin = [ 1.381227, -2.60989, 1.387331 ]
+						relative_angles = [ 72.223305, 12.362873, -76.804047 ]
 						weight = 1.0
 						ignore_rotation = false
 					},
@@ -2013,22 +1992,6 @@
 								bone = "clavicle_R"
 								weight = 0.0
 							},
-							{
-								bone = "neck_0"
-								weight = 1.0
-							},
-							{
-								bone = "spine_0"
-								weight = 1.0
-							},
-							{
-								bone = "spine_1"
-								weight = 1.0
-							},
-							{
-								bone = "spine_2"
-								weight = 1.0
-							},
 						]
 						master_morph_weight = -1.0
 						morph_weights = [  ]
@@ -2065,6 +2028,24 @@
 							},
 							{
 								bone = "spine_1"
+								weight = 1.0
+							},
+						]
+						master_morph_weight = -1.0
+						morph_weights = [  ]
+					},
+					{
+						_class = "WeightList"
+						name = "Only_Arms"
+						default_weight = 0.0
+						weights = 
+						[
+							{
+								bone = "arm_upper_L"
+								weight = 1.0
+							},
+							{
+								bone = "arm_upper_R"
 								weight = 1.0
 							},
 						]
