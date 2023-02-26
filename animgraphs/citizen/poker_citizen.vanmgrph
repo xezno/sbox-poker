@@ -655,7 +655,7 @@
 								{
 									_class = "CSequenceAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ -304.0, 48.0 ]
+									m_vecPosition = [ -304.0, 32.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1684720348
@@ -665,7 +665,7 @@
 									m_tagSpans = [  ]
 									m_sequenceName = "HoldCards"
 									m_playbackSpeed = 1.0
-									m_bLoop = false
+									m_bLoop = true
 								}
 							},
 						]
@@ -1293,7 +1293,7 @@
 				{
 					_class = "CRootAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -656.0, 528.0 ]
+					m_vecPosition = [ -464.0, 544.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1338594817
@@ -1304,11 +1304,11 @@
 					{
 						m_nodeID = 
 						{
-							m_id = 1892424927
+							m_id = 1955259253
 						}
 						m_outputID = 
 						{
-							m_id = 2083027639
+							m_id = 4294967295
 						}
 					}
 				}
@@ -3585,6 +3585,74 @@
 							},
 						]
 					}
+				}
+			},
+			{
+				key = 
+				{
+					m_id = 1951096869
+				}
+				value = 
+				{
+					_class = "CSequenceAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ -848.0, 576.0 ]
+					m_nNodeID = 
+					{
+						m_id = 1951096869
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = "This is a subtle idle layer that plays on top of everything else, which adds very small eye motions. The delta is precomputed in ModelDoc."
+					m_tagSpans = [  ]
+					m_sequenceName = "Eyes_Darts_delta"
+					m_playbackSpeed = 1.0
+					m_bLoop = true
+				}
+			},
+			{
+				key = 
+				{
+					m_id = 1955259253
+				}
+				value = 
+				{
+					_class = "CAddAnimNode"
+					m_sName = "Add (eye darts)"
+					m_vecPosition = [ -640.0, 544.0 ]
+					m_nNodeID = 
+					{
+						m_id = 1955259253
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = ""
+					m_baseInput = 
+					{
+						m_nodeID = 
+						{
+							m_id = 1892424927
+						}
+						m_outputID = 
+						{
+							m_id = 2083027639
+						}
+					}
+					m_additiveInput = 
+					{
+						m_nodeID = 
+						{
+							m_id = 1951096869
+						}
+						m_outputID = 
+						{
+							m_id = 4294967295
+						}
+					}
+					m_timingBehavior = "UseChild1"
+					m_flTimingBlend = 0.5
+					m_footMotionTiming = "Child1"
+					m_bResetBase = true
+					m_bResetAdditive = true
+					m_bApplyChannelsSeparately = true
 				}
 			},
 		]

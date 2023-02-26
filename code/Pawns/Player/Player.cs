@@ -12,12 +12,12 @@ public partial class Player : BasePawn
 
 	private Vector3[] _offsets = new Vector3[]
 	{
-		new Vector3( 10, 0, -3 ),
-		new Vector3( 10, 0, -4 ),
+		new Vector3( 10, 0, -5 ),
 		new Vector3( 10, 0, -6 ),
-		new Vector3( 10, 0, -2 ),
-		new Vector3( 10, -1, -3 ),
-		new Vector3( 10, 0, -2 )
+		new Vector3( 10, 0, -7 ),
+		new Vector3( 10, 0, -4 ),
+		new Vector3( 10, -1, -5 ),
+		new Vector3( 10, 0, -4 )
 	};
 
 	public override Ray AimRay
@@ -25,12 +25,35 @@ public partial class Player : BasePawn
 		get
 		{
 			var eyeTransform = GetAttachment( "eyes" ) ?? default;
-			var position = eyeTransform.Position + Vector3.Up * 2f + Vector3.Right * 4f;
+			var position = eyeTransform.Position + Rotation.Up * 2f + Rotation.Backward * 4f;
 			var forward = ViewAngles.Forward;
 
 			if ( Client.IsBot )
 			{
 				var offset = _offsets[Seat.SeatNumber];
+
+				if ( _botLookingAway )
+				{
+					// Look at next seat
+					var nextSeat = Seat.SeatNumber + 1;
+					if ( nextSeat >= Game.Clients.Count )
+						nextSeat = 0;
+
+					var nextSeatEntity = Entity.All.OfType<SeatEntity>().FirstOrDefault( x => x.SeatNumber == nextSeat );
+					if ( nextSeatEntity != null )
+					{
+						var target = nextSeatEntity.Position.WithZ( position.z ) - position;
+
+						float time = (_botAnimateDelay - _timeSinceBotAnimate.Relative);
+						time = _botAnimateDelay - time;
+						time -= (_botAnimateDelay / 2f);
+
+						float t = time.LerpInverse( 0, 1 );
+						target = offset.LerpTo( target, 0.1f * t ).WithZ( 0 );
+
+						offset = offset.LerpTo( target, 0.2f * t );
+					}
+				}
 
 				var lookPoint = Position + (Rotation * offset);
 				forward = (lookPoint - Position).Normal;
@@ -49,6 +72,12 @@ public partial class Player : BasePawn
 	private TimeSince timeSinceTurnChange;
 
 	private PlayerCamera Camera { get; set; }
+
+	private bool IsDevCamEnabled()
+	{
+		var camera = Client.Components.Get<DevCamera>( true );
+		return (camera?.Enabled ?? false);
+	}
 
 	public override void Spawn()
 	{
@@ -121,7 +150,7 @@ public partial class Player : BasePawn
 
 	private void SetBodyGroups()
 	{
-		if ( Game.IsClient && IsLocalPawn )
+		if ( Game.IsClient && IsLocalPawn && !IsDevCamEnabled() )
 		{
 			SetBodyGroup( "Head", 1 );
 		}
@@ -138,6 +167,9 @@ public partial class Player : BasePawn
 
 	public override void BuildInput()
 	{
+		if ( IsDevCamEnabled() )
+			return;
+
 		base.BuildInput();
 
 		if ( InputLayer.Evaluate( "community_cards" ) )
@@ -157,6 +189,11 @@ public partial class Player : BasePawn
 	float _aimCardsWeight = 0.0f;
 	float _aimEmoteWeight = 0.0f;
 	float _aimHeadWeight = 1.0f;
+
+	TimeSince _timeSinceBotAnimate = 0;
+	float _botAnimateDelay = 5;
+
+	bool _botLookingAway = true;
 
 	private void Animate()
 	{
@@ -179,6 +216,24 @@ public partial class Player : BasePawn
 		SetAnimParameter( "aim_head_weight", _aimHeadWeight );
 		SetAnimParameter( "aim_emote_weight", _aimEmoteWeight );
 		SetAnimParameter( "aim_cards_weight", _aimCardsWeight );
+
+		if ( Client.IsBot )
+		{
+			_aimHeadWeight = _aimHeadWeight.LerpTo( 1.0f, Time.Delta );
+			_botLookingAway = false;
+
+			if ( _timeSinceBotAnimate > _botAnimateDelay / 2f )
+			{
+				// Look somewhere else
+				_botLookingAway = true;
+			}
+
+			if ( _timeSinceBotAnimate > _botAnimateDelay )
+			{
+				_timeSinceBotAnimate = 0;
+				_botAnimateDelay = Game.Random.Float( 10, 20 );
+			}
+		}
 
 		if ( Game.IsClient && Client.IsValid )
 		{

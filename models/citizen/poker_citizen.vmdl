@@ -1710,6 +1710,18 @@
 												anim_name = "HoldCards"
 												frame = 0
 											},
+											{
+												_class = "AnimEvent"
+												event_class = "AE_CL_PLAYSOUND"
+												event_frame = 50
+												event_keys = 
+												{
+													name = "sounds/foley.raise.sound"
+													stop_on_seq_change = false
+													use_layer_sequence = false
+													tags = ""
+												}
+											},
 										]
 										activity_name = ""
 										activity_weight = 1
@@ -1739,6 +1751,18 @@
 												anim_name = "HoldCards"
 												frame = 0
 											},
+											{
+												_class = "AnimEvent"
+												event_class = "AE_CL_PLAYSOUND"
+												event_frame = 8
+												event_keys = 
+												{
+													name = "sounds/foley.check.sound"
+													stop_on_seq_change = false
+													use_layer_sequence = false
+													tags = ""
+												}
+											},
 										]
 										activity_name = ""
 										activity_weight = 1
@@ -1767,6 +1791,18 @@
 												_class = "AnimSubtract"
 												anim_name = "HoldCards"
 												frame = 0
+											},
+											{
+												_class = "AnimEvent"
+												event_class = "AE_CL_PLAYSOUND"
+												event_frame = 50
+												event_keys = 
+												{
+													name = "sounds/foley.fold.sound"
+													stop_on_seq_change = false
+													use_layer_sequence = false
+													tags = ""
+												}
 											},
 										]
 										activity_name = ""
@@ -1805,7 +1841,7 @@
 								disable_compression = false
 								source_filename = "models/citizen/citizen@HoldCards.fbx"
 								start_frame = -1
-								end_frame = 99
+								end_frame = 599
 								framerate = -1.0
 								take = 0
 								reverse = false
