@@ -1,0 +1,49 @@
+﻿@using Sandbox.UI;
+@using System;
+@using System.Threading.Tasks;
+@namespace Poker.UI
+
+<root class="winner-screen">
+
+	<section>
+	
+		<img src="avatar:@WinnerId" class="avatar" />
+
+		<cell>
+			<label class="title">@Winner Wins</label>
+			<label class="subtitle">$5000 • Full House</label>
+		</cell>
+	
+	</section>
+
+</root>
+
+@code
+{
+	public static WinnerScreen Instance { get; set; }
+
+	private string Winner { get; set; }
+	private long WinnerId { get; set; }
+
+	public WinnerScreen()
+	{
+		Instance = this;
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(Time.Now);
+	}
+
+	private async Task ShowWinnerScreen( string winner, long winnerId )
+	{
+		Winner = winner;
+		WinnerId = winnerId;
+
+		SetClass("visible", true);
+
+		await GameTask.DelaySeconds(5.0f);
+
+		SetClass("visible", false);
+	}
+}

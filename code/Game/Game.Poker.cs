@@ -1,4 +1,6 @@
-﻿namespace Poker;
+﻿using Poker.UI;
+
+namespace Poker;
 partial class PokerGame
 {
 	// TODO: Buy-ins
@@ -164,6 +166,9 @@ partial class PokerGame
 
 			var winner = FindWinner();
 			ProcessWinner( winner );
+
+			WinnerScreen.OnWin( To.Everyone, winner.Client.Name, winner.Client.SteamId );
+			Log.Info( $"{winner.Client.Name} wins" );
 
 			Run(); // TODO: Should move to a different game state instead and wait for players etc.
 

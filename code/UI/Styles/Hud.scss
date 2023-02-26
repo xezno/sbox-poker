@@ -7,7 +7,6 @@
 @import "/UI/Styles/Controls.scss";
 @import "/UI/Styles/DebugMenu.scss";
 @import "/UI/Styles/Emotes.scss";
-@import "/UI/Styles/EventFeed.scss";
 @import "/UI/Styles/InputHint.scss";
 @import "/UI/Styles/Money.scss";
 @import "/UI/Styles/Ranking.scss";
@@ -16,6 +15,7 @@
 @import "/UI/Styles/PokerLabel.scss";
 @import "/UI/Styles/Pots.scss";
 @import "/UI/Styles/VoiceSpeaker.scss";
+@import "/UI/Styles/WinnerScreen.scss";
 
 .outer {
     position: absolute;
@@ -39,28 +39,30 @@
 }
 
 .wip {
-    left: $safe-area-x;
+    left: 0;
     flex-direction: column;
     position: absolute;
     top: 150px;
-    gap: 5px;
-    width: 350px;
+    width: 380px;
 
     cell {
         flex-grow: 1;
         align-items: center;
-        gap: 5px;
+        flex-direction: column;
 
         row {
             padding: 5px 10px;
+            padding-left: $safe-area-x;
             border-radius: 5px;
             align-items: center;
             justify-content: center;
             flex-grow: 1;
+            gap: 5px;
+            width: 280px;
+        }
 
-            iconpanel {
-                margin-right: 8px;
-            }
+        dummy {
+            flex-grow: 1;
         }
     }
 }

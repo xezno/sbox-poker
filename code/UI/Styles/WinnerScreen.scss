@@ -1,0 +1,66 @@
+﻿@import "/UI/Styles/_Theme.scss";
+
+.winner-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: $gradient-a;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur( 10px );
+    flex-direction: row;
+    opacity: 0.001;
+    transform: scale( 1.1 );
+    transition: all 150ms ease;
+    pointer-events: none;
+
+    section {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        border-radius: 10px;
+        padding: 25px 50px;
+        background: linear-gradient( to bottom, $gradient-a, $gradient-b );
+        //
+
+        opacity: 0;
+        transition: all 500ms ease;
+    }
+
+    cell {
+        flex-direction: column;
+        gap: -10px;
+    }
+
+    .avatar {
+        width: 128px;
+        aspect-ratio: 1;
+    }
+
+    label.title {
+        label {
+            font-size: 48px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+    }
+
+    label.subtitle {
+        font-size: 24px;
+        font-weight: 600;
+        opacity: 0.5;
+    }
+
+    &.visible {
+        opacity: 1;
+        transform: scale( 1 );
+
+        section {
+            opacity: 1;
+        }
+    }
+}

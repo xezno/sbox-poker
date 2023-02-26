@@ -1,6 +1,4 @@
-﻿using Poker.UI;
-
-namespace Poker;
+﻿namespace Poker;
 partial class PokerGame
 {
 	public HandRank RankPlayerHand( Player player, out int score )
@@ -49,9 +47,6 @@ partial class PokerGame
 			// One winner
 			winner = bestPlayers.First().player;
 		}
-
-		EventFeed.AddEvent( To.Everyone, $"{winner.Client.Name} wins" );
-		Log.Trace( $"{winner.Client.Name} wins" );
 
 		return winner;
 	}
