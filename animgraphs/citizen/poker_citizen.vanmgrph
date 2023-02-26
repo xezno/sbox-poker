@@ -1995,7 +1995,7 @@
 								{
 									_class = "CSubGraphAnimNode"
 									m_sName = "Make Delta"
-									m_vecPosition = [ 576.0, -560.0 ]
+									m_vecPosition = [ -496.0, -16.0 ]
 									m_nNodeID = 
 									{
 										m_id = 485287305
@@ -2042,7 +2042,7 @@
 								{
 									_class = "CAddAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ 768.0, -560.0 ]
+									m_vecPosition = [ -304.0, -16.0 ]
 									m_nNodeID = 
 									{
 										m_id = 530653966
@@ -2088,7 +2088,7 @@
 								{
 									_class = "CGroupInputAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ 768.0, -640.0 ]
+									m_vecPosition = [ -304.0, -96.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1221852841
@@ -2127,7 +2127,7 @@
 								{
 									_class = "CGroupAnimNode"
 									m_sName = "The random blink machine"
-									m_vecPosition = [ 320.0, -528.0 ]
+									m_vecPosition = [ -752.0, 16.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1428553126
@@ -2345,7 +2345,7 @@
 								{
 									_class = "CSequenceAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ 384.0, -576.0 ]
+									m_vecPosition = [ -688.0, -32.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1510342223
@@ -2367,7 +2367,7 @@
 								{
 									_class = "CAddAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ 976.0, -560.0 ]
+									m_vecPosition = [ -96.0, -16.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1688978118
@@ -2413,7 +2413,7 @@
 								{
 									_class = "CGroupOutputAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ 1168.0, -560.0 ]
+									m_vecPosition = [ 96.0, -16.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1875061022
