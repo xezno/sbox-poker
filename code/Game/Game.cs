@@ -3,6 +3,7 @@ global using Sandbox;
 global using System.Collections.Generic;
 global using System.Linq;
 using Poker.UI;
+using System;
 
 namespace Poker;
 
@@ -21,6 +22,23 @@ public partial class PokerGame : GameManager
 		if ( Game.IsClient )
 		{
 			Game.RootPanel = new Hud();
+		}
+
+		PrecacheAssets();
+	}
+
+	private void PrecacheAssets()
+	{
+		// Precache all cards
+		foreach ( var suit in Enum.GetValues( typeof( Suit ) ) )
+		{
+			foreach ( var value in Enum.GetValues( typeof( Value ) ) )
+			{
+				var card = new Card( (Suit)suit, (Value)value );
+
+				Log.Trace( $"Precache: {card.GetFilename()}" );
+				Precache.Add( card.GetFilename() );
+			}
 		}
 	}
 
