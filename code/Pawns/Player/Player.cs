@@ -94,6 +94,8 @@ public partial class Player : BasePawn
 			{
 				timeSinceTurnChange = 0;
 			}
+
+			PlayRandomAudio();
 		}
 
 		// Hacky bot behaviour, just check after 1 second
