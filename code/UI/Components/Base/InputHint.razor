@@ -1,0 +1,104 @@
+﻿@using Sandbox.UI;
+@using System;
+@namespace Poker.UI
+
+<root class="input-hint">
+	
+    <pokerlabel class="action" @ref="ActionLabel"></pokerlabel>
+    
+    <div class="glyph-wrapper">
+        <image class="glyph" @ref="Glyph"></image>
+        <image class="glyph-shadow" @ref="GlyphShadow"></image>
+		<!-- <RadialFill class="radial-fill" @ref="RadialFill"></RadialFill> -->
+    </div>
+
+</root>
+
+@code
+{
+	// @ref
+	public Image Glyph { get; set; }
+	public Image GlyphShadow { get; set; }
+	public string Name { get; set; }
+	public string Text { get; set; }
+	public PokerLabel ActionLabel { get; set; }
+
+	public InputHint()
+	{
+		BindClass("noaction", () => string.IsNullOrEmpty(Text));
+	}
+
+	public override void SetProperty(string name, string value)
+	{
+		base.SetProperty(name, value);
+
+		if (name == "btn")
+		{
+			SetButton(value);
+		}
+	}
+
+	public void SetButton(string name)
+	{
+		Name = name;
+	}
+
+	public override void SetContent(string value)
+	{
+		base.SetContent(value);
+
+		ActionLabel.Text = value;
+		Text = value;
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+
+		if (string.IsNullOrEmpty(Name))
+			return;
+
+		var action = InputLayer.GetAction(Name);
+		var button = action.GetDisplayButton();
+		bool active = MathF.Abs(action.Evaluate()) > 0.5f;
+
+		SetClass("using-controller", Input.UsingController);
+		SetClass("active", active);
+		
+		if (action is HoldAction holdAction)
+		{
+			SetClass("is-hold", true);
+			SetClass("has-progress", holdAction.Progress > 0.001f);
+			SetClass("active", holdAction.Progress > 0.001f);
+
+			float progress = holdAction.Progress.Clamp(0, 1);
+
+			// RadialFill.Visible = Input.UsingController && progress > 0;
+			// RadialFill.FillAmount = progress;
+
+			active = holdAction.Progress > 0.001f;
+		}
+
+		var glyphStyle = GlyphStyle.Knockout.WithNeutralColorABXY();
+		if (active)
+			glyphStyle = GlyphStyle.Dark.WithSolidABXY();
+
+		Texture glyphTexture = Input.GetGlyph(button, InputGlyphSize.Small, glyphStyle);
+
+		if (glyphTexture != null)
+		{
+			SetImageTexture(Glyph, glyphTexture);
+			SetImageTexture(GlyphShadow, glyphTexture);
+		}
+	}
+
+	private void SetImageTexture(Image image, Texture texture)
+	{
+		if (image == null)
+			return;
+
+		image.Style.BackgroundImage = texture;
+		image.Style.Width = texture.Width;
+		image.Style.Height = texture.Height;
+	}
+}
