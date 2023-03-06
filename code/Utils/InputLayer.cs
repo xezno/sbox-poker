@@ -158,6 +158,9 @@ public class InputLayer
 		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
 		new BoolAction( "emote.pump", InputButton.Slot4 ),
 
+		new BoolAction( "raise_inc", InputButton.Forward ),
+		new BoolAction( "raise_dec", InputButton.Back ),
+
 		new BoolAction( "show_emotes", InputButton.Score )
 	};
 
@@ -168,6 +171,9 @@ public class InputLayer
 		new HoldAction( "raise", InputButton.Reload ),
 		new HoldAction( "check", InputButton.View ),
 		new BoolAction( "community_cards", InputButton.Duck ),
+
+		new BoolAction( "raise_inc", InputButton.Forward ),
+		new BoolAction( "raise_dec", InputButton.Back ),
 
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
 		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),

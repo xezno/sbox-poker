@@ -74,10 +74,43 @@
         bottom: 0;
         padding: 10px;
         padding-bottom: $safe-area-y;
+        align-items: center;
 
         .input-hint {
             flex-direction: row-reverse;
             align-items: center;
+        }
+    }
+
+    .raise {
+        bottom: 0;
+        padding: 10px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        row {
+            align-items: center;
+        }
+
+        .input-hint {
+            flex-direction: row-reverse;
+            align-items: center;
+        }
+
+        .slider {
+            margin-left: 10px;
+            width: 300px;
+        }
+
+        .bet-text {
+            width: 60px;
+            justify-content: center;
+
+            label {
+                text-align: center;
+            }
         }
     }
 }

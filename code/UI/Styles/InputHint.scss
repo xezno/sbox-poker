@@ -8,6 +8,10 @@
         display: none;
     }
 
+    &.noaction {
+        padding: 0 0;
+    }
+
     &.is-hold {
         &.using-controller {
             .radial-fill {

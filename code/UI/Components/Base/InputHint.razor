@@ -25,7 +25,7 @@
 
 	public InputHint()
 	{
-		BindClass("noaction", () => string.IsNullOrEmpty(Text));
+		BindClass("noaction", () => !Children.OfType<Label>().Any( x => !string.IsNullOrEmpty( x.Text ) ));
 	}
 
 	public override void SetProperty(string name, string value)

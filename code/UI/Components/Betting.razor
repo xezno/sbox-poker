@@ -27,11 +27,22 @@
 		<cardranking></cardranking>
 
 		// Display controls in a row
-		<div class="row gradient-bottom">
+		
+		<div class="raise gradient-bottom">
+			
+			<row>
+				<slider MinValue="@BetMin" MaxValue="@BetMax" Value="@BetValue" @ref=BetSlider></slider>
+				
+				<label class="bet-text">$@BetSlider.Value</label>
+				
+				<inputhint btn="raise_inc"></inputhint>
+				<inputhint btn="raise_dec"></inputhint>				
+			</row>
 
-			<inputhint btn="raise">Raise</inputhint>
-			<inputhint btn="fold">Fold</inputhint>
-			<inputhint btn="check">Check</inputhint>
+			<row>
+				<inputhint btn="raise">Confirm</inputhint>
+				<inputhint btn="fold">Fold</inputhint>
+			</row>
 			
 		</div>
 	}
@@ -40,7 +51,13 @@
 
 @code
 {
+	private Slider BetSlider { get; set; }
+	private float BetValue { get; set; }
+	private TimeSince TimeSinceLastBetIncrement { get; set; }
 	public RadialMenu RadialWheel { get; set; }
+
+	private int BetMin => PokerGame.Instance.MinimumBet.CeilToInt();
+	private int BetMax => Player.Money.CeilToInt();
 
 	private bool WasMyTurn { get; set; }
 	private TimeUntil TimeUntilTurnEnds { get; set; }
@@ -78,7 +95,7 @@
 		if (Player == null)
 			return;
 
-		throw new NotImplementedException();
+		Player.Raise(BetValue);
 	}
 
 	void Check()
@@ -121,6 +138,29 @@
 				Fold();
 			if ( InputLayer.Evaluate( "check" ) )
 				Check();
+
+			int increment = ((BetMax - BetMin) / 10f).CeilToInt();
+			increment = (MathF.Round(increment / 10) * 10).CeilToInt();
+
+			if ( TimeSinceLastBetIncrement > 0.25f )
+			{
+				if ( InputLayer.Evaluate( "raise_inc" ) )
+				{
+					BetValue += increment;
+					TimeSinceLastBetIncrement = 0;
+				}
+
+				if ( InputLayer.Evaluate( "raise_dec" ) )
+				{
+					BetValue -= increment;
+					TimeSinceLastBetIncrement = 0;					
+				}
+			}
+
+			BetValue = BetValue.Clamp(BetMin, BetMax);
+			
+			if ( BetValue > BetMin && BetValue < BetMax )
+				BetValue = MathF.Round(BetValue / 10) * 10;	
 		}
 	}
 

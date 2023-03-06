@@ -1,0 +1,40 @@
+﻿@import "/UI/Styles/_Theme.scss";
+
+$form-control-height: 20px;
+$switch-padding: 6px !default;
+
+.slider {
+    flex-grow: 1;
+    cursor: pointer;
+    min-height: $form-control-height;
+    align-items: center;
+    padding-right: $form-control-height;
+
+    > .thumb {
+        background-color: white;
+        border-radius: 100px;
+        position: relative;
+        width: $form-control-height;
+        height: $form-control-height;
+        transition: all 0.2s ease-out;
+
+        &:hover {
+            background-color: $accent;
+        }
+    }
+
+    &:active {
+        > .thumb {
+            background-color: $accent;
+        }
+    }
+
+    > .track {
+        position: absolute;
+        left: 14px; // This has to be half of the thumb's width :S
+        right: 14px;
+        height: 10px;
+        background-color: $background-dark;
+        border-radius: 5px;
+    }
+}
