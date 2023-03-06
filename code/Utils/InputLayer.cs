@@ -149,8 +149,8 @@ public class InputLayer
 	public static List<BaseInputAction> ControllerActions = new()
 	{
 		new HoldAction( "fold", InputButton.Duck ),
-		new HoldAction( "raise", InputButton.Use ),
-		new HoldAction( "check", InputButton.Jump ),
+		new HoldAction( "raise", InputButton.Jump ),
+		new HoldAction( "check", InputButton.Use ),
 		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
 
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
@@ -158,8 +158,8 @@ public class InputLayer
 		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
 		new BoolAction( "emote.pump", InputButton.Slot4 ),
 
-		new BoolAction( "raise_inc", InputButton.Forward ),
-		new BoolAction( "raise_dec", InputButton.Back ),
+		new BoolAction( "raise_inc", InputButton.Slot2 ),
+		new BoolAction( "raise_dec", InputButton.Slot4 ),
 
 		new BoolAction( "show_emotes", InputButton.Score )
 	};
@@ -172,13 +172,13 @@ public class InputLayer
 		new HoldAction( "check", InputButton.View ),
 		new BoolAction( "community_cards", InputButton.Duck ),
 
-		new BoolAction( "raise_inc", InputButton.Forward ),
-		new BoolAction( "raise_dec", InputButton.Back ),
-
 		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
 		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
 		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
 		new BoolAction( "emote.pump", InputButton.Slot4 ),
+
+		new BoolAction( "raise_inc", InputButton.Forward ),
+		new BoolAction( "raise_dec", InputButton.Back ),
 
 		new BoolAction( "show_emotes", InputButton.Score )
 	};
