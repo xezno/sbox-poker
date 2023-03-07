@@ -15,8 +15,8 @@
     transition: all 150ms ease;
     z-index: 100;
     justify-content: center;
-
-    backdrop-filter: blur( 10px ) brightness( 0.5 );
+    background-color: $gradient-a;
+    backdrop-filter: blur( 10px );
 
     &.visible {
         transform: scale( 1.0 );
@@ -26,7 +26,6 @@
 
     .selected-action {
         background-color: rgba( $background-dark, 0.5 );
-        backdrop-filter: $blur;
         padding: 10px 20px;
         border-radius: 10px;
         margin-bottom: 20px;

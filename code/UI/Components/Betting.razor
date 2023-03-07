@@ -18,7 +18,7 @@
 		</row>
 
 		<row>
-			<inputhint btn="raise">Confirm</inputhint>
+			<inputhint btn="raise">@MoveName</inputhint>
 			<inputhint btn="fold">Fold</inputhint>
 		</row>
 			
@@ -35,6 +35,8 @@
 
 	private int BetMin => PokerGame.Instance.MinimumBet.CeilToInt();
 	private int BetMax => Player.Money.CeilToInt();
+
+	private string MoveName => ( BetValue == BetMax ? "All In" : ( BetValue == BetMin ? "Check" : "Raise" ) );
 
 	private bool WasMyTurn { get; set; }
 	private TimeUntil TimeUntilTurnEnds { get; set; }
@@ -98,7 +100,10 @@
 			return;
 
 		if (!WasMyTurn && Player.IsMyTurn)
+		{
+			BetValue = BetMin;
 			TimeUntilTurnEnds = 30f;
+		}
 
 		float t = ( TimeUntilTurnEnds / 30f ) * 100f;
 		t = t.UnsignedMod( 99 );
@@ -130,8 +135,18 @@
 				if ( InputLayer.Evaluate( "raise_dec" ) )
 				{
 					BetValue -= increment;
-					TimeSinceLastBetIncrement = 0;					
+					TimeSinceLastBetIncrement = 0;
 				}
+			}
+			
+			if ( InputLayer.Evaluate( "raise_max" ) )
+			{
+				BetValue = BetMax;
+			}
+
+			if ( InputLayer.Evaluate( "raise_min" ) )
+			{
+				BetValue = BetMin;
 			}
 
 			BetValue = BetValue.Clamp(BetMin, BetMax);

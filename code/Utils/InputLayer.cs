@@ -161,6 +161,9 @@ public class InputLayer
 		new BoolAction( "raise_inc", InputButton.Slot2 ),
 		new BoolAction( "raise_dec", InputButton.Slot4 ),
 
+		new BoolAction( "raise_max", InputButton.SlotNext ),
+		new BoolAction( "raise_min", InputButton.SlotPrev ),
+
 		new BoolAction( "show_emotes", InputButton.Score )
 	};
 
@@ -179,6 +182,9 @@ public class InputLayer
 
 		new BoolAction( "raise_inc", InputButton.Forward ),
 		new BoolAction( "raise_dec", InputButton.Back ),
+
+		new BoolAction( "raise_max", InputButton.SlotNext ),
+		new BoolAction( "raise_min", InputButton.SlotPrev ),
 
 		new BoolAction( "show_emotes", InputButton.Score )
 	};
