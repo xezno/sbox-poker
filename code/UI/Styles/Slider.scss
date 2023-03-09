@@ -1,7 +1,6 @@
 ﻿@import "/UI/Styles/_Theme.scss";
 
-$form-control-height: 20px;
-$switch-padding: 6px !default;
+$form-control-height: 10px;
 
 .slider {
     flex-grow: 1;
@@ -31,10 +30,10 @@ $switch-padding: 6px !default;
 
     > .track {
         position: absolute;
-        left: 14px; // This has to be half of the thumb's width :S
-        right: 14px;
+        left: 0;
+        right: 0;
         height: 10px;
-        background-color: rgba( $background-dark, 0.5 );
+        background-color: rgba( $background-dark, 0.25 );
         border-radius: 5px;
     }
 }

@@ -3,24 +3,21 @@
 @namespace Poker.UI
 
 <root class="betting @VisibilityClass()">
-	
-	<cardranking></cardranking>
 		
 	<div class="raise gradient-bottom">
 			
 		<row>
+			<inputhint btn="raise_dec"></inputhint>
 			<slider MinValue="@BetMin" MaxValue="@BetMax" Value="@BetValue" @ref=BetSlider></slider>
+			<inputhint btn="raise_inc"></inputhint>
 				
 			<label class="bet-text">$@BetSlider.Value</label>
-				
-			<inputhint btn="raise_dec"></inputhint>				
-			<inputhint btn="raise_inc"></inputhint>
 		</row>
 
-		<row>
+		<column style="width: 125px">
 			<inputhint btn="raise">@MoveName</inputhint>
 			<inputhint btn="fold">Fold</inputhint>
-		</row>
+		</column>
 			
 	</div>
 

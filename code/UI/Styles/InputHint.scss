@@ -49,6 +49,12 @@
         margin-left: 10px;
     }
 
+    &.noaction {
+        .glyph-wrapper {
+            margin-left: 0px;
+        }
+    }
+
     label, text, .action {
         font-size: $font-normal;
         text-shadow: $text-shadow;

@@ -1,97 +1,31 @@
 ﻿@import "/UI/Styles/_Theme.scss";
 
 .betting {
-    position: absolute;
-    bottom: 0;
-    left: 43.5%; // HACK
     opacity: 0;
     flex-direction: column;
     align-items: center;
-    width: 250px;
 
     &.visible {
         opacity: 1;
     }
 
-    .selected-action {
-        background-color: rgba( $background-dark, 0.5 );
-        backdrop-filter: $blur;
-        padding: 10px 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        opacity: 0;
-        transition: opacity 150ms ease;
-
-        &.visible {
-            opacity: 1;
-        }
-    }
-
-    .radial-wheel {
-        width: 200px;
-        height: 200px;
-        background: $background-gradient;
-        border-radius: 100%;
-        position: relative;
-        backdrop-filter: $blur;
-        margin-bottom: 40px;
-
-        .item {
-            position: absolute;
-            margin: -54px -24px;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-            width: 48px;
-            height: 96px;
-
-            .icon {
-                font-family: fa6-solid;
-                font-size: 32px;
-                border: 1px solid transparent;
-                transition: border 150ms ease;
-                width: 48px;
-                height: 48px;
-                padding: 1px 0 0 1px;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .action {
-                // position: absolute;
-                // bottom: -16px;
-                // right: -16px;
-                border-radius: -1;
-                margin-top: -5px;
-                margin-left: -10px;
-                transform: scale( 0.75 );
-            }
-        }
-    }
-
-    .row {
-        bottom: 0;
-        padding: 10px;
-        padding-bottom: $safe-area-y;
-        align-items: center;
-
-        .input-hint {
-            flex-direction: row-reverse;
-            align-items: center;
-        }
-    }
-
     .raise {
         bottom: 0;
-        padding: 10px;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         gap: 10px;
+        padding: 10px;
 
         row {
             align-items: center;
+            gap: 10px;
+        }
+
+        column {
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
         }
 
         .input-hint {
@@ -100,12 +34,14 @@
         }
 
         .slider {
-            margin-left: 10px;
             width: 300px;
         }
 
         .bet-text {
-            width: 60px;
+            background-color: rgba( $background-dark, 0.25 );
+            border-radius: 5px;
+            padding: 10px;
+            width: 100px;
             justify-content: center;
 
             label {
