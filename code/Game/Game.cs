@@ -60,6 +60,13 @@ public partial class PokerGame : GameManager
 		Instance.Run();
 	}
 
+	[Event.Tick.Server]
+	public void OnServerTick()
+	{
+		if ( !IsRunning && Game.Clients.Count >= 2 )
+			Run();
+	}
+
 	public override void ClientJoined( IClient client )
 	{
 		base.ClientJoined( client );
