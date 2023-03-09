@@ -26,6 +26,14 @@ public partial class CardEntity : ModelEntity
 		SetMaterialOverride( material, "isCardTarget" );
 	}
 
+	[ClientRpc]
+	public void RpcClearCard()
+	{
+		Game.AssertClient();
+
+		ClearMaterialOverride();
+	}
+
 	[Event.Client.Frame]
 	public void OnFrame()
 	{

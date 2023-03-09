@@ -28,7 +28,7 @@ partial class PokerGame
 		End
 	}
 
-	private Rounds Round { get; set; } = Rounds.Preflop;
+	public Rounds Round { get; private set; } = Rounds.Preflop;
 
 	public void Run()
 	{
@@ -142,6 +142,8 @@ partial class PokerGame
 
 		foreach ( var card in cards )
 			CommunityCards.Add( card );
+
+		Event.Run( PokerEvent.CommunityCardsUpdated.Name );
 	}
 
 	private void StartRound( Rounds round )
@@ -162,6 +164,8 @@ partial class PokerGame
 		}
 
 		PlayerTurnQueue.CreateQueue( Players );
+
+		Event.Run( PokerEvent.NewRound.Name );
 
 		if ( Round >= Rounds.Showdown || PlayerTurnQueue.Count <= 1 )
 		{
@@ -200,7 +204,10 @@ partial class PokerGame
 		if ( PlayerTurnQueue.Peek().HasFolded )
 		{
 			MoveToNextPlayer();
+			return;
 		}
+
+		Event.Run( PokerEvent.TurnChange.Name );
 	}
 
 	public bool IsTurn( Player player )

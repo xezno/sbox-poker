@@ -1,29 +1,30 @@
 ﻿namespace Poker;
 public class PokerEvent
 {
+	/// <summary>
+	/// Only runs on server
+	/// </summary>
 	public class TurnChange : EventAttribute
 	{
-		private const string Name = "PokerEvent.TurnChange";
+		public const string Name = "PokerEvent.TurnChange";
 		public TurnChange() : base( Name ) { }
 	}
 
+	/// <summary>
+	/// Only runs on server
+	/// </summary>
 	public class NewRound : EventAttribute
 	{
-		private const string Name = "PokerEvent.NewRound";
+		public const string Name = "PokerEvent.NewRound";
 		public NewRound() : base( Name ) { }
 	}
 
-	public class Client
+	/// <summary>
+	/// Only runs on server
+	/// </summary>
+	public class CommunityCardsUpdated : EventAttribute
 	{
-		public class LocalTurn : EventAttribute
-		{
-			private const string Name = "PokerEvent.Client.LocalTurn";
-			public LocalTurn() : base( Name ) { }
-		}
-	}
-
-	public class Server
-	{
-
+		public const string Name = "PokerEvent.CommunityCardsUpdated";
+		public CommunityCardsUpdated() : base( Name ) { }
 	}
 }
