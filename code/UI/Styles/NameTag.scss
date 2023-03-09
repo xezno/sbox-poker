@@ -18,9 +18,6 @@ NameTag {
     justify-content: space-between;
     text-shadow: $text-shadow;
     position: absolute;
-    left: 50%;
-    bottom: 250px;
-    transform: translateX( -50% );
     background: linear-gradient(to right, rgba( $background-dark, 0.75 ), rgba( $background-dark, 0.0 ));
 
     .right {

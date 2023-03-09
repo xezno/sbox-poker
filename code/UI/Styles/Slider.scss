@@ -34,7 +34,7 @@ $switch-padding: 6px !default;
         left: 14px; // This has to be half of the thumb's width :S
         right: 14px;
         height: 10px;
-        background-color: $background-dark;
+        background-color: rgba( $background-dark, 0.5 );
         border-radius: 5px;
     }
 }

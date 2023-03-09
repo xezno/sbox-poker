@@ -46,9 +46,6 @@ public partial class PokerGame : GameManager
 
 	public override void OnVoicePlayed( IClient cl )
 	{
-		// TODO: Re-implement this in razor
-		// Old_PlayerList.Instance?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
-
 		if ( cl.Pawn is Player player )
 		{
 			player.VoiceLevel = cl.Voice.CurrentLevel;
@@ -75,30 +72,24 @@ public partial class PokerGame : GameManager
 
 	public void CreateSpectatorFor( IClient client )
 	{
+		if ( client.Pawn is Spectator )
+			return;
+
+		PokerChatBox.AddInformation( To.Everyone, $"{client.Name} was moved to spectators." );
+
 		client.Pawn?.Delete();
 
 		var spectatorPawn = new Spectator();
 		client.Pawn = spectatorPawn;
 	}
 
-	[ConCmd.Server( "poker_switch" )]
-	public static void SwitchPlayer()
-	{
-		var client = ConsoleSystem.Caller;
-		var pawn = client.Pawn;
-
-		if ( pawn is Player )
-		{
-			PokerGame.Instance.CreateSpectatorFor( client );
-		}
-		else if ( pawn is Spectator )
-		{
-			PokerGame.Instance.CreatePlayerFor( client );
-		}
-	}
-
 	public void CreatePlayerFor( IClient client )
 	{
+		if ( client.Pawn is Player )
+			return;
+
+		PokerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the table." );
+
 		client.Pawn?.Delete();
 
 		var clothingContainer = new ClothingContainer();
@@ -125,8 +116,8 @@ public partial class PokerGame : GameManager
 
 		if ( firstAvailableSeat == null )
 		{
-			Log.Error( "Wasn't able to seat player, kicking them" );
-			client.Kick(); // TODO: Move to spectators
+			Log.Error( "Wasn't able to seat player, moving to spectator" );
+			PokerGame.Instance.CreateSpectatorFor( client );
 			return;
 		}
 

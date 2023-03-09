@@ -4,6 +4,8 @@ public class Spectator : BasePawn
 {
 	private SpectatorCamera Camera { get; set; }
 
+	private int RoundsLeft { get; set; } = 5;
+
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
@@ -22,5 +24,19 @@ public class Spectator : BasePawn
 		base.FrameSimulate( cl );
 
 		Camera.Update();
+	}
+
+	[PokerEvent.NewRound]
+	public void OnNewRound()
+	{
+		if ( !Game.IsServer )
+			return;
+
+		RoundsLeft--;
+
+		if ( RoundsLeft <= 0 )
+		{
+			PokerGame.Instance.CreatePlayerFor( Client );
+		}
 	}
 }

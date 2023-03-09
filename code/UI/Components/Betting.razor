@@ -34,14 +34,14 @@
 	public RadialMenu RadialWheel { get; set; }
 
 	private int BetMin => PokerGame.Instance.MinimumBet.CeilToInt();
-	private int BetMax => Player.Money.CeilToInt();
+	private int BetMax => Player?.Money.CeilToInt() ?? 0;
 
 	private string MoveName => ( BetValue == BetMax ? "All In" : ( BetValue == BetMin ? "Check" : "Raise" ) );
 
 	private bool WasMyTurn { get; set; }
 	private TimeUntil TimeUntilTurnEnds { get; set; }
 
-	private Player Player => Game.LocalPawn as Player;
+	private Player? Player => Game.LocalPawn as Player;
 
 	protected override int BuildHash()
 	{

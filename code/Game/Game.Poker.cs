@@ -112,14 +112,14 @@ partial class PokerGame
 		Players.ForEach( player =>
 		{
 			if ( player.Money <= 0 )
-				player.Client.Kick(); // TODO: Move to spectators
+				PokerGame.Instance.CreateSpectatorFor( player.Client );
 		} );
 
 		// OK now everyone needs to pay the ante
 		Players.ForEach( player =>
 		{
 			if ( !Bet( 5, player ) )
-				player.Client.Kick(); // TODO: Move to spectators
+				PokerGame.Instance.CreateSpectatorFor( player.Client );
 		} );
 
 		// Start pre-flop

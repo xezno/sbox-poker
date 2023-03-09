@@ -22,15 +22,18 @@ public class NameTag : WorldPanel
 
 		NameTagPanel = AddChild<NameTagPanel>();
 		Player = player;
+	}
 
-		var size = new Vector2( 1024, 1024 );
+	public override void Tick()
+	{
+		var size = new Vector2( 1024, 512 );
+		PanelBounds = new Rect( 0, size );
 
-		PanelBounds = new Rect( size.x * -0.5f, size.y * -0.5f, size.x, size.y );
+		float renderScale = 4.0f;
+		float scale = 1.5f;
 
-		float resolutionScale = 2.0f;
-
-		Scale = resolutionScale;
-		WorldScale = 1f / resolutionScale;
+		Scale = renderScale * scale;
+		WorldScale = 1f / renderScale;
 	}
 }
 
@@ -62,8 +65,8 @@ internal class NameTagComponent : EntityComponent<Player>
 		var screenPos = (Vector2)tx.Position.ToScreen();
 		var center = screenPos - new Vector2( 0.5f, 0.5f );
 
-		tx.Position += rot.Right * 20.0f;
-		tx.Position += rot.Down * 16.0f;
+		tx.Position += rot.Right * 6;
+		tx.Position += rot.Down * 8;
 		tx.Rotation = Rotation.LookAt( -Camera.Rotation.Forward );
 
 		var opacity = MathF.Abs( center.x ).LerpInverse( 0.05f, 0f );

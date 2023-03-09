@@ -121,7 +121,6 @@ public partial class PokerChatBox : Panel
 
 		Assert.NotNull( ConsoleSystem.Caller );
 
-		// todo - reject more stuff
 		if ( message.Contains( '\n' ) || message.Contains( '\r' ) )
 			return;
 

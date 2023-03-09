@@ -4,7 +4,7 @@
     position: absolute;
     bottom: 0px;
     left: $safe-area-x;
-    z-index: 100;
+    z-index: 10000;
     flex-direction: column;
     width: 500px;
     height: 320px;
@@ -19,7 +19,7 @@
         padding: 10px 15px;
         padding-bottom: 20px;
         width: 100%;
-        background-color: $background-dark;
+        background-color: rgba( $background-dark, 0.5 );
         border-radius: 10px;
 
         .placeholder {
