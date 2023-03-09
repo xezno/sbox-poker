@@ -7,6 +7,9 @@ partial class PokerGame
 		if ( ConsoleSystem.Caller.Pawn is not Player player )
 			return;
 
+		if ( !DebugMenu.Enabled )
+			return;
+
 		Log.Trace( $"Forced {player.Client.Name} as winner" );
 		Instance.ProcessWinner( player );
 	}
@@ -15,6 +18,9 @@ partial class PokerGame
 	public static void ForceNextPlayer()
 	{
 		if ( !Game.IsServer )
+			return;
+
+		if ( !DebugMenu.Enabled )
 			return;
 
 		var instance = Instance;

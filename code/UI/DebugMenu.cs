@@ -5,6 +5,9 @@ namespace Poker;
 
 public class DebugMenu : Panel
 {
+	[ConVar.Replicated( "poker_debug_enabled" )]
+	public static bool Enabled { get; set; } = false;
+
 	public DebugMenu()
 	{
 		SetClass( "debug-menu", true );
@@ -23,7 +26,7 @@ public class DebugMenu : Panel
 				() => ConsoleSystem.Run( "poker_debug_forcewin" ) );
 		}
 
-		BindClass( "visible", () => Input.Down( InputButton.Menu ) );
+		BindClass( "visible", () => Input.Down( InputButton.Menu ) && Enabled );
 	}
 
 	public override void Tick()
@@ -36,9 +39,12 @@ public class DebugMenu : Panel
 		}
 	}
 
-	[ConCmd.Server( "poker_game_test" )]
+	[ConCmd.Admin( "poker_game_test" )]
 	public static void GameTestMacro()
 	{
+		if ( !DebugMenu.Enabled )
+			return;
+
 		ConsoleSystem.Run( "bot_add 0 0" );
 		ConsoleSystem.Run( "poker_start" );
 	}
