@@ -88,15 +88,11 @@ public partial class Player : BasePawn
 
 		Money = StartingCash;
 
-		// WHAT THE FUCK!!! TAGS R SHIT??
-		// WHY IS IT NOT "card,leftcard"!?!?!?!?
-		LeftCard = Children.OfType<CardEntity>().First( x => x.Tags.Has( "card leftcard" ) );
-		RightCard = Children.OfType<CardEntity>().First( x => x.Tags.Has( "card rightcard" ) );
+		LeftCard = Children.OfType<CardEntity>().First( x => x.Tags.Has( "leftcard" ) );
+		RightCard = Children.OfType<CardEntity>().First( x => x.Tags.Has( "rightcard" ) );
 
 		if ( LeftCard == null || RightCard == null )
-		{
-			Log.Error( "No cards for you, fuck off" );
-		}
+			Log.Error( "Where are your cards?" );
 	}
 
 	public override void ClientSpawn()
