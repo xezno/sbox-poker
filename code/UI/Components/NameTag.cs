@@ -26,10 +26,10 @@ public class NameTag : WorldPanel
 
 	public override void Tick()
 	{
-		var size = new Vector2( 1024, 512 );
+		var size = new Vector2( 2048, 256 );
 		PanelBounds = new Rect( 0, size );
 
-		float renderScale = 4.0f;
+		float renderScale = 2.0f;
 		float scale = 1.5f;
 
 		Scale = renderScale * scale;
@@ -65,13 +65,12 @@ internal class NameTagComponent : EntityComponent<Player>
 		var screenPos = (Vector2)tx.Position.ToScreen();
 		var center = screenPos - new Vector2( 0.5f, 0.5f );
 
-		tx.Position += rot.Right * 6;
-		tx.Position += rot.Down * 8;
 		tx.Rotation = Rotation.LookAt( -Camera.Rotation.Forward );
+		tx.Position += rot.Up * 10;
 
 		var opacity = MathF.Abs( center.x ).LerpInverse( 0.05f, 0f );
 
-		NameTag.SetClass( "visible", opacity > 0f );
+		NameTag.SetClass( "visible", opacity > 0f || NameTag.Player.IsMyTurn );
 		NameTag.Transform = tx;
 	}
 
