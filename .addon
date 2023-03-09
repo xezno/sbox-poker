@@ -76,7 +76,7 @@
     "Summary": "Deal me in",
     "Description": "A faithful implementation of Texas Hold\u0027em you can play with your mates in s\u0026box",
     "ReplaceTags": "poker texasholdem casino",
-    "Public": false,
+    "Public": true,
     "GeneralExtensions": true,
     "TargettedExtensions": true,
     "ExtensionApiVersion": 1001,
