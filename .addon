@@ -20,7 +20,7 @@
     "MaxPlayers": 6,
     "MinPlayers": 1,
     "GameNetworkType": "Multiplayer",
-    "MapSelect": "Tagged",
+    "MapSelect": "Unrestricted",
     "MapList": [
       "alex.poker_hotel"
     ],
