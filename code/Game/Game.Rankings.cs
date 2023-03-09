@@ -25,7 +25,7 @@ partial class PokerGame
 		return PokerUtils.RankPokerHand( cards, out score );
 	}
 
-	public Player FindWinner()
+	public Player FindWinner( out HandRank rank )
 	{
 		var rankedPlayers = Players.Select( x => new { player = x, rank = RankPlayerHand( x, out var score ), score } );
 		var groupedPlayers = rankedPlayers.GroupBy( x => x.rank );
@@ -34,6 +34,7 @@ partial class PokerGame
 		var bestPlayers = orderedGroupedPlayers.First();
 		Log.Trace( "Best players: " + string.Join( ", ", bestPlayers.Select( x => x.player + " - " + x.rank + " - " + x.score ) ) );
 
+		rank = HandRank.None;
 		Player winner;
 
 		if ( bestPlayers.Count() > 1 )
@@ -41,11 +42,13 @@ partial class PokerGame
 			// Find highest score
 			var orderedBestPlayers = bestPlayers.OrderBy( x => x.score );
 			winner = orderedBestPlayers.First().player;
+			rank = bestPlayers.First().rank;
 		}
 		else
 		{
 			// One winner
 			winner = bestPlayers.First().player;
+			rank = bestPlayers.First().rank;
 		}
 
 		return winner;
