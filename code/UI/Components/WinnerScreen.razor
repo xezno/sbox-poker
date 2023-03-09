@@ -11,7 +11,9 @@
 
 		<cell>
 			<label class="title">@Winner Wins</label>
-			<label class="subtitle">$5000 • Full House</label>
+			<row class="subtitle">
+				$@WinAmount | @(WinRank.ToDisplayString())
+			</row>
 		</cell>
 	
 	</section>
@@ -24,6 +26,8 @@
 
 	private string Winner { get; set; }
 	private long WinnerId { get; set; }
+	private int WinAmount { get; set; }
+	private HandRank WinRank { get; set; }
 
 	public WinnerScreen()
 	{
@@ -35,10 +39,12 @@
 		return HashCode.Combine(Time.Now);
 	}
 
-	private async Task ShowWinnerScreen( string winner, long winnerId )
+	private async Task ShowWinnerScreen( string winner, long winnerId, int winAmount, HandRank winRank )
 	{
 		Winner = winner;
 		WinnerId = winnerId;
+		WinAmount = winAmount;
+		WinRank = winRank;
 
 		SetClass("visible", true);
 

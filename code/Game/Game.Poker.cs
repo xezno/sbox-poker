@@ -15,6 +15,8 @@ partial class PokerGame
 	[ConVar.Server( "poker_sv_blind_amount" )]
 	public static float BlindAmount { get; set; } = 50f;
 
+	private bool IsRunning { get; set; }
+
 	public enum Rounds
 	{
 		Preflop,
@@ -43,6 +45,7 @@ partial class PokerGame
 		CommunityCards.Clear();
 		Round = Rounds.Preflop;
 		Pot = 0;
+		IsRunning = true;
 
 		// Reset players
 		Entity.All.OfType<Player>().ToList().ForEach( player => player.Reset() );
@@ -164,13 +167,14 @@ partial class PokerGame
 		{
 			Log.Info( "Game over" );
 
-			var winner = FindWinner();
+			var winner = FindWinner( out var rank );
 			ProcessWinner( winner );
 
-			WinnerScreen.OnWin( To.Everyone, winner.Client.Name, winner.Client.SteamId );
+			WinnerScreen.OnWin( To.Everyone, winner.Client.Name, winner.Client.SteamId, Pot.CeilToInt(), rank );
 			Log.Info( $"{winner.Client.Name} wins" );
 
-			Run(); // TODO: Should move to a different game state instead and wait for players etc.
+			IsRunning = false;
+			Pot = 0;
 
 			return;
 		}
@@ -179,7 +183,6 @@ partial class PokerGame
 	private void ProcessWinner( Player winner )
 	{
 		winner.Money += Pot;
-		Pot = 0;
 	}
 
 	private void MoveToNextPlayer()
