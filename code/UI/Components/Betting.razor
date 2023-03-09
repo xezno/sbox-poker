@@ -35,8 +35,23 @@
 
 	private int BetMin => PokerGame.Instance.MinimumBet.CeilToInt();
 	private int BetMax => Player?.Money.CeilToInt() ?? 0;
+	
+	private string MoveName
+	{
+		get
+		{
+			if (BetValue == 0)
+				return "Check";
 
-	private string MoveName => ( BetValue == BetMax ? "All In" : ( BetValue == BetMin ? "Check" : "Raise" ) );
+			if (BetValue == BetMax)
+				return "All In";
+
+			if (BetValue == BetMin)
+				return "Call";
+
+			return "Raise";
+		}
+	}
 
 	private bool WasMyTurn { get; set; }
 	private TimeUntil TimeUntilTurnEnds { get; set; }
