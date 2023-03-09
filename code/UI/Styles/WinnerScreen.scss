@@ -49,10 +49,15 @@
         }
     }
 
-    label.subtitle {
+    row.subtitle {
         font-size: 24px;
         font-weight: 600;
         opacity: 0.5;
+        
+        label {
+            font-size: 24px;
+            font-weight: 600;
+        }
     }
 
     &.visible {

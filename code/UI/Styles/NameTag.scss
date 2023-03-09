@@ -3,6 +3,8 @@
 NameTag {
     transition: opacity 150ms ease;
     opacity: 0;
+    justify-content: center;
+    transform: translate( -50% );
 
     &.visible {
         opacity: 1;
@@ -18,7 +20,12 @@ NameTag {
     justify-content: space-between;
     text-shadow: $text-shadow;
     position: absolute;
-    background: linear-gradient(to right, rgba( $background-dark, 0.75 ), rgba( $background-dark, 0.0 ));
+    background: linear-gradient(to bottom, rgba( $background-dark, 0.75 ), rgba( $background-dark, 0.25 ));
+
+    &.my-turn {
+        background: linear-gradient(to bottom, rgba( $background, 0.75 ), rgba( $background, 0.25 ));
+        box-shadow: 0 0 100px rgba( $background, 0.25 );
+    }
 
     .right {
         flex-direction: column;
@@ -33,6 +40,7 @@ NameTag {
     .name label {
         font-size: $font-big;
         font-weight: $weight-big;
+        min-width: 128px;
     }
 
     .avatar {
