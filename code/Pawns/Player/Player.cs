@@ -133,8 +133,6 @@ public partial class Player : BasePawn
 			Log.Info( $"{Client.IsBot} && {Game.IsClient} && {IsMyTurn}" );
 			PokerGame.SubmitMove( this, Move.Bet, 0f );
 		}
-
-		SetEyeTransforms();
 	}
 
 	public override void FrameSimulate( IClient cl )
@@ -144,7 +142,6 @@ public partial class Player : BasePawn
 		Animate();
 		Camera.Update();
 
-		SetEyeTransforms();
 		SetBodyGroups();
 	}
 
@@ -158,11 +155,6 @@ public partial class Player : BasePawn
 		{
 			SetBodyGroup( "Head", 0 );
 		}
-	}
-
-	private void SetEyeTransforms()
-	{
-		Position = Position.WithZ( 8 );
 	}
 
 	public override void BuildInput()
