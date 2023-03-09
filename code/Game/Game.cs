@@ -17,7 +17,7 @@ public partial class PokerGame : GameManager
 
 	public PokerGame()
 	{
-		Game.TickRate = 15;
+		Game.TickRate = 40;
 
 		Instance = this;
 
