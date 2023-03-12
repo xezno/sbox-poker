@@ -4,6 +4,8 @@ using System;
 namespace Poker.UI;
 public class CardPanel : Panel
 {
+	private Card? Card { get; set; }
+
 	public override void SetProperty( string name, string value )
 	{
 		base.SetProperty( name, value );
@@ -35,12 +37,19 @@ public class CardPanel : Panel
 
 	public void Reset()
 	{
+		Card = null;
 		Style.BackgroundImage = null;
 	}
 
 	public void SetCard( Suit suit, Value value )
 	{
 		var card = new Card( suit, value );
-		Style.BackgroundImage = Texture.Load( FileSystem.Mounted, card.GetFilename() );
+		if ( card == Card )
+			return;
+
+		var texture = Texture.Load( FileSystem.Mounted, card.GetFilename() );
+
+		Style.BackgroundImage = texture;
+		Card = card;
 	}
 }

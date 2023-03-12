@@ -4,9 +4,11 @@
     opacity: 0;
     flex-direction: column;
     align-items: center;
+    display: none;
 
     &.visible {
         opacity: 1;
+        display: flex;
     }
 
     .raise {
