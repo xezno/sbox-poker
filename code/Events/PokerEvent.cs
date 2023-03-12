@@ -27,4 +27,22 @@ public class PokerEvent
 		public const string Name = "PokerEvent.CommunityCardsUpdated";
 		public CommunityCardsUpdated() : base( Name ) { }
 	}
+
+	/// <summary>
+	/// Only runs on server
+	/// </summary>
+	public class GameStart : EventAttribute
+	{
+		public const string Name = "PokerEvent.GameStart";
+		public GameStart() : base( Name ) { }
+	}
+
+	/// <summary>
+	/// Only runs on server
+	/// </summary>
+	public class GameOver : EventAttribute
+	{
+		public const string Name = "PokerEvent.GameOver";
+		public GameOver() : base( Name ) { }
+	}
 }

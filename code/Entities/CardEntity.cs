@@ -20,8 +20,6 @@ public partial class CardEntity : ModelEntity
 		Game.AssertClient();
 
 		texture = Texture.Load( FileSystem.Mounted, card.GetFilename() );
-		Log.Trace( $"Set card texture to {texture.ResourcePath}" );
-
 		material = Material.Load( "materials/card/card.vmat" ).CreateCopy();
 		SetMaterialOverride( material, "isCardTarget" );
 	}

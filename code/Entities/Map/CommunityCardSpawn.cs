@@ -7,6 +7,7 @@
 public class CommunityCardSpawn : Entity
 {
 	private List<CardEntity> Cards { get; set; } = new();
+	private ChipGroupEntity Chips { get; set; }
 
 	public override void Spawn()
 	{
@@ -27,6 +28,20 @@ public class CommunityCardSpawn : Entity
 
 			Cards.Add( card );
 		}
+
+		Chips = new();
+		Chips.SetParent( this );
+		Chips.LocalPosition = Vector3.Forward * -8f + Vector3.Down * 2f;
+	}
+
+	[PokerEvent.GameStart]
+	public void OnGameStart()
+	{
+		Cards.ForEach( x =>
+		{
+			x.RpcClearCard();
+			x.EnableDrawing = false;
+		} );
 	}
 
 	[PokerEvent.CommunityCardsUpdated]
@@ -47,5 +62,12 @@ public class CommunityCardSpawn : Entity
 				card.EnableDrawing = false;
 			}
 		}
+	}
+
+	[PokerEvent.NewRound]
+	public void OnNewRound()
+	{
+		if ( PokerGame.Instance.IsValid() && Chips.IsValid() )
+			Chips.Value = PokerGame.Instance.Pot;
 	}
 }

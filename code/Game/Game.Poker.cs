@@ -15,7 +15,9 @@ partial class PokerGame
 	[ConVar.Server( "poker_sv_blind_amount" )]
 	public static float BlindAmount { get; set; } = 50f;
 
-	private bool IsRunning { get; set; }
+	[Net] public bool IsRunning { get; set; }
+
+	private TimeUntil _timeUntilNextRound = 0;
 
 	public enum Rounds
 	{
@@ -30,15 +32,8 @@ partial class PokerGame
 
 	public Rounds Round { get; private set; } = Rounds.Preflop;
 
-	public void Run()
+	private void Reset()
 	{
-		Game.AssertServer();
-
-		/*
-		 * TODO:
-		 * - Buy-in
-		 */
-
 		// Instantiate everything
 		Deck = new();
 		PlayerTurnQueue = new();
@@ -49,6 +44,24 @@ partial class PokerGame
 
 		// Reset players
 		Entity.All.OfType<Player>().ToList().ForEach( player => player.Reset() );
+	}
+
+	public void Run()
+	{
+		Game.AssertServer();
+
+		if ( _timeUntilNextRound > 0 )
+		{
+			Log.Trace( _timeUntilNextRound );
+			return;
+		}
+
+		/*
+		 * TODO:
+		 * - Buy-in
+		 */
+		// Reset all
+		Reset();
 
 		// Determine dealer
 		Dealer = Players[0];
@@ -125,6 +138,9 @@ partial class PokerGame
 				PokerGame.Instance.CreateSpectatorFor( player.Client );
 		} );
 
+		// We're ready, broadcast event
+		Event.Run( PokerEvent.GameStart.Name );
+
 		// Start pre-flop
 		StartNextRound();
 	}
@@ -169,18 +185,15 @@ partial class PokerGame
 
 		if ( Round >= Rounds.Showdown || PlayerTurnQueue.Count <= 1 )
 		{
-			Log.Info( "Game over" );
+			Round = Rounds.End;
+			IsRunning = false;
+			_timeUntilNextRound = 10;
 
 			var winner = FindWinner( out var rank );
 			ProcessWinner( winner );
 
 			WinnerScreen.OnWin( To.Everyone, winner.Client.Name, winner.Client.SteamId, Pot.CeilToInt(), rank );
-			Log.Info( $"{winner.Client.Name} wins" );
-
-			IsRunning = false;
-			Pot = 0;
-
-			return;
+			Event.Run( PokerEvent.GameOver.Name );
 		}
 	}
 
@@ -212,6 +225,6 @@ partial class PokerGame
 
 	public bool IsTurn( Player player )
 	{
-		return PlayerTurnQueue?.Peek() == player;
+		return IsRunning && Round != Rounds.End && PlayerTurnQueue?.Peek() == player;
 	}
 }

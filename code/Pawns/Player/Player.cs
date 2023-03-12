@@ -95,6 +95,20 @@ public partial class Player : BasePawn
 			Log.Error( "Where are your cards?" );
 	}
 
+	public void CreateChips()
+	{
+		if ( Chips.IsValid() )
+			return;
+
+		Game.AssertServer();
+
+		var chipSpawn = Entity.All.OfType<PlayerChipSpawn>().First( x => x.SeatNumber == Seat.SeatNumber );
+		Chips = new ChipGroupEntity();
+		Chips.Position = chipSpawn.Position;
+		Chips.Rotation = chipSpawn.Rotation;
+		Chips.SetParent( this );
+	}
+
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
@@ -126,7 +140,6 @@ public partial class Player : BasePawn
 		// Hacky bot behaviour, just check after 1 second
 		if ( Client.IsBot && Game.IsServer && IsMyTurn && timeSinceTurnChange > 1f )
 		{
-			Log.Info( $"{Client.IsBot} && {Game.IsClient} && {IsMyTurn}" );
 			PokerGame.SubmitMove( this, Move.Bet, 0f );
 		}
 	}
@@ -139,6 +152,14 @@ public partial class Player : BasePawn
 		Camera.Update();
 
 		SetBodyGroups();
+	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+
+		if ( Chips.IsValid() )
+			Chips.Delete();
 	}
 
 	private void SetBodyGroups()
