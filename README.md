@@ -8,3 +8,8 @@ You can play it [here](https://asset.party/alex/poker).
 ## Mapping
 
 If you're interested in making a map, please read [MAPPING.md](https://github.com/xezno/sbox-poker/blob/master/MAPPING.md).
+
+## Acknowledgements
+
+- Poker table model - ShadowBrain ([Twitter](https://twitter.com/TheShadowBrain), [GitHub](https://github.com/shadowbrian))
+- Icons - FlatIcon ([Web](https://www.flaticon.com/)]
