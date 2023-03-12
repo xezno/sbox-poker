@@ -11,5 +11,5 @@ If you're interested in making a map, please read [MAPPING.md](https://github.co
 
 ## Acknowledgements
 
-- Poker table model - ShadowBrain ([Twitter](https://twitter.com/TheShadowBrain), [GitHub](https://github.com/shadowbrian))
+- Poker table & chair models - ShadowBrain ([Twitter](https://twitter.com/TheShadowBrain), [GitHub](https://github.com/shadowbrian))
 - Icons - FlatIcon ([Web](https://www.flaticon.com/)]
