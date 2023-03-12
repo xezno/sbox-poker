@@ -111,10 +111,14 @@ public partial class PokerGame : GameManager
 		clothingContainer.DressEntity( player );
 
 		client.Pawn = player;
-		MoveToSeat( client );
+
+		if ( MoveToSeat( client ) )
+		{
+			player.CreateChips();
+		}
 	}
 
-	private void MoveToSeat( IClient client )
+	private bool MoveToSeat( IClient client )
 	{
 		var orderedSeats = Entity.All.OfType<SeatEntity>().OrderBy( x => x.SeatNumber );
 		var emptySeats = orderedSeats.Where( x => !x.IsOccupied );
@@ -125,10 +129,11 @@ public partial class PokerGame : GameManager
 		{
 			Log.Error( "Wasn't able to seat player, moving to spectator" );
 			PokerGame.Instance.CreateSpectatorFor( client );
-			return;
+			return false;
 		}
 
 		firstAvailableSeat.SetOccupiedBy( client.Pawn as Player );
+		return true;
 	}
 
 	[Event.Debug.Overlay( "poker_debug", "Poker Debug", "style" )]

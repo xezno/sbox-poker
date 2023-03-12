@@ -1,4 +1,6 @@
-﻿namespace Poker;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Poker;
 
 public struct Card
 {
@@ -65,5 +67,23 @@ public struct Card
 		var suitString = suitLUT[Suit];
 
 		return $"{suitString}{valueString}";
+	}
+
+	public override bool Equals( [NotNullWhen( true )] object obj )
+	{
+		if ( obj is not Card card )
+			return false;
+
+		return card.Suit == Suit && card.Value == Value;
+	}
+
+	public static bool operator ==( Card card1, Card card2 )
+	{
+		return card1.Equals( card2 );
+	}
+
+	public static bool operator !=( Card card1, Card card2 )
+	{
+		return !(card1 == card2);
 	}
 }
