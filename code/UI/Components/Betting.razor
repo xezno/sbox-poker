@@ -75,7 +75,7 @@
 
 	string VisibilityClass()
 	{
-		if (Player != null && Player.IsMyTurn)
+		if (Player != null && Player.IsMyTurn && PokerGame.Instance.IsRunning)
 			return "visible";
 
 		return "";
