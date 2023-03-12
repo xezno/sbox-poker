@@ -1,5 +1,7 @@
 {
   "cloud_packages": [],
-  "game_packages": [],
+  "game_packages": [
+    "alex.poker"
+  ],
   "addon_packages": []
 }
