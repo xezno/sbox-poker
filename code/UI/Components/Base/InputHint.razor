@@ -60,7 +60,7 @@
 
 		var action = InputLayer.GetAction(Name);
 		var button = action.GetDisplayButton();
-		bool active = MathF.Abs(action.Evaluate()) > 0.5f;
+		bool active = MathF.Abs(action.Evaluate()) > 0.05f;
 
 		SetClass("using-controller", Input.UsingController);
 		SetClass("active", active);
@@ -77,6 +77,8 @@
 			// RadialFill.FillAmount = progress;
 
 			active = holdAction.Progress > 0.001f;
+
+			Glyph.Style.BackgroundTint = Color.Lerp(Color.White, Color.Green, holdAction.Progress);
 		}
 
 		var glyphStyle = GlyphStyle.Knockout.WithNeutralColorABXY();
