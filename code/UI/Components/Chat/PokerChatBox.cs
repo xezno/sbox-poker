@@ -82,7 +82,7 @@ public partial class PokerChatBox : Panel
 	{
 		base.Tick();
 
-		if ( Sandbox.Input.Pressed( InputButton.Chat ) )
+		if ( Sandbox.Input.Pressed( "chat" ) )
 			Open();
 
 		Input.Placeholder = string.IsNullOrEmpty( Input.Text ) ? "Say something..." : "";

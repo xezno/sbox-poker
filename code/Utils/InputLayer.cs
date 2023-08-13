@@ -16,9 +16,9 @@ public class BaseInputAction
 		return 0.0f;
 	}
 
-	public virtual InputButton GetDisplayButton()
+	public virtual string GetDisplayButton()
 	{
-		return InputButton.Slot0;
+		return "Slot0";
 	}
 }
 
@@ -26,11 +26,11 @@ public class HoldAction : BoolAction
 {
 	private TimeSince timeSinceHeld;
 
-	const float ProcessAfter = 1.5f; // Seconds
+	const float ProcessAfter = 0.01f; // Seconds
 
 	public float Progress => (!Input.Down( Button ) ? 0.0f : timeSinceHeld / ProcessAfter);
 
-	public HoldAction( string name, InputButton button ) : base( name, button )
+	public HoldAction( string name, string button ) : base( name, button )
 	{
 		Event.Register( this );
 	}
@@ -50,7 +50,7 @@ public class HoldAction : BoolAction
 		return (Progress >= 1f && Input.Down( Button )) ? 1.0f : 0.0f;
 	}
 
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	public void OnFrame()
 	{
 		if ( Input.Pressed( Button ) || Input.Released( Button ) )
@@ -60,9 +60,9 @@ public class HoldAction : BoolAction
 
 public class BoolAction : BaseInputAction
 {
-	public InputButton Button { get; set; }
+	public string Button { get; set; }
 
-	public BoolAction( string name, InputButton button ) : base( name )
+	public BoolAction( string name, string button ) : base( name )
 	{
 		Button = button;
 	}
@@ -77,7 +77,7 @@ public class BoolAction : BaseInputAction
 		return Input.Down( Button ) ? 1.0f : 0.0f;
 	}
 
-	public override InputButton GetDisplayButton()
+	public override string GetDisplayButton()
 	{
 		return Button;
 	}
@@ -85,10 +85,10 @@ public class BoolAction : BaseInputAction
 
 public class FloatAction : BaseInputAction
 {
-	public InputButton PositiveButton { get; set; }
-	public InputButton NegativeButton { get; set; }
+	public string PositiveButton { get; set; }
+	public string NegativeButton { get; set; }
 
-	public FloatAction( string name, InputButton positiveButton, InputButton negativeButton ) : base( name )
+	public FloatAction( string name, string positiveButton, string negativeButton ) : base( name )
 	{
 		PositiveButton = positiveButton;
 		NegativeButton = negativeButton;
@@ -110,7 +110,7 @@ public class FloatAction : BaseInputAction
 		return 0.0f;
 	}
 
-	public override InputButton GetDisplayButton()
+	public override string GetDisplayButton()
 	{
 		return PositiveButton;
 	}
@@ -119,9 +119,9 @@ public class FloatAction : BaseInputAction
 public class AxisAction : BaseInputAction
 {
 	public Func<float> Function { get; set; }
-	public InputButton DisplayButton { get; set; }
+	public string DisplayButton { get; set; }
 
-	public AxisAction( string name, Func<float> function, InputButton displayButton ) : base( name )
+	public AxisAction( string name, Func<float> function, string displayButton ) : base( name )
 	{
 		Function = function;
 		DisplayButton = displayButton;
@@ -137,7 +137,7 @@ public class AxisAction : BaseInputAction
 		return Function?.Invoke() ?? 0.0f;
 	}
 
-	public override InputButton GetDisplayButton()
+	public override string GetDisplayButton()
 	{
 		return DisplayButton;
 	}
@@ -148,45 +148,45 @@ public class InputLayer
 	[SkipHotload]
 	public static List<BaseInputAction> ControllerActions = new()
 	{
-		new HoldAction( "fold", InputButton.Duck ),
-		new HoldAction( "raise", InputButton.Jump ),
-		new HoldAction( "check", InputButton.Use ),
-		new BoolAction( "community_cards", InputButton.PrimaryAttack ),
+		new HoldAction( "fold", "duck"),
+		new HoldAction( "raise", "jump" ),
+		new HoldAction( "check", "use" ),
+		new BoolAction( "community_cards", "attack1" ),
 
-		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
-		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
-		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
-		new BoolAction( "emote.pump", InputButton.Slot4 ),
+		new BoolAction( "emote.middle_finger", "slot1" ),
+		new BoolAction( "emote.thumbs_up", "slot2" ),
+		new BoolAction( "emote.thumbs_down", "slot3" ),
+		new BoolAction( "emote.pump", "slot4" ),
 
-		new BoolAction( "raise_inc", InputButton.Slot2 ),
-		new BoolAction( "raise_dec", InputButton.Slot4 ),
+		new BoolAction( "raise_inc", "slot2" ),
+		new BoolAction( "raise_dec", "slot4" ),
 
-		new BoolAction( "raise_max", InputButton.SlotNext ),
-		new BoolAction( "raise_min", InputButton.SlotPrev ),
+		new BoolAction( "raise_max", "slotnext" ),
+		new BoolAction( "raise_min", "SlotPrev" ),
 
-		new BoolAction( "show_emotes", InputButton.Score )
+		new BoolAction( "show_emotes", "score" )
 	};
 
 	[SkipHotload]
 	public static List<BaseInputAction> PCActions = new()
 	{
-		new HoldAction( "fold", InputButton.Flashlight ),
-		new HoldAction( "raise", InputButton.Reload ),
-		new HoldAction( "check", InputButton.View ),
-		new BoolAction( "community_cards", InputButton.Duck ),
+		new HoldAction( "fold", "Flashlight" ),
+		new HoldAction( "raise", "Reload" ),
+		new HoldAction( "check", "View" ),
+		new BoolAction( "community_cards", "Duck" ),
 
-		new BoolAction( "emote.middle_finger", InputButton.Slot1 ),
-		new BoolAction( "emote.thumbs_up", InputButton.Slot2 ),
-		new BoolAction( "emote.thumbs_down", InputButton.Slot3 ),
-		new BoolAction( "emote.pump", InputButton.Slot4 ),
+		new BoolAction( "emote.middle_finger", "slot1" ),
+		new BoolAction( "emote.thumbs_up", "slot2" ),
+		new BoolAction( "emote.thumbs_down", "slot3" ),
+		new BoolAction( "emote.pump", "slot4" ),
 
-		new BoolAction( "raise_inc", InputButton.Forward ),
-		new BoolAction( "raise_dec", InputButton.Back ),
+		new BoolAction( "raise_inc", "forward" ),
+		new BoolAction( "raise_dec", "backward" ),
 
-		new BoolAction( "raise_max", InputButton.SlotNext ),
-		new BoolAction( "raise_min", InputButton.SlotPrev ),
+		new BoolAction( "raise_max", "slotnext" ),
+		new BoolAction( "raise_min", "SlotPrev" ),
 
-		new BoolAction( "show_emotes", InputButton.Score )
+		new BoolAction( "show_emotes", "score" )
 	};
 
 	public static List<BaseInputAction> Actions
