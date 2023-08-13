@@ -7,15 +7,12 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "ResourcePaths": [
-    "/code/UI/*",
-    "/ui/*",
-    "/ui/cards/*",
-    "/ui/menu/*",
-    "/fonts/*"
-  ],
+  "Resources": null,
+  "MenuResources": null,
   "HasCode": true,
   "CodePath": "/code/",
+  "PackageReferences": [],
+  "EditorReferences": null,
   "Metadata": {
     "MaxPlayers": 6,
     "MinPlayers": 1,
@@ -106,6 +103,7 @@
         "Step": 10
       }
     ],
-    "CsProjName": ""
+    "CsProjName": "",
+    "TickRate": 40
   }
 }

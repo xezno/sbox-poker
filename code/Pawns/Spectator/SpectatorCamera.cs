@@ -38,9 +38,9 @@ public class SpectatorCamera
 
 		moveMul = 1;
 
-		if ( Input.Down( InputButton.Run ) )
+		if ( Input.Down( "run" ) )
 			moveMul = 5;
-		if ( Input.Down( InputButton.Duck ) )
+		if ( Input.Down( "duck" ) )
 			moveMul = 0.2f;
 
 		LookAngles += Input.AnalogLook;
@@ -49,7 +49,7 @@ public class SpectatorCamera
 		TargetFOV -= Input.MouseWheel * 4f;
 		TargetFOV = TargetFOV.Clamp( 30f, 100f );
 
-		Input.ClearButton( InputButton.PrimaryAttack );
+		Input.Clear( "attack1" );
 		Input.StopProcessing = true;
 	}
 

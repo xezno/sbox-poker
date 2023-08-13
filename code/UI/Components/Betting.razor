@@ -8,7 +8,7 @@
 			
 		<row>
 			<inputhint btn="raise_dec"></inputhint>
-			<slider MinValue="@BetMin" MaxValue="@BetMax" Value="@BetValue" @ref=BetSlider></slider>
+			<SliderControl MinValue="@BetMin" MaxValue="@BetMax" Value="@BetValue" @ref=BetSlider></SliderControl>
 			<inputhint btn="raise_inc"></inputhint>
 				
 			<label class="bet-text">$@BetSlider.Value</label>
@@ -25,7 +25,7 @@
 
 @code
 {
-	private Slider BetSlider { get; set; }
+	private SliderControl BetSlider { get; set; }
 	private float BetValue { get; set; }
 	private TimeSince TimeSinceLastBetIncrement { get; set; }
 	public RadialMenu RadialWheel { get; set; }

@@ -32,7 +32,7 @@ public partial class CardEntity : ModelEntity
 		ClearMaterialOverride();
 	}
 
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	public void OnFrame()
 	{
 		if ( texture?.IsLoaded ?? false )

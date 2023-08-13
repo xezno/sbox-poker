@@ -18,7 +18,7 @@ public partial class ChipEntity : ModelEntity
 		Value = value;
 	}
 
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	public void OnFrame()
 	{
 		SceneObject.ColorTint = Value switch

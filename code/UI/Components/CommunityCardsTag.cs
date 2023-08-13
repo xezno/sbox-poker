@@ -55,7 +55,7 @@ internal class CommunityCardsTagComponent : EntityComponent<CommunityCardSpawn>
 	/// <summary>
 	/// Called for every tag, while it's active
 	/// </summary>
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	public void FrameUpdate()
 	{
 		var tx = Entity.Transform;
@@ -82,7 +82,7 @@ internal class CommunityCardsTagComponent : EntityComponent<CommunityCardSpawn>
 	/// <summary>
 	/// Called once per frame to manage component creation/deletion
 	/// </summary>
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	public static void SystemUpdate()
 	{
 		var target = Sandbox.Entity.All.OfType<CommunityCardSpawn>().First();

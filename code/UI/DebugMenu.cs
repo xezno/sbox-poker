@@ -26,14 +26,14 @@ public class DebugMenu : Panel
 				() => ConsoleSystem.Run( "poker_debug_forcewin" ) );
 		}
 
-		BindClass( "visible", () => Input.Down( InputButton.Menu ) && Enabled );
+		BindClass( "visible", () => Input.Down( "menu" ) && Enabled );
 	}
 
 	public override void Tick()
 	{
 		base.Tick();
 
-		if ( Input.Pressed( InputButton.Menu ) )
+		if ( Input.Pressed( "menu" ) )
 		{
 			CreateEvent( "onopen" );
 		}
