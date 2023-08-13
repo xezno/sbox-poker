@@ -17,8 +17,6 @@ public partial class PokerGame : GameManager
 
 	public PokerGame()
 	{
-		Game.TickRate = 40;
-
 		Instance = this;
 
 		if ( Game.IsClient )
@@ -60,7 +58,7 @@ public partial class PokerGame : GameManager
 		Instance.Run();
 	}
 
-	[Event.Tick.Server]
+	[GameEvent.Tick.Server]
 	public void OnServerTick()
 	{
 		if ( !IsRunning && Game.Clients.Count >= 2 )
